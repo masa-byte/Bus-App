@@ -1,0 +1,48 @@
+<div class="container">
+    <div class="main-div">
+        <h2>Sign Up</h2>
+        <mat-form-field appearance="fill" class="field">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" [(ngModel)]="email" required="true" #emailInput="ngModel" />
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="field">
+            <mat-label>Password</mat-label>
+            <input matInput required="true" [type]="hidePassword ? 'password' : 'text'" name="password"
+                [(ngModel)]="password" #passwordInput="ngModel" />
+            <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
+                <mat-icon>{{
+                    hidePassword ? "visibility_off" : "visibility"
+                    }}</mat-icon>
+            </button>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="field">
+            <mat-label>Name</mat-label>
+            <input matInput [(ngModel)]="name" required="true" #nameInput="ngModel" />
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="field">
+            <mat-label>Surname</mat-label>
+            <input matInput [(ngModel)]="surname" required="true" #surnameInput="ngModel" />
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="field">
+            <mat-label>Birth date</mat-label>
+            <input matInput type="date" [(ngModel)]="birthDate" required="true" #birthDateInput="ngModel" />
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="field">
+            <mat-label>Phone</mat-label>
+            <input matInput [(ngModel)]="phone" required="true" #phoneInput="ngModel" />
+        </mat-form-field>
+
+        <mat-checkbox [(ngModel)]="rememberMe">Remember me</mat-checkbox>
+        <br>
+        <div class="button-container">
+            <button mat-raised-button class="btn" (click)="signIn()">Sign In</button>
+            <button mat-raised-button class="btn" (click)="signUp()"
+                [disabled]="!emailInput.valid || !passwordInput.valid || !nameInput.valid || !surnameInput.valid || 
+                !birthDateInput.valid || !phoneInput.valid">
+                Sign Up
+            </button>
+        </div>
+    </div>
+</div>
+
+<app-background-picture [src]="'assets/back2.jpg'"></app-background-picture>

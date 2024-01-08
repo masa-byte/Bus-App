@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  postgres:
+    # connect with postgres-bus for connection string
+    container_name: postgres-bus
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - 5432:5432
+    networks:
+      - bus-network
+
+  redis:
+    # connect with redis-bus for connection string
+    container_name: redis-bus
+    image: redis:latest
+    restart: always     
+    ports:
+      - 6379:6379
+    networks:
+      - bus-network
+
+  neo4j: 
+    # connection string automatically generated
+    container_name: neo4j-bus
+    image: neo4j:latest
+    restart: always
+    environment:
+      NEO4J_AUTH: none
+    ports:
+      - 7474:7474
+      - 7687:7687
+    networks:
+      - bus-network
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@domain.com
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    ports:
+      - "8080:80"
+    depends_on:
+      - postgres
+    networks:
+      - bus-network
+
+  redisinsight:
+    image: redislabs/redisinsight:latest
+    ports:
+      - 8001:8001
+    networks:
+      - bus-network
+
+networks:
+  bus-network:
+    driver: bridge

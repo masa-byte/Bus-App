@@ -1,0 +1,39 @@
+.image-container {
+    position: relative;
+    display: block;
+}
+
+.background-picture {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+}
+
+.text-over-image {
+    cursor: default;
+    position: absolute;
+    top: 80%;
+    left: 35%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bolder;
+    font-style: italic;
+    text-shadow: 0 0 10px rgba(216, 220, 224, 0.97);
+}
+
+.title {
+    font-size: x-large;
+    font-weight: bolder;
+    color: white;
+    letter-spacing: 4px;
+}
+
+.subtitle {
+    background: -webkit-linear-gradient(#eee, #de9b9b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
