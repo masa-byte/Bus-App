@@ -1,18 +1,5 @@
 
 import { Neo4jScheme } from "nest-neo4j/dist";
-import { DataSourceOptions } from "typeorm";
-
-// PostgreSQL
-
-export const postgreConfig: DataSourceOptions = {
-    type: 'postgres',
-    host: 'localhost',
-    port: 5432,
-    username: 'postgres',
-    password: 'postgres',
-    entities: [],
-    synchronize: true,
-};
 
 // Neo4j
 

@@ -24,6 +24,10 @@ export class NavComponent implements OnInit{
     this.router.navigate(['/signUpUser']);
   }
 
+  continueAsGuest() {
+    //this.router.navigate(['/mainPage', 'listItems']);
+  }
+
   openSnackBar(message: string) {
     this.snackBar.open(message, 'Okay', {
       duration: 5000,

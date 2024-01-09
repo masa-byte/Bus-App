@@ -1,16 +1,15 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post } from '@nestjs/common';
-import { UserResolver } from './user.resolver';
-import { User } from './user.entity';
+import { Body, Controller, Delete, Get, HttpStatus, Param, Post } from '@nestjs/common';
+import { UserService } from './user.service';
 
 @Controller('user')
 export class UserController {
 
-    constructor(private readonly userResolver: UserResolver) { }
+    constructor(private readonly userService: UserService) { }
 
     @Get()
     async users() {
         try {
-            const users = await this.userResolver.users()
+            const users = await this.userService.getAllUsers()
             return users
         } catch (error) {
             return HttpStatus.NOT_FOUND
@@ -20,7 +19,7 @@ export class UserController {
     @Get(':id')
     async user(@Param('id') id: string) {
         try {
-            const user = await this.userResolver.user(id)
+            const user = await this.userService.getUserById(id)
             return user
         } catch (error) {
             return HttpStatus.NOT_FOUND
@@ -30,7 +29,7 @@ export class UserController {
     @Get('email/:email')
     async userByEmail(@Param('email') email: string) {
         try {
-            const user = await this.userResolver.userByEmail(email)
+            const user = await this.userService.getUserByEmail(email)
             return user
         } catch (error) {
             return HttpStatus.NOT_FOUND
@@ -40,7 +39,7 @@ export class UserController {
     @Get('compare-password/:password/:id')
     async comparePassword(@Param('password') password: string, @Param('id') id: string): Promise<boolean> {
         try {
-            const res = await this.userResolver.comparePassword(password, id)
+            const res = await this.userService.comparePassword(password, id)
             return res
         } catch (error) {
             return false
@@ -50,7 +49,7 @@ export class UserController {
     @Post()
     async createUser(@Body() user: any) {
         try {
-            const res = await this.userResolver.createUser(user)
+            const res = await this.userService.createUser(user)
             return res
         } catch (error) {
             return HttpStatus.NOT_FOUND
@@ -60,7 +59,7 @@ export class UserController {
     @Delete(':id')
     async deleteUser(@Param('id') id: string) {
         try {
-            const res = await this.userResolver.deleteUser(id)
+            const res = await this.userService.deleteUser(id)
             return res
         } catch (error) {   
             return HttpStatus.NOT_FOUND

@@ -25,7 +25,7 @@ export class User {
     type: string;
 
     @Field(() => GraphQLISODateTime)
-    dateOfBirth: Date;
+    birthDate: Date;
 
     @Field(() => GraphQLISODateTime)
     createdAt: Date;

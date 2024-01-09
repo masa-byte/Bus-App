@@ -1,14 +1,13 @@
-import { Query, ResolveField, Resolver } from '@nestjs/graphql';
-import { User } from './user.entity';
+import { Injectable } from '@nestjs/common';
 import { Neo4jService } from 'src/my-neo4j/neo4j.service';
+import { User } from './user.entity';
 
-@Resolver(() => User)
-export class UserResolver {
+@Injectable()
+export class UserService {
 
-    constructor(private readonly neo4jService: Neo4jService) { }
+    constructor(private readonly neo4jService: Neo4jService) {}
 
-    @Query(() => User)
-    async users(): Promise<User[]> {
+    async getAllUsers(): Promise<User[]> {
         const res = await this.neo4jService.read(`MATCH (n:User) RETURN n`)
         if (res.records.length === 0) {
             return []
@@ -16,8 +15,7 @@ export class UserResolver {
         return res.records.map(record => this.mapNeo4jNodeToUser(record.get('n')))
     }
 
-    @Query(() => User)
-    async user(id: string): Promise<User> {
+    async getUserById(id: string): Promise<User> {
         const res = await this.neo4jService.read(`MATCH (n:User) WHERE id(n) = ${id} RETURN n`)
         if (res.records.length === 0) {
             return null
@@ -25,8 +23,7 @@ export class UserResolver {
         return this.mapNeo4jNodeToUser(res.records[0].get('n'))
     }
 
-    @Query(() => User)
-    async userByEmail(email: string): Promise<User> {
+    async getUserByEmail(email: string): Promise<User> {
         const res = await this.neo4jService.read(`MATCH (n:User) WHERE n.email = '${email}' RETURN n`)
         if (res.records.length === 0) {
             return null
@@ -34,19 +31,17 @@ export class UserResolver {
         return this.mapNeo4jNodeToUser(res.records[0].get('n'))
     }
 
-    @Query(() => User)
     async createUser(user: any): Promise<User> {
+        console.log('user', user)
         const res = await this.neo4jService.write(`CREATE (n:User $user) RETURN n`, { user })
         return this.mapNeo4jNodeToUser(res.records[0].get('n'))
     }
 
-    @Query(() => User)
     async deleteUser(id: string) {
         const res = await this.neo4jService.write(`MATCH (n:User) WHERE id(n) = ${id} DELETE n`)
         return
     }
 
-    @Query(() => Boolean)
     async comparePassword(password: string, id: string): Promise<boolean> {
         const res = await this.neo4jService.read(`MATCH (n:User) WHERE id(n) = ${id} RETURN n`)
         if (res.records.length === 0) {
@@ -65,7 +60,7 @@ export class UserResolver {
         user.password = node.properties.password;
         user.phone = node.properties.phone;
         user.type = node.properties.type;
-        user.dateOfBirth = node.properties.dateOfBirth;
+        user.birthDate = node.properties.birthDate;
         user.createdAt = node.properties.createdAt;
         return user;
     }
