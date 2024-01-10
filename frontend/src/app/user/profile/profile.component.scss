@@ -1,0 +1,113 @@
+div {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+
+.profile-picture {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.profile-picture img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.centeredDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile {
+  max-width: 456px;
+  margin: 30px auto;
+  padding: 20px;
+  border: 1px solid #323875;
+  border-radius: 8px;
+  background-color: #6A90D1;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
+}
+
+.profile h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+  font-weight: bolder;
+  font-style: italic;
+  text-shadow: 0 0 15px rgba(216, 220, 224, 0.97);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+
+.profile-details {
+  margin-top: 20px;
+}
+
+.profile-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.profile-row span {
+  font-size: 18px;
+  flex-grow: 1;
+  text-align: right;
+  margin-bottom: 10px;
+}
+
+.profile-label {
+  text-align: left !important;
+  font-weight: bold;
+  margin-right: 10px;
+  font-style: italic;
+  
+  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.profile-name {
+  display: inline;
+  margin: 0;
+}
+
+.profile-names h2 {
+  display: inline;
+  margin: 0;
+}
+
+.edit-profile {
+  margin-top: 20px;
+  text-align: right;
+}
+
+.edit-button {
+  display: inline-block;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+  margin-left: 10px;
+}
+
+.edit {
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: space-between;
+}
+
+.centered-sub-btn {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+button {
+  background-color: #C47C7F !important;
+  font-weight: bold;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
+}

@@ -42,6 +42,11 @@ export class UserService {
         return
     }
 
+    async updateUser(user: any): Promise<User> {
+        const res = await this.neo4jService.write(`MATCH (n:User) WHERE id(n) = ${user.id} SET n += $user RETURN n`, { user })
+        return this.mapNeo4jNodeToUser(res.records[0].get('n'))
+    }
+
     async comparePassword(password: string, id: string): Promise<boolean> {
         const res = await this.neo4jService.read(`MATCH (n:User) WHERE id(n) = ${id} RETURN n`)
         if (res.records.length === 0) {

@@ -1,0 +1,160 @@
+.sidenav-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidenav {
+    width: 200px;
+    background: linear-gradient(to right, #323875, #457790);
+}
+
+.sidenav .mat-toolbar {
+    background: inherit;
+    padding-top: 20px;
+    padding-left: 25px;
+}
+
+.mat-toolbar {
+    font-size: 250%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    height: auto;
+    background-color: #323875;
+}
+
+.mat-toolbar.mat-primary {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.mat-sidenav-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.left-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    flex: 1 1 auto;
+}
+
+.right-group {
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1 1 auto;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.right-group button {
+    margin-right: 2%;
+    margin-top: 5px;
+}
+
+.mat-icon-button {
+    display: inline;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.menu-items {
+    padding: 16px;
+    flex: auto;
+    align-items: flex-start;
+}
+
+.menu-checkbox {
+    padding-left: 10px;
+    padding-bottom: 16px;
+}
+
+.menu-items mat-nav-list {
+    border-top: 1px solid #a9a9a9;
+    border-bottom: 1px solid #a9a9a9;
+    margin-top: 16px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+
+.menu-items mat-list-item {
+    border: 1px solid #a9a9a9;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    padding: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    text-shadow: 0 0 15px rgba(216, 220, 224, 0.97) !important;
+}
+
+.profile-actions {
+    padding: 16px;
+    padding-top: 0px;
+    flex: auto;
+    align-items: flex-start;
+}
+
+.profile-actions mat-nav-list {
+    border-top: 1px solid #a9a9a9;
+    border-bottom: 1px solid #a9a9a9;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    width: 100%;
+}
+
+mat-toolbar {
+    font-weight: bolder;
+    font-style: italic;
+
+    text-shadow: 0 0 15px rgba(216, 220, 224, 0.97);
+}
+
+.customButton {
+    background-color: #C47C7F !important;
+    font-weight: bold;
+
+}
+
+.customButton:hover {
+    background-color: #F89B92 !important;
+    font-weight: bold;
+    transform: translateY(-2px);
+}
+
+.customMenu {
+    background-color: #C47C7F !important;
+    font-weight: bold;
+
+}
+
+.mat-drawer-content {
+    overflow: hidden !important;
+}
+
+::ng-deep {
+    html {
+        --mat-menu-item-label-text-color: white;
+        --mat-menu-item-label-text-font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        --mat-menu-item-icon-color: white;
+        --mat-menu-item-hover-state-layer-color: rgba(255, 255, 255, 0.08);
+        --mat-menu-item-focus-state-layer-color: rgba(255, 255, 255, 0.08);
+        --mat-menu-container-color: #C47C7F;
+        --mdc-list-list-item-label-text-font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .mat-mdc-list-base {
+        --mdc-list-list-item-label-text-font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        --mdc-list-list-item-label-text-size: 16px;
+        --mdc-list-list-item-label-text-weight: bold;
+        --mdc-list-list-item-label-text-style: italic;
+    }
+}

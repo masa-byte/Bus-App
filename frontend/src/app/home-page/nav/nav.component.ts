@@ -25,7 +25,7 @@ export class NavComponent implements OnInit{
   }
 
   continueAsGuest() {
-    //this.router.navigate(['/mainPage', 'listItems']);
+    this.router.navigate(['/mainPage', 'listItems']);
   }
 
   openSnackBar(message: string) {

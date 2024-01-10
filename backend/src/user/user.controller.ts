@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpStatus, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put } from '@nestjs/common';
 import { UserService } from './user.service';
 
 @Controller('user')
@@ -50,6 +50,16 @@ export class UserController {
     async createUser(@Body() user: any) {
         try {
             const res = await this.userService.createUser(user)
+            return res
+        } catch (error) {
+            return HttpStatus.NOT_FOUND
+        }
+    }
+
+    @Put(':id')
+    async updateUser(@Param('id') id: string, @Body() user: any) {
+        try {
+            const res = await this.userService.updateUser(user)
             return res
         } catch (error) {
             return HttpStatus.NOT_FOUND

@@ -47,6 +47,14 @@ export class UserService {
       { headers: headers, observe: 'response' });
   }
 
+  updateUser(user: User): Observable<HttpResponse<any>> {
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem('token'));
+    return this.http.put(url + '/user/',
+      { user: user },
+      { headers: headers, observe: 'response' }
+    );
+  }
+
   deleteUser(id: number): Observable<HttpResponse<any>> {
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem('token'));
     return this.http.delete(url + '/user/' + id,

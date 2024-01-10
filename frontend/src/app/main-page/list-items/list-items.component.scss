@@ -1,0 +1,25 @@
+body {
+    overflow: auto;
+}
+
+.container {
+    display: flex;
+    justify-content: space-around;
+}
+
+.mainDiv {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    overflow: auto;
+}
+
+.card {
+    flex: 1 1 auto;
+    background-color: transparent;
+    border: none;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
