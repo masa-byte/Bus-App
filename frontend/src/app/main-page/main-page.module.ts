@@ -19,6 +19,10 @@ import { MainPageRoutingModule } from './main-page-routing.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ListItemsComponent } from './list-items/list-items.component';
 import { ProfileComponent } from '../user/profile/profile.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
+import { DeleteDialogModule } from '../delete-dialog/delete-profile.module';
+import { EditProfileModule } from '../user/edit-profile/edit-profile.module';
 
 @NgModule({
   declarations: [
@@ -44,6 +48,10 @@ import { ProfileComponent } from '../user/profile/profile.component';
     FormsModule,
     BackgroundPictureModule,
     MatDialogModule,
+    MatCardModule,
+    MatDividerModule,
+    EditProfileModule,
+    DeleteDialogModule
   ],
   exports: [ NavMainPageComponent ]
 })

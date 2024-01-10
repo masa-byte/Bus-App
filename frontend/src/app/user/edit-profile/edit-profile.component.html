@@ -1,0 +1,45 @@
+<h2 mat-dialog-title>Edit Profile</h2>
+<mat-dialog-content>
+    <mat-form-field appearance="fill" class="field">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" [(ngModel)]="user.email" required="true" #emailInput="ngModel" />
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="field">
+        <mat-label>Old Password</mat-label>
+        <input matInput required="false" [type]="hideOldPassword ? 'password' : 'text'" name="password"
+            [(ngModel)]="oldPassword" #passwordInput="ngModel" placeholder="Enter if you wish to change password" />
+        <button mat-icon-button matSuffix (click)="hideOldPassword = !hideOldPassword">
+            <mat-icon>{{
+                hideOldPassword ? "visibility_off" : "visibility"
+                }}</mat-icon>
+        </button>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="field">
+        <mat-label>New Password</mat-label>
+        <input matInput required="false" [type]="hideNewPassword ? 'password' : 'text'" name="password"
+            [(ngModel)]="newPassword" #passwordInput="ngModel" />
+        <button mat-icon-button matSuffix (click)="hideNewPassword = !hideNewPassword">
+            <mat-icon>{{
+                hideNewPassword ? "visibility_off" : "visibility"
+                }}</mat-icon>
+        </button>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="field">
+        <mat-label>Name</mat-label>
+        <input matInput [(ngModel)]="user.name" required="true" #nameInput="ngModel" />
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="field" *ngIf="user.surname != null">
+        <mat-label>Surname</mat-label>
+        <input matInput [(ngModel)]="user.surname" required="true" #surnameInput="ngModel" />
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="field">
+        <mat-label>Phone number</mat-label>
+        <input matInput [(ngModel)]="user.phone" required="true" #phoneInput="ngModel" />
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-raised-button type="button" (click)="cancelEdit()" class="customBtn">Cancel</button>
+    <button mat-raised-button type="button" (click)="confirmEdit()"
+        [disabled]="!nameInput.valid || !emailInput.valid || !phoneInput.valid"
+        class="customBtn">Save</button>
+</mat-dialog-actions>

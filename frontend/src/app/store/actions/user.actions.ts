@@ -38,8 +38,15 @@ export const getUserSuccess = createAction('[User] Get User Success', props<{ us
 
 export const getUserFailure = createAction('[User] Get User Failure', props<{ error: string }>());
 
+// Update User Actions
+export const updateUser = createAction('[Profile] Update User', props<{ user: User }>());
+
+export const updateUserSuccess = createAction('[Profile] Update User Success', props<{ user: User }>());
+
+export const updateUserFailure = createAction('[Profile] Update User Failure', props<{ error: string }>());
+
 // Delete User Actions
-export const deleteUser = createAction('[Profile] Delete User', props<{ userId: number }>());
+export const deleteUser = createAction('[Profile] Delete User', props<{ userId: string }>());
 
 export const deleteUserSuccess = createAction('[Profile] Delete User Success');
 

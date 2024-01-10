@@ -120,6 +120,31 @@ export class UserEffects {
             )
         ));
 
+    updateUser$ = createEffect(() =>
+    this.actions$.pipe(
+        ofType(UserActions.updateUser),
+        switchMap(({ user }) => 
+            this.userService.updateUser(user).pipe(
+                map((response) => {
+                    let body = response.body;
+                    let user: User = {
+                        id: body.id,
+                        email: body.email,
+                        name: body.name,
+                        surname: body.surname,
+                        birthDate: body.birthDate,
+                        phone: body.phone,
+                        type: body.type
+                    };
+                    return UserActions.updateUserSuccess({user: user});
+                }),
+                catchError((error) => {
+                    return of(UserActions.updateUserFailure({ error: 'Failed to update user' }));
+                })
+            )
+        )
+    ));
+
     deleteUser$ = createEffect(() =>
         this.actions$.pipe(
             ofType(UserActions.deleteUser),

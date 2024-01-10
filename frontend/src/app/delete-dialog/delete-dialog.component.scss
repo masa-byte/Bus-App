@@ -1,0 +1,33 @@
+mat-dialog-actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.deleteBtn {
+    background-color: #f44336;
+    color: white;
+}
+
+.cancelBtn {
+    background-color: #6A90D1;
+    color: white;
+}
+
+button {
+    width: 35%;
+    color: white !important;
+    font-weight: bolder;
+    font-style: italic;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+
+h2 {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+
+::ng-deep {
+    .mat-mdc-dialog-container {
+        --mdc-dialog-container-color: transparent;
+        background-image: linear-gradient(to bottom, #000000, #353232) !important;
+    }
+}

@@ -30,8 +30,6 @@
     "@nestjs/typeorm": "^10.0.1",
     "bcrypt": "^5.1.1",
     "class-validator": "^0.14.0",
-    "graphql": "^16.8.1",
-    "graphql-tools": "^9.0.0",
     "neo4j-driver": "^5.16.0",
     "nest-neo4j": "^0.3.1",
     "passport-jwt": "^4.0.1",

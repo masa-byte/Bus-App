@@ -66,6 +66,15 @@ export const userReducer = createReducer(
         ...state,
         error: "",
     })),
+    on(UserActions.updateUserSuccess, (state, { user }) => ({
+        ...state,
+        user: user,
+        error: "",
+    })),
+    on(UserActions.updateUserFailure, (state, { error }) => ({
+        ...state,
+        error: error,
+    })),
     on(UserActions.deleteUserSuccess, (state) => ({
         ...state,
         user: null,

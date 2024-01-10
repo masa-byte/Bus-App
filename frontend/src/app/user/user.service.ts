@@ -49,19 +49,19 @@ export class UserService {
 
   updateUser(user: User): Observable<HttpResponse<any>> {
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem('token'));
-    return this.http.put(url + '/user/',
+    return this.http.put(url + '/user/' + user.id,
       { user: user },
       { headers: headers, observe: 'response' }
     );
   }
 
-  deleteUser(id: number): Observable<HttpResponse<any>> {
+  deleteUser(id: string): Observable<HttpResponse<any>> {
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem('token'));
     return this.http.delete(url + '/user/' + id,
       { headers: headers, observe: 'response' });
   }
 
-  checkPassword(id: number, password: string): Observable<HttpResponse<any>> {
+  checkPassword(id: string, password: string): Observable<HttpResponse<any>> {
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem('token'));
     return this.http.get(url + '/user/' + id + '/checkpassword/' + password,
       { headers: headers, observe: 'response' }

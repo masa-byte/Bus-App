@@ -13,7 +13,10 @@ export class NavMainPageComponent implements OnInit {
 
   userType: string | undefined = '';
 
-  constructor(private store: Store, private router: Router,) { }
+  constructor(
+    private store: Store, 
+    private router: Router
+    ) { }
 
   ngOnInit(): void {
     this.store.select(selectUserType).subscribe((userType) => {

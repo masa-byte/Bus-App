@@ -59,7 +59,7 @@ export class UserController {
     @Put(':id')
     async updateUser(@Param('id') id: string, @Body() user: any) {
         try {
-            const res = await this.userService.updateUser(user)
+            const res = await this.userService.updateUser(user['user'])
             return res
         } catch (error) {
             return HttpStatus.NOT_FOUND
