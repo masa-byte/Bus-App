@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomePageComponent } from './home-page/home-page.component';
 import { SignInComponent } from './home-page/sign-in/sign-in.component';
 import { SignUpComponent } from './home-page/sign-up/sign-up.component';
+import { CompanyFormComponent } from './company/company-form/company-form.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,11 @@ const routes: Routes = [
   {
     path: 'signUpUser',
     component: SignUpComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'companyForm',
+    component: CompanyFormComponent,
     pathMatch: 'full',
   },
   {

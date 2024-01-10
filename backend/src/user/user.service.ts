@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { Neo4jService } from 'src/my-neo4j/neo4j.service';
 import { User } from './user.entity';
+import { Role } from 'src/auth/enums/role.enum';
 
 @Injectable()
 export class UserService {
 
-    constructor(private readonly neo4jService: Neo4jService) {}
+    constructor(private readonly neo4jService: Neo4jService) { }
 
     async getAllUsers(): Promise<User[]> {
         const res = await this.neo4jService.read(`MATCH (n:User) RETURN n`)
@@ -32,8 +33,25 @@ export class UserService {
     }
 
     async createUser(user: any): Promise<User> {
-        console.log('user', user)
-        const res = await this.neo4jService.write(`CREATE (n:User $user) RETURN n`, { user })
+        let userToCreate = {
+            ...user,
+            dateCreated: new Date().toISOString(),
+        };
+        const res = await this.neo4jService.write(`CREATE (n:User $userToCreate) RETURN n`, { userToCreate })
+        return this.mapNeo4jNodeToUser(res.records[0].get('n'))
+    }
+
+    async createCompany(company: User): Promise<User> {
+        let user = new User();
+        await user.setPassword(company.password);
+        company.password = user.password;
+        company.id = null;
+        let companyToCreate = {
+            ...company,
+            dateCreated: new Date().toISOString(),
+        };
+        
+        const res = await this.neo4jService.write(`CREATE (n:Company $companyToCreate) RETURN n`, { companyToCreate })
         return this.mapNeo4jNodeToUser(res.records[0].get('n'))
     }
 
@@ -43,7 +61,8 @@ export class UserService {
     }
 
     async updateUser(user: any): Promise<User> {
-        const res = await this.neo4jService.write(`MATCH (n:User) WHERE id(n) = ${user.id} SET n += $user RETURN n`, { user })
+        const { id, ...rest } = user
+        const res = await this.neo4jService.write(`MATCH (n:User) WHERE id(n) = ${id} SET n += $rest RETURN n`, { id, rest })
         return this.mapNeo4jNodeToUser(res.records[0].get('n'))
     }
 

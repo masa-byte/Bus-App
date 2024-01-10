@@ -1,0 +1,34 @@
+<div class="container">
+    <div class="main-div">
+        <mat-form-field appearance="fill" class="field">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" [(ngModel)]="company.email" required="true" #emailInput="ngModel" />
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="field">
+            <mat-label>Password</mat-label>
+            <input matInput required="true" [type]="hidePassword ? 'password' : 'text'" name="password"
+                [(ngModel)]="company.password" #passwordInput="ngModel" />
+            <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
+                <mat-icon>{{
+                    hidePassword ? "visibility_off" : "visibility"
+                    }}</mat-icon>
+            </button>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="field">
+            <mat-label>Name</mat-label>
+            <input matInput [(ngModel)]="company.name" required="true" #nameInput="ngModel" />
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="field">
+            <mat-label>Phone</mat-label>
+            <input matInput [(ngModel)]="company.phone" required="true" #phoneInput="ngModel" />
+        </mat-form-field>
+
+        <div class="button-container">
+            <button mat-raised-button class="btn" (click)="back()">Back</button>
+            <button mat-raised-button class="btn" (click)="action()" [disabled]="
+          !nameInput.valid || !emailInput.valid || !phoneInput.valid || !passwordInput.valid"> Create Company
+            </button>
+        </div>
+    </div>
+</div>
+<app-background-picture [src]="'assets/back2.jpg'"></app-background-picture>

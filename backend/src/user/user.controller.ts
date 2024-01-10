@@ -46,10 +46,12 @@ export class UserController {
         }
     }
 
+    // users are only created through sign up and authentication
+    // these are users created by already authenticated and existing users
     @Post()
-    async createUser(@Body() user: any) {
+    async createCompanyUser(@Body() user: any) {
         try {
-            const res = await this.userService.createUser(user)
+            const res = await this.userService.createCompany(user['company'])
             return res
         } catch (error) {
             return HttpStatus.NOT_FOUND

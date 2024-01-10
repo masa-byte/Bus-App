@@ -12,6 +12,7 @@ import { UserEffects } from './store/effects/user.effects';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { MainPageModule } from './main-page/main-page.module';
 import { EditProfileModule } from './user/edit-profile/edit-profile.module';
+import { CompanyModule } from './company/company.module';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { EditProfileModule } from './user/edit-profile/edit-profile.module';
     HomePageModule,
     MainPageModule,
     EditProfileModule,
+    CompanyModule,
     StoreModule.forRoot({
       user: userReducer
     }, {}),

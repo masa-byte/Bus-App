@@ -14,9 +14,9 @@ export class NavMainPageComponent implements OnInit {
   userType: string | undefined = '';
 
   constructor(
-    private store: Store, 
+    private store: Store,
     private router: Router
-    ) { }
+  ) { }
 
   ngOnInit(): void {
     this.store.select(selectUserType).subscribe((userType) => {
@@ -25,7 +25,7 @@ export class NavMainPageComponent implements OnInit {
   }
 
   addNewCompany() {
-    //this.router.navigate(['companyForm']);
+    this.router.navigate(['companyForm']);
   }
 
   openMainPage() {
