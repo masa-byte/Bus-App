@@ -13,6 +13,8 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 import { MainPageModule } from './main-page/main-page.module';
 import { EditProfileModule } from './user/edit-profile/edit-profile.module';
 import { CompanyModule } from './company/company.module';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { VehiclesOnMapModule } from './vehicles-on-map/vehicles-on-map.module';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,8 @@ import { CompanyModule } from './company/company.module';
     StoreDevtoolsModule.instrument({
       maxAge: 25,
     }),
+    LeafletModule,
+    VehiclesOnMapModule,
   ],
   providers: [
     provideClientHydration(),

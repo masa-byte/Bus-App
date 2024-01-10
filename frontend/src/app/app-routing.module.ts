@@ -4,6 +4,7 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { SignInComponent } from './home-page/sign-in/sign-in.component';
 import { SignUpComponent } from './home-page/sign-up/sign-up.component';
 import { CompanyFormComponent } from './company/company-form/company-form.component';
+import { MapComponent } from './vehicles-on-map/map/map.component';
 
 const routes: Routes = [
   {
@@ -29,6 +30,11 @@ const routes: Routes = [
   {
     path: 'companyForm',
     component: CompanyFormComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'vehicles-on-map',
+    component: MapComponent,
     pathMatch: 'full',
   },
   {

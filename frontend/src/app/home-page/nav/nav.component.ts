@@ -15,6 +15,10 @@ export class NavComponent implements OnInit{
   ) { }
 
   ngOnInit(): void {}
+  
+  maps() {
+    this.router.navigate(['/vehicles-on-map']);
+  }
 
   signIn() {
     this.router.navigate(['/signInUser']);
