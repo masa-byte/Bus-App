@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { UserController } from './user.controller';
+import { CompanyService } from './company.service';
+import { CompanyController } from './company.controller';
 import { MyNeo4jModule } from 'src/my-neo4j/my-neo4j.module';
-import { UserService } from './user.service';
 import { UtilityModule } from 'src/utility/utility.module';
 
 @Module({
@@ -9,8 +9,7 @@ import { UtilityModule } from 'src/utility/utility.module';
     MyNeo4jModule,
     UtilityModule
   ],
-  controllers: [UserController],
-  providers: [UserService],
-  exports: [UserService]
+  providers: [CompanyService],
+  controllers: [CompanyController]
 })
-export class UserModule {}
+export class CompanyModule {}

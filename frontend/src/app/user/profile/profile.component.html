@@ -5,24 +5,32 @@
         </div>
         <div class="profile-name">
             <h2>{{
-                (this.user$ | async)!.surname == null ? 
-                (this.user$ | async)!.name : 
-                (this.user$ | async)!.name + " " + (this.user$ | async)!.surname }}
+                (user$ | async)!.type == 'company' ? 
+                (user$ | async)!.name : 
+                (user$ | async)!.name + " " + (user$ | async)!.surname }}
             </h2>
         </div>
     </div>
     <div class="profile-details">
-        <div class="profile-row">
+        <div class="profile-row" *ngIf="(user$ | async)!.type != 'company'">
             <span class="profile-label">Date Of Birth:</span>
             <span>{{ (user$ | async)!.birthDate | date:'dd-MM-yyyy' }}</span>
         </div>
+        <div class="profile-row" *ngIf="(user$ | async)!.type == 'company'">
+            <span class="profile-label">Year established:</span>
+            <span>{{ (user$ | async)!.yearEstablished }}</span>
+        </div>
         <div class="profile-row">
             <span class="profile-label">Email:</span>
-            <span>{{ (this.user$ | async)!.email }}</span>
+            <span>{{ (user$ | async)!.email }}</span>
         </div>
         <div class="profile-row">
             <span class="profile-label">Phone:</span>
-            <span>{{ (this.user$ | async)!.phone }}</span>
+            <span>{{ (user$ | async)!.phone }}</span>
+        </div>
+        <div class="profile-row" *ngIf="(user$ | async)!.type == 'company'">
+            <span class="profile-label">Rating:</span>
+            <span>{{ ((user$ | async)!.rating)! }}</span>
         </div>
     </div>
 

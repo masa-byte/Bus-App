@@ -1,0 +1,78 @@
+.card {
+    max-width: 100%;
+    min-width: fit-content;
+    margin: 8px;
+    background-color: #E1D89F;
+    color: black !important;
+    font-weight: bold;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
+    letter-spacing: 0.5px;
+}
+
+.label {
+    text-align: left;
+    font-weight: bold;
+    margin-right: 10px;
+    font-style: italic;
+    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.6);
+    letter-spacing: 0.5px;
+    width: auto;
+}
+
+.text {
+    text-align: right;
+    width: auto;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    font-size: larger;
+    margin-bottom: 5px;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+mat-divider {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    background-color: black;
+}
+
+mat-card-actions {
+    display: flex;
+    text-align: end;
+    justify-content: space-between;
+}
+
+.section2 {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.section1 {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+span {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.icon {
+    background-image: url("../../../assets/company.png");
+    background-size: contain;
+}
+
+::ng-deep {
+    .mat-mdc-card {
+        --mat-card-title-text-font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        --mat-card-title-text-weight: 800;
+        --mat-card-subtitle-text-font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        --mat-card-subtitle-text-weight: 600;
+    }
+}

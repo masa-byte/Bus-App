@@ -1,10 +1,10 @@
 import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { User } from 'src/user/user.entity';
 import { AuthSignUpUserDto } from './dto/auth-sign-up-user.dto';
 import { AuthSignInUserDto } from './dto/auth-sign-in-user.dto';
 import { Role } from './enums/role.enum';
 import { UserService } from 'src/user/user.service';
+import { RegularUser } from 'src/user/regular-user.entity';
 
 @Injectable()
 export class AuthService {
@@ -27,7 +27,7 @@ export class AuthService {
     async signUp(signUpDto: AuthSignUpUserDto): Promise<any> {
         let user = await this.userService.getUserByEmail(signUpDto.email);
         if (user == null) {
-            user = new User();
+            user = new RegularUser();
             user.email = signUpDto.email;
             user.name = signUpDto.name;
             user.surname = signUpDto.surname;

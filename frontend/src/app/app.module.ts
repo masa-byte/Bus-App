@@ -13,6 +13,8 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 import { MainPageModule } from './main-page/main-page.module';
 import { EditProfileModule } from './user/edit-profile/edit-profile.module';
 import { CompanyModule } from './company/company.module';
+import { companyReducer } from './store/reducers/company.reducer';
+import { CompanyEffects } from './store/effects/company.effects';
 
 @NgModule({
   declarations: [
@@ -27,10 +29,12 @@ import { CompanyModule } from './company/company.module';
     EditProfileModule,
     CompanyModule,
     StoreModule.forRoot({
-      user: userReducer
+      user: userReducer,
+      companies: companyReducer
     }, {}),
     EffectsModule.forRoot([
-      UserEffects
+      UserEffects,
+      CompanyEffects
     ]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { Router } from '@angular/router';
 import { Observable, of, Subscription } from 'rxjs';
 import { User } from '../../user/user.model';
 import { selectUserError } from '../../store/selectors/user.selectors';
@@ -29,7 +29,7 @@ export class CompanyFormComponent {
 
   constructor(
     private snackBar: MatSnackBar,
-    private route: ActivatedRoute,
+    private router: Router,
     private store: Store,
   ) { }
 
@@ -51,6 +51,7 @@ export class CompanyFormComponent {
         this.openSnackBar(error);
       else
         this.openSnackBar("Company user successfully added!");
+      this.router.navigate(['/mainPage', 'listItems']);
     });
   }
 

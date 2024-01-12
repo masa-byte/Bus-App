@@ -49,9 +49,9 @@ export class UserController {
     // users are only created through sign up and authentication
     // these are users created by already authenticated and existing users
     @Post()
-    async createCompanyUser(@Body() user: any) {
+    async createCompanyUser(@Body('company') user: any) {
         try {
-            const res = await this.userService.createCompany(user['company'])
+            const res = await this.userService.createCompany(user)
             return res
         } catch (error) {
             return HttpStatus.NOT_FOUND
@@ -59,9 +59,9 @@ export class UserController {
     }
 
     @Put(':id')
-    async updateUser(@Param('id') id: string, @Body() user: any) {
+    async updateUser(@Param('id') id: string, @Body('user') user: any) {
         try {
-            const res = await this.userService.updateUser(user['user'])
+            const res = await this.userService.updateUser(user)
             return res
         } catch (error) {
             return HttpStatus.NOT_FOUND

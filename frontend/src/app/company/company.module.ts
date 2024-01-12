@@ -10,10 +10,14 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatListModule } from "@angular/material/list";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { BackgroundPictureModule } from '../background-picture/background-picture.module';
+import { CompanyDisplayComponent } from './company-display/company-display.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   declarations: [
-    CompanyFormComponent
+    CompanyFormComponent,
+    CompanyDisplayComponent
   ],
   imports: [
     CommonModule,
@@ -24,9 +28,14 @@ import { BackgroundPictureModule } from '../background-picture/background-pictur
     MatSnackBarModule,
     MatIconModule,
     MatListModule,
+    MatCardModule,
+    MatDividerModule,
     ReactiveFormsModule,
     MatCheckboxModule,
     BackgroundPictureModule
+  ],
+  exports: [
+    CompanyDisplayComponent
   ]
 })
 export class CompanyModule { }

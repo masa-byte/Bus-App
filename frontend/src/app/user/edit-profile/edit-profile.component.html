@@ -28,7 +28,7 @@
         <mat-label>Name</mat-label>
         <input matInput [(ngModel)]="user.name" required="true" #nameInput="ngModel" />
     </mat-form-field>
-    <mat-form-field appearance="fill" class="field" *ngIf="user.surname != null">
+    <mat-form-field appearance="fill" class="field" *ngIf="user.surname != undefined">
         <mat-label>Surname</mat-label>
         <input matInput [(ngModel)]="user.surname" required="true" #surnameInput="ngModel" />
     </mat-form-field>

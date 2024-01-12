@@ -22,11 +22,16 @@
             <mat-label>Phone</mat-label>
             <input matInput [(ngModel)]="company.phone" required="true" #phoneInput="ngModel" />
         </mat-form-field>
+        <mat-form-field appearance="fill" class="field">
+            <mat-label>Year established</mat-label>
+            <input matInput [(ngModel)]="company.yearEstablished" required="true" #yearInput="ngModel" />
+        </mat-form-field>
 
         <div class="button-container">
             <button mat-raised-button class="btn" (click)="back()">Back</button>
             <button mat-raised-button class="btn" (click)="action()" [disabled]="
-          !nameInput.valid || !emailInput.valid || !phoneInput.valid || !passwordInput.valid"> Create Company
+          !nameInput.valid || !emailInput.valid || !phoneInput.valid || !passwordInput.valid || !yearInput.valid"> 
+          Create Company
             </button>
         </div>
     </div>

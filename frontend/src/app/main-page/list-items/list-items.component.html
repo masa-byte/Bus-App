@@ -1,2 +1,20 @@
+<app-search-bar></app-search-bar>
+
+<mat-paginator #paginator
+               class="paginator"
+               (page)="handlePageEvent($event)"
+               [length]="length"
+               [pageSize]="pageSize"
+               [showFirstLastButtons]="showFirstLastButtons"
+               [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []"
+               [pageIndex]="pageIndex"
+               aria-label="Select page">
+</mat-paginator>
+
+<div *ngIf="(companies$ | async)" class="mainDiv">
+    <div *ngFor="let company of companies$ | async" class="card">
+        <app-company-display [company]="company[1]" (companyDeleteRequest)="deleteCompany($event)"></app-company-display>
+    </div>
+</div>
 
 <app-background-picture [src]="'assets/back3.jpg'"></app-background-picture>

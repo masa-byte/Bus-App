@@ -1,0 +1,46 @@
+<mat-card class="card">
+    <mat-card-header>
+        <div mat-card-avatar class="icon"></div>
+        <mat-card-title class="cursor-pointer">
+            {{ company!.name }}
+        </mat-card-title>
+        <mat-card-subtitle>
+            {{ company!.yearEstablished }}
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-divider></mat-divider>
+        <div class="row">
+            <span class="label">Name:</span>
+            <span class="text">{{ company!.name }}</span>
+        </div>
+
+        <div class="row">
+            <span class="label">Year Established:</span>
+            <span class="text">{{ company!.yearEstablished }}</span>
+        </div>
+
+        <div class="row">
+            <span class="label">Phone:</span>
+            <span class="text">{{ company!.phone }}</span>
+        </div>
+
+        <div class="row">
+            <span class="label">Rating:</span>
+            <span class="text">{{ company!.rating }}</span>
+        </div>
+        <mat-divider></mat-divider>
+    </mat-card-content>
+    <mat-card-actions>
+        <section class="section2" *ngIf="(user$ | async)!.type == 'admin'">
+            <button mat-icon-button color="basic" (click)="deleteCompany()">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </section>
+        <section class="section2" *ngIf="(user$ | async)!.type == 'user'">
+            <button mat-icon-button color="basic" (click)="checkAvailableTrips()">
+                <mat-icon>event_available</mat-icon>
+            </button>
+        </section>
+    </mat-card-actions>
+</mat-card>

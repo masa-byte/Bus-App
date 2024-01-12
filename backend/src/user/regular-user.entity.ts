@@ -1,8 +1,8 @@
 import { Field, GraphQLISODateTime, ID, ObjectType } from "@nestjs/graphql";
 import * as bcrypt from 'bcrypt';
 
-@ObjectType('User')
-export class User {
+@ObjectType('RegularUser')
+export class RegularUser {
     @Field(() => ID)
     id: string;
 
@@ -26,9 +26,6 @@ export class User {
 
     @Field(() => GraphQLISODateTime)
     birthDate: Date;
-
-    @Field(() => GraphQLISODateTime)
-    createdAt: Date;
 
     async setPassword(password: string): Promise<void> {
         const saltRounds = 10;

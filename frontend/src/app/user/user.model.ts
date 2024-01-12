@@ -1,11 +1,5 @@
+import { CompanyUser } from "./company-user";
+import { RegularUser } from "./regular-user";
 
-export interface User {
-    id: string;
-    email: string;
-    password?: string;
-    name: string;
-    surname?: string;
-    phone: string;
-    birthDate?: Date;
-    type: string;
+export interface User extends RegularUser, CompanyUser {
 }
