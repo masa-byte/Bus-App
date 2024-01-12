@@ -51,7 +51,7 @@ export class CompanyFormComponent {
         this.openSnackBar(error);
       else
         this.openSnackBar("Company user successfully added!");
-      this.router.navigate(['/mainPage', 'listItems']);
+      this.router.navigate(['/mainPage', 'listCompanies']);
     });
   }
 

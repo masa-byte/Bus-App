@@ -71,7 +71,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
       if (user) {
         localStorage.setItem('userId', user.id.toString());
         localStorage.setItem('rememberMe', this.rememberMe.toString());
-        this.router.navigate(['/mainPage', 'listItems']);
+        this.router.navigate(['/mainPage', 'listCompanies']);
       }
     });
     this.errorSubscription = this.error$.subscribe((error) => {

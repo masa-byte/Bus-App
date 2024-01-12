@@ -23,7 +23,7 @@ export class NavComponent {
   }
 
   continueAsGuest() {
-    this.router.navigate(['/mainPage', 'listItems']);
+    this.router.navigate(['/mainPage', 'listCompanies']);
   }
 
   openSnackBar(message: string) {

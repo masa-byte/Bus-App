@@ -3,18 +3,18 @@ import { PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
-import { Observable, of, Subscription, map, tap } from 'rxjs';
+import { Observable, of, Subscription, map } from 'rxjs';
 import * as CompanyActions from '../../store/actions/company.actions';
-import { selectCompanyEntities, selectFilteredCompanies, selectTotalNumberOfCompanies } from '../../store/selectors/company.selector';
+import { selectFilteredCompanies, selectTotalNumberOfCompanies } from '../../store/selectors/company.selector';
 import { CompanyUser } from '../../user/company-user';
 import { DeleteDialogComponent } from '../../delete-dialog/delete-dialog.component';
 
 @Component({
-  selector: 'app-list-items',
-  templateUrl: './list-items.component.html',
-  styleUrls: ['./list-items.component.scss']
+  selector: 'app-list-companies',
+  templateUrl: './list-companies.component.html',
+  styleUrls: ['./list-companies.component.scss']
 })
-export class ListItemsComponent implements OnInit, OnDestroy {
+export class ListCompaniesComponent implements OnInit, OnDestroy {
 
   @HostBinding('style.overflow')
   overflow = 'auto';

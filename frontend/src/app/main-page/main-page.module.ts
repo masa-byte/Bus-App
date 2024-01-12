@@ -17,7 +17,6 @@ import { MatMenuModule } from '@angular/material/menu';
 import { FormsModule } from '@angular/forms';
 import { MainPageRoutingModule } from './main-page-routing.module';
 import { MatDialogModule } from '@angular/material/dialog';
-import { ListItemsComponent } from './list-items/list-items.component';
 import { ProfileComponent } from '../user/profile/profile.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
@@ -26,12 +25,13 @@ import { EditProfileModule } from '../user/edit-profile/edit-profile.module';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { CompanyModule } from '../company/company.module';
 import { SearchBarModule } from '../search-bar/search-bar.module';
+import { ListCompaniesComponent } from './list-companies/list-companies.component';
 
 @NgModule({
   declarations: [
     MainPageComponent,
     NavMainPageComponent,
-    ListItemsComponent,
+    ListCompaniesComponent,
     ProfileComponent,
   ],
   imports: [

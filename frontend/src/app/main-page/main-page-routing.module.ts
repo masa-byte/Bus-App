@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MainPageComponent } from './main-page.component';
-import { ListItemsComponent } from './list-items/list-items.component';
 import { ProfileComponent } from '../user/profile/profile.component';
+import { ListCompaniesComponent } from './list-companies/list-companies.component';
 
 const routes: Routes = [
   {
@@ -14,8 +14,8 @@ const routes: Routes = [
         component: ProfileComponent
       },
       {
-        path: 'listItems',
-        component: ListItemsComponent
+        path: 'listCompanies',
+        component: ListCompaniesComponent
       }
     ],
   },
