@@ -1,5 +1,5 @@
-import { CompanyUser } from "./company-user";
-import { RegularUser } from "./regular-user";
+import { CompanyUser } from "./company-user.model";
+import { RegularUser } from "./regular-user.model";
 
 export interface User extends RegularUser, CompanyUser {
 }

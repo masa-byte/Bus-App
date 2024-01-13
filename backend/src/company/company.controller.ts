@@ -1,5 +1,6 @@
 import { Body, Controller, Delete, Get, HttpStatus, Param, Put, Query } from '@nestjs/common';
 import { CompanyService } from './company.service';
+import { Public } from 'src/auth/decorators/metadata';
 
 @Controller('company')
 export class CompanyController {

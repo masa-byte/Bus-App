@@ -1,40 +1,39 @@
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BusLine } from './bus-line.model';
 import { Observable } from 'rxjs';
 import { url } from '../../environment/environment';
+import { Town } from '../town/town.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CompanyService {
+export class BusLineService {
 
   constructor(private http: HttpClient) { }
 
-  getTotalNumberOfCompanies(): Observable<HttpResponse<any>> {
+  createBusLine(busLine: BusLine): Observable<HttpResponse<any>> {
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem('token'));
-    return this.http.get(url + '/company/total',
+    return this.http.post(url + '/bus-line',
+      { busLine },
       { headers: headers, observe: 'response' }
     );
   }
 
-  getCompaniesByPageIndexPageNumber(pageIndex: number, pageSize: number): Observable<HttpResponse<any>> {
+  getBusLinesByStartDestEndDest(startDest: Town, endDest: Town): Observable<HttpResponse<any>> {
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem('token'));
-    return this.http.get(url + '/company?pageIndex=' + pageIndex + '&pageSize=' + pageSize,
-      { headers: headers, observe: 'response' }
-    );
+    return this.http.get(url + '/bus-line' + '?startDest=' + startDest.id + '&endDest=' + endDest.id, 
+    { headers: headers, observe: 'response' });
   }
 
-  deleteCompany(id: string): Observable<HttpResponse<any>> {
+  getBusLine(id: number): Observable<HttpResponse<any>> {
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem('token'));
-    return this.http.delete(url + '/company/' + id,
-      { headers: headers, observe: 'response' }
-    );
+    return this.http.get(url + '/bus-line/' + id, { headers: headers, observe: 'response' });
   }
 
-  rateCompany(id: string, rating: number): Observable<HttpResponse<any>> {
+  deleteBusLine(id: string): Observable<HttpResponse<any>> {
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem('token'));
-    return this.http.put(url + '/company/rate/' + id,
-      { rating },
+    return this.http.delete(url + '/bus-line/' + id,
       { headers: headers, observe: 'response' }
     );
   }

@@ -4,7 +4,7 @@ import { User } from '../../user/user.model';
 import { Store } from '@ngrx/store';
 import { selectUser } from '../../store/selectors/user.selectors';
 import { Observable, of } from 'rxjs';
-import { CompanyUser } from '../../user/company-user';
+import { CompanyUser } from '../../user/company-user.model';
 
 @Component({
   selector: 'app-company-display',

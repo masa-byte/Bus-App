@@ -34,6 +34,10 @@ export class NavMainPageComponent implements OnInit, OnDestroy {
     this.router.navigate(['companyForm']);
   }
 
+  addNewBusLine() {
+    this.router.navigate(['busLineForm']);
+  }
+
   openMainPage() {
     this.router.navigate(['mainPage', 'listCompanies']);
   }

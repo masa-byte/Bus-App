@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { Observable, of, Subscription, map } from 'rxjs';
 import * as CompanyActions from '../../store/actions/company.actions';
 import { selectFilteredCompanies, selectTotalNumberOfCompanies } from '../../store/selectors/company.selector';
-import { CompanyUser } from '../../user/company-user';
+import { CompanyUser } from '../../user/company-user.model';
 import { DeleteDialogComponent } from '../../delete-dialog/delete-dialog.component';
 
 @Component({

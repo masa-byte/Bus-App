@@ -12,6 +12,8 @@ import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './auth/guards/roles.guard';
 import { CompanyModule } from './company/company.module';
 import { UtilityModule } from './utility/utility.module';
+import { TownModule } from './town/town.module';
+import { BusLineModule } from './bus-line/bus-line.module';
 
 @Module({
   imports: [
@@ -21,7 +23,9 @@ import { UtilityModule } from './utility/utility.module';
     AuthModule,
     UserModule,
     CompanyModule,
-    UtilityModule
+    UtilityModule,
+    TownModule,
+    BusLineModule
   ],
   controllers: [AppController],
   providers: [AppService,

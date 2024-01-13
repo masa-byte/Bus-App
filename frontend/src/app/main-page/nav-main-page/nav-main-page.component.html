@@ -26,10 +26,12 @@
                     BusCard
                 </span>
             </div>
-            <div class="right-group">      
-                <button mat-raised-button class="customButton" *ngIf="userType == 'admin'"
-                    (click)="addNewCompany()">
+            <div class="right-group">
+                <button mat-raised-button class="customButton" *ngIf="userType == 'admin'" (click)="addNewCompany()">
                     + Add new company
+                </button>
+                <button mat-raised-button class="customButton" *ngIf="userType == 'company'" (click)="addNewBusLine()">
+                    + Add new bus line
                 </button>
                 <button type="button" aria-label="Navigate to profile" mat-icon-button [matMenuTriggerFor]="profile">
                     <mat-icon aria-label="Profile icon">account_circle</mat-icon>

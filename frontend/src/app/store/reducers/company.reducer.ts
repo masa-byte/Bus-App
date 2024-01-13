@@ -1,6 +1,6 @@
 import { EntityAdapter, createEntityAdapter } from "@ngrx/entity";
 import { createReducer, on } from "@ngrx/store";
-import { CompanyUser } from "../../user/company-user";
+import { CompanyUser } from "../../user/company-user.model";
 import { CompanyState } from "../states/company.state";
 import * as CompanyActions from '../actions/company.actions';
 

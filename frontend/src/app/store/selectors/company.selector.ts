@@ -62,9 +62,6 @@ export const selectFilteredCompanies = createSelector(
         if (searchText !== '')
             arrayOfCompanies = arrayOfCompanies.filter((company: any) => company.name.toLowerCase().includes(searchText.toLowerCase()));
 
-        if (sorting === 'none')
-            return [];
-
         if (sorting === 'noCriteria')
             return arrayOfCompanies;
 

@@ -1,5 +1,5 @@
 import { EntityState } from "@ngrx/entity";
-import { CompanyUser } from "../../user/company-user";
+import { CompanyUser } from "../../user/company-user.model";
 
 export interface CompanyState extends EntityState<CompanyUser> {
     selectedCompanyId: number | null;

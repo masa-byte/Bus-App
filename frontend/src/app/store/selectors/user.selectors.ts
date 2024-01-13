@@ -8,6 +8,11 @@ export const selectUser = createSelector(
     (state: UserState) => state.user
 );
 
+export const selectUserId = createSelector(
+    selectUserInfo,
+    (state: UserState) => state.user?.id
+);
+
 export const selectUserError = createSelector(
     selectUserInfo,
     (state: UserState) => state.error

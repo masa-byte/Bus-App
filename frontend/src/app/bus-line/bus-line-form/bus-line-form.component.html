@@ -1,0 +1,103 @@
+<div class="container">
+    <div class="main-div">
+        <mat-stepper orientation="vertical" [linear]="true" #stepper>
+            <mat-step [stepControl]="townFormGroup">
+                <form [formGroup]="townFormGroup">
+                    <ng-template matStepLabel> Add Towns </ng-template>
+                    <div formArrayName="towns">
+                        <div *ngFor="let town of towns.controls; let i = index">
+                            <div [formGroupName]="i">
+                                <h3 style="margin-top: 10px">Town {{ i + 1 }}</h3>
+
+                                <mat-form-field appearance="fill" class="field">
+                                    <mat-label>Town</mat-label>
+                                    <mat-select formControlName="stop">
+                                        <mat-option *ngFor="let town of townsArr" [value]="town.name">
+                                            {{town.name}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <div>
+                                    <button mat-button class="btn" (click)="removeTown(i)">
+                                        Remove
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="add-button">
+                            <div class="center-container">
+                                <button mat-icon-button type="button" color="basic" (click)="addTown()">
+                                    <mat-icon>add</mat-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="button-container">
+                        <button mat-button class="btn" type="button" matStepperPrevious>
+                            Back
+                        </button>
+                        <button mat-button class="btn" type="button" matStepperNext>
+                            Next
+                        </button>
+                    </div>
+                </form>
+            </mat-step>
+
+            <mat-step [stepControl]="priceFormGroup">
+                <ng-template matStepLabel> Price Calculation </ng-template>
+                <form [formGroup]="priceFormGroup">
+                    <mat-form-field appearance="fill" class="field">
+                        <mat-label>Regular Price Factor</mat-label>
+                        <input matInput formControlName="regularPriceFactor" />
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill" class="field">
+                        <mat-label>Return Price Factor</mat-label>
+                        <input matInput formControlName="returnPriceFactor" />
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill" class="field">
+                        <mat-label>Student Discount</mat-label>
+                        <input matInput formControlName="studentDiscount" />
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill" class="field">
+                        <mat-label>Senior Discount</mat-label>
+                        <input matInput formControlName="seniorDiscount" />
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill" class="field">
+                        <mat-label>Group Discount</mat-label>
+                        <input matInput formControlName="groupDiscount" />
+                    </mat-form-field>
+
+                    <div class="button-container">
+                        <button mat-button class="btn" type="button" matStepperPrevious>
+                            Back
+                        </button>
+                        <button mat-button class="btn" type="button" matStepperNext>
+                            Next
+                        </button>
+                    </div>
+                </form>
+            </mat-step>
+
+            <mat-step>
+                <ng-template matStepLabel>Done</ng-template>
+                <div style="margin: 30px">
+                    <h2>This bus line is ready!</h2>
+                    <div class="button-container">
+                        <button mat-button class="btn" type="button" matStepperPrevious>
+                            Back
+                        </button>
+                        <button mat-raised-button class="btn" type="submit" (click)="action()">
+                            Save
+                        </button>
+                    </div>
+                </div>
+            </mat-step>
+        </mat-stepper>
+    </div>
+</div>
+<app-background-picture [src]="'assets/map.jpg'"></app-background-picture>
