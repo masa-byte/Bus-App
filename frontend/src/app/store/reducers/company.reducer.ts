@@ -43,6 +43,15 @@ export const companyReducer = createReducer(
             error: error
         };
     }),
+    on(CompanyActions.createCompanyUserSuccess, (state, { company }) => {
+        return companyAdapter.addOne(company, state);
+    }),
+    on(CompanyActions.createCompanyUserFailure, (state, { error }) => {
+        return {
+            ...state,
+            error: error
+        };
+    }),
     on(CompanyActions.deleteCompanySuccess, (state, { id }) => {
         return companyAdapter.removeOne(id, state);
     }),

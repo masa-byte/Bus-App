@@ -25,6 +25,15 @@ export class CompanyUser {
     yearEstablished: number;
 
     @Field()
+    regularPriceFactor: number;
+
+    @Field()
+    returnPriceFactor: number;
+
+    @Field()
+    discount: number;
+
+    @Field()
     gradeNumber: number;
 
     @Field()

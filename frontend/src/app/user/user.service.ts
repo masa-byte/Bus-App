@@ -11,14 +11,6 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  createCompanyUser(company: User): Observable<HttpResponse<any>> {
-    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem('token'));
-    return this.http.post(url + '/user',
-      { company: company },
-      { headers: headers, observe: 'response' }
-    );
-  }
-
   signUp(email: string, password: string, name: string, surname: string, birthDate: Date, phone: string): Observable<HttpResponse<any>> {
     return this.http.post(url + '/auth/signup',
       { email: email, password: password, name: name, surname: surname, birthDate: birthDate, phone: phone },

@@ -1,48 +1,28 @@
 import { Injectable } from '@nestjs/common';
 import { Neo4jService } from 'src/my-neo4j/neo4j.service';
-import { UtilityService } from 'src/utility/utility.service';
 import { BusLine } from './bus-line.entity';
 
 @Injectable()
 export class BusLineService {
 
-    constructor(
-        private readonly neo4jService: Neo4jService,
-        private readonly utilityService: UtilityService
-    ) { }
+  constructor(
+    private readonly neo4jService: Neo4jService,
+  ) { }
 
-    async createBusLine(busLine: any): Promise<void> {
-        let busLineToCreate = {
-            ...busLine,
-            dateCreated: new Date().toISOString(),
-        };
+  async createBusLine(busLine: any): Promise<string> {
+    const res = await this.neo4jService.read(`MATCH (n:Company) WHERE id(n) = ${busLine.companyId} RETURN n.nextBusLineId AS nextBusLineId`)
+    const busLineId = res.records[0].get('nextBusLineId')
+    let stop1 = busLine.stops[0];
+    let stop2;
+    for (let i = 1; i < busLine.stops.length; i++) {
+      stop2 = busLine.stops[i];
+      const query = `
+      MATCH (t1:Town), (t2:Town) WHERE id(t1) = ${stop1.id} AND id(t2) = ${stop2.id} 
+      CREATE (t1)-[r:BUS_LINE {busLineId: '${busLineId}', companyId: '${busLine.companyId}', companyName: '${busLine.companyName}'}]->(t2)`;
+      await this.neo4jService.write(query);
+      stop1 = stop2;
     }
+    await this.neo4jService.write(`MATCH (n:Company) WHERE id(n) = ${busLine.companyId} SET n.nextBusLineId = '${+busLineId + 1}'`)
+    return res.records[0].get('nextBusLineId');
+  }
 }
-
-/*
-{
-  id: '',
-  companyId: '7',
-  companyName: 'as',
-  regularPriceFactor: '1',
-  returnPriceFactor: '1',
-  studentDiscount: '10',
-  seniorDiscount: '10',
-  groupDiscount: '10',
-  stops: [
-    {
-      id: '8',
-      name: 'Mokrin',
-      population: '5270',
-      latitude: '45.9347',
-      longitude: '20.4044'
-    },
-    {
-      id: '10',
-      name: 'Beograd',
-      population: '1378682',
-      latitude: '44.8200',
-      longitude: '20.4600'
-    }
-  ]
-*/

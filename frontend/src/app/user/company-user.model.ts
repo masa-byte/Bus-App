@@ -7,5 +7,8 @@ export interface CompanyUser {
     phone: string;
     type: string;
     yearEstablished?: number;
+    regularPriceFactor?: number;
+    returnPriceFactor?: number;
+    discount?: number;
     rating?: number;
 }

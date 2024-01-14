@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { url } from '../../environment/environment';
+import { CompanyUser } from '../user/company-user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,14 @@ export class CompanyService {
   getCompaniesByPageIndexPageNumber(pageIndex: number, pageSize: number): Observable<HttpResponse<any>> {
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem('token'));
     return this.http.get(url + '/company?pageIndex=' + pageIndex + '&pageSize=' + pageSize,
+      { headers: headers, observe: 'response' }
+    );
+  }
+
+  createCompanyUser(company: CompanyUser): Observable<HttpResponse<any>> {
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem('token'));
+    return this.http.post(url + '/company',
+      { company: company },
       { headers: headers, observe: 'response' }
     );
   }

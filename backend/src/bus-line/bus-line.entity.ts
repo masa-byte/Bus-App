@@ -12,18 +12,6 @@ export class BusLine {
     @Field()
     companyName: string;
     
-    @Field()
-    priceFactor: number;
-    
-    @Field()
-    studentDiscount: number;
-    
-    @Field()
-    seniorDiscount: number;
-    
-    @Field()
-    groupDiscount: number;
-
     @Field(() => [Town])
     stops: Town[];
 }

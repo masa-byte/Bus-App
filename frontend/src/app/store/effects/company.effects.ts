@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType, } from '@ngrx/effects';
-import { switchMap, map, catchError, of } from 'rxjs';
+import { switchMap, map, catchError, of, mapTo } from 'rxjs';
 import * as CompanyActions from '../actions/company.actions';
 import { CompanyUser } from '../../user/company-user.model';
 import { CompanyService } from '../../company/company.service';
+import { mapToCompanyUser } from '../../utility/utility';
 
 @Injectable()
 export class CompanyEffects {
@@ -39,17 +40,7 @@ export class CompanyEffects {
                     map((response) => {
                         let body = response.body;
                         let allCompanies: CompanyUser[] = body.map((company: any) => {
-                            const gradeNumber = company.gradeNumber;
-                            const gradeSum = company.gradeSum;
-                            return {
-                                id: company.id,
-                                email: company.email,
-                                name: company.name,
-                                phone: company.phone,
-                                type: company.type,
-                                yearEstablished: company.yearEstablished,
-                                rating: gradeNumber == 0 ? 0 : gradeSum / gradeNumber
-                            };
+                            return mapToCompanyUser(company)
                         });
 
                         return CompanyActions.loadCompaniesSuccess({ company: allCompanies });
@@ -61,6 +52,23 @@ export class CompanyEffects {
             )
         )
     );
+
+    createCompanyUser$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(CompanyActions.createCompanyUser),
+            switchMap(({ company }) =>
+                this.companyService.createCompanyUser(company).pipe(
+                    map((response) => {
+                        let body = response.body;
+                        let company: CompanyUser = mapToCompanyUser(body);
+                        return CompanyActions.createCompanyUserSuccess({ company });
+                    }),
+                    catchError((error) => {
+                        return of(CompanyActions.createCompanyUserFailure({ error: 'Failed to create company user' }));
+                    })
+                )
+            )
+        ));
 
     deleteCompany$ = createEffect(() =>
         this.actions$.pipe(
@@ -85,15 +93,7 @@ export class CompanyEffects {
                 this.companyService.rateCompany(id, rating).pipe(
                     map((response) => {
                         let body = response.body;
-                        let company: CompanyUser = {
-                            id: body.id,
-                            email: body.email,
-                            name: body.name,
-                            phone: body.phone,
-                            type: body.type,
-                            yearEstablished: body.yearEstablished,
-                            rating: body.rating
-                        };
+                        let company: CompanyUser = mapToCompanyUser(body);
 
                         return CompanyActions.rateCompanySuccess({ company: company });
                     }),

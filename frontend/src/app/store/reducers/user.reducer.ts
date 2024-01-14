@@ -84,13 +84,5 @@ export const userReducer = createReducer(
     on(UserActions.deleteUserFailure, (state, { error }) => ({
         ...state,
         error: error,
-    })),
-    on(UserActions.createCompanyUserSuccess, (state, { company }) => ({
-        ...state,
-        error: "",
-    })),
-    on(UserActions.createCompanyUserFailure, (state, { error }) => ({
-        ...state,
-        error: error,
-    })),
+    }))
 );

@@ -1,14 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { Neo4jService } from 'src/my-neo4j/neo4j.service';
-import { UtilityService } from 'src/utility/utility.service';
 import { Town } from './town.entity';
+import { mapNeo4jNodeToTown } from 'src/utility/utility';
 
 @Injectable()
 export class TownService {
 
     constructor(
-        private readonly neo4jService: Neo4jService,
-        private readonly utilityService: UtilityService
+        private readonly neo4jService: Neo4jService
     ) { }
 
     async getAllTowns(): Promise<Town[]> {
@@ -16,6 +15,6 @@ export class TownService {
         if (res.records.length === 0) {
             return []
         }
-        return res.records.map(record => this.utilityService.mapNeo4jNodeToTown(record.get('n')))
+        return res.records.map(record => mapNeo4jNodeToTown(record.get('n')))
     }
 }

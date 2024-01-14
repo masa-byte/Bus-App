@@ -4,6 +4,7 @@ import { switchMap, map, catchError, of } from 'rxjs';
 import * as TownActions from '../actions/town.actions';
 import { TownService } from '../../town/town.service';
 import { Town } from '../../town/town.model';
+import { mapToTown } from '../../utility/utility';
 
 @Injectable()
 export class TownEffects {
@@ -20,13 +21,7 @@ export class TownEffects {
                     map((response) => {
                         let body = response.body;
                         let allTowns: Town[] = body.map((town: Town) => {
-                            return {
-                                id: town.id,
-                                name: town.name,
-                                population: town.population,
-                                latitude: town.latitude,
-                                longitude: town.longitude,
-                            };
+                            return mapToTown(town)
                         });
 
                         return TownActions.loadTownsSuccess({ towns: allTowns });

@@ -16,10 +16,6 @@
             <span class="profile-label">Date Of Birth:</span>
             <span>{{ (user$ | async)!.birthDate | date:'dd-MM-yyyy' }}</span>
         </div>
-        <div class="profile-row" *ngIf="(user$ | async)!.type == 'company'">
-            <span class="profile-label">Year established:</span>
-            <span>{{ (user$ | async)!.yearEstablished }}</span>
-        </div>
         <div class="profile-row">
             <span class="profile-label">Email:</span>
             <span>{{ (user$ | async)!.email }}</span>
@@ -27,6 +23,22 @@
         <div class="profile-row">
             <span class="profile-label">Phone:</span>
             <span>{{ (user$ | async)!.phone }}</span>
+        </div>
+        <div class="profile-row" *ngIf="(user$ | async)!.type == 'company'">
+            <span class="profile-label">Year established:</span>
+            <span>{{ (user$ | async)!.yearEstablished }}</span>
+        </div>
+        <div class="profile-row" *ngIf="(user$ | async)!.type == 'company'">
+            <span class="profile-label">Regular price factor</span>
+            <span>{{ (user$ | async)!.regularPriceFactor }}</span>
+        </div>
+        <div class="profile-row" *ngIf="(user$ | async)!.type == 'company'">
+            <span class="profile-label">Return price factor</span>
+            <span>{{ (user$ | async)!.returnPriceFactor }}</span>
+        </div>
+        <div class="profile-row" *ngIf="(user$ | async)!.type == 'company'">
+            <span class="profile-label">Discount:</span>
+            <span>{{ (user$ | async)!.discount }}</span>
         </div>
         <div class="profile-row" *ngIf="(user$ | async)!.type == 'company'">
             <span class="profile-label">Rating:</span>

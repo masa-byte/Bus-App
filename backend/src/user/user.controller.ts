@@ -12,7 +12,7 @@ export class UserController {
             const users = await this.userService.getAllUsers()
             return users
         } catch (error) {
-            return HttpStatus.NOT_FOUND
+            return HttpStatus.INTERNAL_SERVER_ERROR
         }
     }
 
@@ -22,7 +22,7 @@ export class UserController {
             const user = await this.userService.getUserById(id)
             return user
         } catch (error) {
-            return HttpStatus.NOT_FOUND
+            return HttpStatus.INTERNAL_SERVER_ERROR
         }
     }
 
@@ -32,7 +32,7 @@ export class UserController {
             const user = await this.userService.getUserByEmail(email)
             return user
         } catch (error) {
-            return HttpStatus.NOT_FOUND
+            return HttpStatus.INTERNAL_SERVER_ERROR
         }
     }
 
@@ -46,25 +46,13 @@ export class UserController {
         }
     }
 
-    // users are only created through sign up and authentication
-    // these are users created by already authenticated and existing users
-    @Post()
-    async createCompanyUser(@Body('company') user: any) {
-        try {
-            const res = await this.userService.createCompany(user)
-            return res
-        } catch (error) {
-            return HttpStatus.NOT_FOUND
-        }
-    }
-
     @Put(':id')
     async updateUser(@Param('id') id: string, @Body('user') user: any) {
         try {
             const res = await this.userService.updateUser(user)
             return res
         } catch (error) {
-            return HttpStatus.NOT_FOUND
+            return HttpStatus.INTERNAL_SERVER_ERROR
         }
     }
 
@@ -74,7 +62,7 @@ export class UserController {
             const res = await this.userService.deleteUser(id)
             return res
         } catch (error) {   
-            return HttpStatus.NOT_FOUND
+            return HttpStatus.INTERNAL_SERVER_ERROR
         }
     }
 }

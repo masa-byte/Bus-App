@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
+import { Role } from 'src/auth/enums/role.enum';
 import { Neo4jService } from 'src/my-neo4j/neo4j.service';
 import { CompanyUser } from 'src/user/company-user.entity';
-import { UtilityService } from 'src/utility/utility.service';
+import { mapNeo4jNodeToCompanyUser } from 'src/utility/utility';
 
 @Injectable()
 export class CompanyService {
 
     constructor(
         private readonly neo4jService: Neo4jService,
-        private readonly utilityService: UtilityService
     ) { }
 
     async getTotalNumberOfCompanies(): Promise<number> {
@@ -24,7 +24,25 @@ export class CompanyService {
         if (res.records.length === 0) {
             return []
         }
-        return res.records.map(record => this.utilityService.mapNeo4jNodeToCompanyUser(record.get('n'), false))
+        return res.records.map(record => mapNeo4jNodeToCompanyUser(record.get('n'), false))
+    }
+
+    async createCompany(company: CompanyUser): Promise<CompanyUser> {
+        let user = new CompanyUser();
+        await user.setPassword(company.password);
+        company.password = user.password;
+        company.id = null;
+        company.type = Role.Company;
+        let companyToCreate = {
+            ...company,
+            dateCreated: new Date().toISOString(),
+            gradeNumber: 0,
+            gradeSum: 0,
+            nextBusLineId: '0'
+        };
+
+        const res = await this.neo4jService.write(`CREATE (n:Company ${companyToCreate}) RETURN n`)
+        return mapNeo4jNodeToCompanyUser(res.records[0].get('n'))
     }
 
     async deleteCompany(id: string) {
@@ -37,6 +55,6 @@ export class CompanyService {
         if (res.records.length === 0) {
             return null
         }
-        return this.utilityService.mapNeo4jNodeToCompanyUser(res.records[0].get('n'))
+        return mapNeo4jNodeToCompanyUser(res.records[0].get('n'))
     }
 }

@@ -36,6 +36,18 @@
         <mat-label>Phone number</mat-label>
         <input matInput [(ngModel)]="user.phone" required="true" #phoneInput="ngModel" />
     </mat-form-field>
+    <mat-form-field appearance="fill" class="field" *ngIf="user.type == 'company'">
+        <mat-label>Regular price factor</mat-label>
+        <input matInput [(ngModel)]="user.regularPriceFactor" required="true" #regularInput="ngModel" />
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="field" *ngIf="user.type == 'company'">
+        <mat-label>Return price factor</mat-label>
+        <input matInput [(ngModel)]="user.returnPriceFactor" required="true" #returnInput="ngModel" />
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="field" *ngIf="user.type == 'company'">
+        <mat-label>Discount</mat-label>
+        <input matInput [(ngModel)]="user.discount" required="true" #discountInput="ngModel" />
+    </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions>
     <button mat-raised-button type="button" (click)="cancelEdit()" class="customBtn">Cancel</button>

@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpStatus, Param, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Query } from '@nestjs/common';
 import { CompanyService } from './company.service';
 import { Public } from 'src/auth/decorators/metadata';
 
@@ -13,7 +13,7 @@ export class CompanyController {
             const numberOfCompanies = await this.companyService.getTotalNumberOfCompanies()
             return numberOfCompanies
         } catch (error) {
-            return HttpStatus.NOT_FOUND
+            return HttpStatus.INTERNAL_SERVER_ERROR
         }
     }
 
@@ -23,7 +23,17 @@ export class CompanyController {
             const companies = await this.companyService.getCompaniesByPageIndexPageSize(pageIndex, pageSize)
             return companies
         } catch (error) {
-            return HttpStatus.NOT_FOUND
+            return HttpStatus.INTERNAL_SERVER_ERROR
+        }
+    }
+
+    @Post()
+    async createCompanyUser(@Body('company') user: any) {
+        try {
+            const res = await this.companyService.createCompany(user)
+            return res
+        } catch (error) {
+            return HttpStatus.INTERNAL_SERVER_ERROR
         }
     }
 
@@ -33,7 +43,7 @@ export class CompanyController {
             const res = await this.companyService.rateCompany(id, rating)
             return res
         } catch (error) {
-            return HttpStatus.NOT_FOUND
+            return HttpStatus.INTERNAL_SERVER_ERROR
         }
     }
 
@@ -43,7 +53,7 @@ export class CompanyController {
             await this.companyService.deleteCompany(id)
             return HttpStatus.OK
         } catch (error) {
-            return HttpStatus.NOT_FOUND
+            return HttpStatus.INTERNAL_SERVER_ERROR
         }
     }
 }

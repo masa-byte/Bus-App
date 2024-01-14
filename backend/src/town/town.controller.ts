@@ -12,7 +12,7 @@ export class TownController {
             const users = await this.townService.getAllTowns()
             return users
         } catch (error) {
-            return HttpStatus.NOT_FOUND
+            return HttpStatus.INTERNAL_SERVER_ERROR
         }
     }
 }

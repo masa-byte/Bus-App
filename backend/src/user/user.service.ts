@@ -3,14 +3,13 @@ import { Neo4jService } from 'src/my-neo4j/neo4j.service';
 import { Role } from 'src/auth/enums/role.enum';
 import { RegularUser } from './regular-user.entity';
 import { CompanyUser } from './company-user.entity';
-import { UtilityService } from 'src/utility/utility.service';
+import { mapNeo4jNodeToRegularUser, mapNeo4jNodeToUser } from 'src/utility/utility';
 
 @Injectable()
 export class UserService {
 
     constructor(
         private readonly neo4jService: Neo4jService,
-        private readonly utilityService: UtilityService
     ) { }
 
     async getAllUsers(): Promise<RegularUser[]> {
@@ -18,7 +17,7 @@ export class UserService {
         if (res.records.length === 0) {
             return []
         }
-        return res.records.map(record => this.utilityService.mapNeo4jNodeToRegularUser(record.get('n')))
+        return res.records.map(record => mapNeo4jNodeToRegularUser(record.get('n')))
     }
 
     async getUserById(id: string): Promise<RegularUser | CompanyUser> {
@@ -26,7 +25,7 @@ export class UserService {
         if (res.records.length === 0) {
             return null
         }
-        return this.utilityService.mapNeo4jNodeToUser(res.records[0].get('n'))
+        return mapNeo4jNodeToUser(res.records[0].get('n'))
     }
 
     async getUserByEmail(email: string): Promise<RegularUser | CompanyUser> {
@@ -34,7 +33,7 @@ export class UserService {
         if (res.records.length === 0) {
             return null
         }
-        return this.utilityService.mapNeo4jNodeToUser(res.records[0].get('n'))
+        return mapNeo4jNodeToUser(res.records[0].get('n'))
     }
 
     async createUser(user: any): Promise<RegularUser> {
@@ -43,25 +42,8 @@ export class UserService {
             ...user,
             dateCreated: new Date().toISOString(),
         };
-        const res = await this.neo4jService.write(`CREATE (n:User $userToCreate) RETURN n`, { userToCreate })
-        return this.utilityService.mapNeo4jNodeToRegularUser(res.records[0].get('n'))
-    }
-
-    async createCompany(company: CompanyUser): Promise<CompanyUser> {
-        let user = new CompanyUser();
-        await user.setPassword(company.password);
-        company.password = user.password;
-        company.id = null;
-        company.type = Role.Company;
-        let companyToCreate = {
-            ...company,
-            dateCreated: new Date().toISOString(),
-            gradeNumber: 0,
-            gradeSum: 0,
-        };
-
-        const res = await this.neo4jService.write(`CREATE (n:Company $companyToCreate) RETURN n`, { companyToCreate })
-        return this.utilityService.mapNeo4jNodeToCompanyUser(res.records[0].get('n'))
+        const res = await this.neo4jService.write(`CREATE (n:User ${userToCreate}) RETURN n`)
+        return mapNeo4jNodeToRegularUser(res.records[0].get('n'))
     }
 
     async deleteUser(id: string) {
@@ -71,8 +53,8 @@ export class UserService {
 
     async updateUser(user: any): Promise<RegularUser | CompanyUser> {
         const { id, ...rest } = user
-        const res = await this.neo4jService.write(`MATCH (n) WHERE id(n) = ${id} SET n += $rest RETURN n`, { id, rest })
-        return this.utilityService.mapNeo4jNodeToUser(res.records[0].get('n'))
+        const res = await this.neo4jService.write(`MATCH (n) WHERE id(n) = ${id} SET n += ${rest} RETURN n`)
+        return mapNeo4jNodeToUser(res.records[0].get('n'))
     }
 
     async comparePassword(password: string, id: string): Promise<boolean> {
@@ -80,9 +62,7 @@ export class UserService {
         if (res.records.length === 0) {
             return false
         }
-        const user = this.utilityService.mapNeo4jNodeToUser(res.records[0].get('n'))
+        const user = mapNeo4jNodeToUser(res.records[0].get('n'))
         return await user.comparePassword(password);
     }
-
-
 }

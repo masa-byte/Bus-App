@@ -3,9 +3,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { Observable, of, Subscription } from 'rxjs';
-import { User } from '../../user/user.model';
-import { selectUserError } from '../../store/selectors/user.selectors';
-import * as UserActions from '../../store/actions/user.actions';
+import * as CompanyActions from '../../store/actions/company.actions';
+import { CompanyUser } from '../../user/company-user.model';
+import { selectCompanyError } from '../../store/selectors/company.selector';
 
 @Component({
   selector: 'app-company-form',
@@ -13,12 +13,16 @@ import * as UserActions from '../../store/actions/user.actions';
   styleUrls: ['./company-form.component.scss']
 })
 export class CompanyFormComponent {
-  company: User = {
+  company: CompanyUser = {
     id: '',
     email: '',
     password: '',
     name: '',
     phone: '',
+    yearEstablished: 0,
+    regularPriceFactor: 0,
+    returnPriceFactor: 0,
+    discount: 0,
     type: 'company',
   };
 
@@ -34,7 +38,7 @@ export class CompanyFormComponent {
   ) { }
 
   ngOnInit(): void {
-    this.error$ = this.store.select(selectUserError);
+    this.error$ = this.store.select(selectCompanyError);
   }
 
   ngOnDestroy(): void {
@@ -43,8 +47,8 @@ export class CompanyFormComponent {
   }
 
   action() {
-    this.store.dispatch(UserActions.clearUserError());
-    this.store.dispatch(UserActions.createCompanyUser({ company: this.company }));
+    this.store.dispatch(CompanyActions.clearCompanyError());
+    this.store.dispatch(CompanyActions.createCompanyUser({ company: this.company }));
 
     this.errorSubscription = this.error$.subscribe((error) => {
       if (error)

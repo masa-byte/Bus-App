@@ -5,6 +5,7 @@ import { catchError, map, switchMap } from 'rxjs/operators';
 import * as UserActions from '../actions/user.actions';
 import { UserService } from '../../user/user.service';
 import { User } from '../../user/user.model';
+import { mapToUser } from '../../utility/utility';
 
 @Injectable()
 export class UserEffects {
@@ -75,15 +76,7 @@ export class UserEffects {
                 this.userService.getUser(userId).pipe(
                     map((response) => {
                         let body = response.body;
-                        let user: User = {
-                            id: body.id,
-                            email: body.email,
-                            name: body.name,
-                            surname: body.surname,
-                            birthDate: body.birthDate,
-                            phone: body.phone,
-                            type: body.type
-                        };
+                        let user: User = mapToUser(body);
                         return UserActions.getUserSuccess({ user });
                     },
                         catchError((error) => {
@@ -101,24 +94,7 @@ export class UserEffects {
                 this.userService.getUser(userId).pipe(
                     map((response) => {
                         let body = response.body;
-                        let user: User = {
-                            id: body.id,
-                            email: body.email,
-                            name: body.name,
-                            surname: body.surname,
-                            birthDate: body.birthDate,
-                            yearEstablished: body.yearEstablished,
-                            phone: body.phone,
-                            type: body.type,
-                        };
-                        const gradeNumber = body.gradeNumber;
-                        const gradeSum = body.gradeSum;
-                        if (user.type == 'company') {
-                            if (gradeNumber == 0)
-                                user.rating = 0;
-                            else
-                                user.rating = gradeSum / gradeNumber;
-                        }
+                        let user: User = mapToUser(body);
                         return UserActions.getUserSuccess({ user });
                     },
                         catchError((error) => {
@@ -136,15 +112,7 @@ export class UserEffects {
                 this.userService.updateUser(user).pipe(
                     map((response) => {
                         let body = response.body;
-                        let user: User = {
-                            id: body.id,
-                            email: body.email,
-                            name: body.name,
-                            surname: body.surname,
-                            birthDate: body.birthDate,
-                            phone: body.phone,
-                            type: body.type
-                        };
+                        let user: User = mapToUser(body);
                         return UserActions.updateUserSuccess({ user: user });
                     }),
                     catchError((error) => {
@@ -164,31 +132,6 @@ export class UserEffects {
                     }),
                     catchError((error) => {
                         return of(UserActions.deleteUserFailure({ error: 'Failed to delete user' }));
-                    })
-                )
-            )
-        ));
-
-    createCompanyUser$ = createEffect(() =>
-        this.actions$.pipe(
-            ofType(UserActions.createCompanyUser),
-            switchMap(({ company }) =>
-                this.userService.createCompanyUser(company).pipe(
-                    map((response) => {
-                        let body = response.body;
-                        let company: User = {
-                            id: body.id,
-                            email: body.email,
-                            name: body.name,
-                            surname: body.surname,
-                            birthDate: body.birthDate,
-                            phone: body.phone,
-                            type: body.type
-                        };
-                        return UserActions.createCompanyUserSuccess({ company });
-                    }),
-                    catchError((error) => {
-                        return of(UserActions.createCompanyUserFailure({ error: 'Failed to create company user' }));
                     })
                 )
             )

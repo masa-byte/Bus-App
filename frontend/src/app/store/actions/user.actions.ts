@@ -56,9 +56,3 @@ export const deleteUserFailure = createAction('[Profile] Delete User Failure', p
 export const clearUserError = createAction('[User] Clear Error');
 
 export const setUserId = createAction('[User] Set User Id', props<{ userId: number }>());
-
-export const createCompanyUser = createAction('[User] Create Company User', props<{ company: User }>());
-
-export const createCompanyUserSuccess = createAction('[User] Create Company User Success', props<{ company: User }>());
-
-export const createCompanyUserFailure = createAction('[User] Create Company User Failure', props<{ error: string }>());

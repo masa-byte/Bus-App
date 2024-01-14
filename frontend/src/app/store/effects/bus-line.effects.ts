@@ -4,6 +4,7 @@ import { switchMap, map, catchError, of } from 'rxjs';
 import * as BusLineActions from '../actions/bus-line.actions';
 import { BusLine } from '../../bus-line/bus-line.model';
 import { BusLineService } from '../../bus-line/bus-line.service';
+import { mapToBusLine } from '../../utility/utility';
 
 @Injectable()
 export class BusLineEffects {
@@ -19,17 +20,7 @@ export class BusLineEffects {
                 this.busLineService.createBusLine(busLine).pipe(
                     map((response) => {
                         let body = response.body;
-                        let busLine: BusLine = {
-                            id: body.id,
-                            companyId: body.companyId,
-                            companyName: body.companyName,
-                            regularPriceFactor: body.regularPriceFactor,
-                            returnPriceFactor: body.returnPriceFactor,
-                            studentDiscount: body.studentDiscount,
-                            seniorDiscount: body.seniorDiscount,
-                            groupDiscount: body.groupDiscount,
-                            stops: body.stops
-                        };
+                        let busLine: BusLine = mapToBusLine(body);
 
                         return BusLineActions.addBusLineSuccess({ busLine: busLine });
                     }),
@@ -49,17 +40,7 @@ export class BusLineEffects {
                     map((response) => {
                         let body = response.body;
                         let allBusLines: BusLine[] = body.map((busLine: BusLine) => {
-                            return {
-                                id: busLine.id,
-                                companyId: busLine.companyId,
-                                companyName: busLine.companyName,
-                                regularPriceFactor: busLine.regularPriceFactor,
-                                returnPriceFactor: busLine.returnPriceFactor,
-                                studentDiscount: busLine.studentDiscount,
-                                seniorDiscount: busLine.seniorDiscount,
-                                groupDiscount: busLine.groupDiscount,
-                                stops: busLine.stops
-                            };
+                            return mapToBusLine(busLine)
                         });
 
                         return BusLineActions.loadBusLinesSuccess({ busLine: allBusLines });

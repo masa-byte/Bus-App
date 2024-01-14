@@ -23,18 +23,12 @@ export class BusLineFormComponent {
     id: '',
     companyId: '',
     companyName: '',
-    regularPriceFactor: 0,
-    returnPriceFactor: 0,
-    studentDiscount: 0,
-    seniorDiscount: 0,
-    groupDiscount: 0,
     stops: []
   };
 
   townsArr: Town[] = [];
 
   townFormGroup: FormGroup;
-  priceFormGroup: FormGroup;
 
   user: User | undefined = undefined;
   error$: Observable<string | null> = of();
@@ -53,14 +47,6 @@ export class BusLineFormComponent {
     });
     this.addTown();
     this.addTown();
-
-    this.priceFormGroup = this.fb.group({
-      regularPriceFactor: ['', Validators.required],
-      returnPriceFactor: ['', Validators.required],
-      studentDiscount: ['', Validators.required],
-      seniorDiscount: ['', Validators.required],
-      groupDiscount: ['', Validators.required]
-    });
   }
 
   ngOnInit(): void {
@@ -126,11 +112,6 @@ export class BusLineFormComponent {
   }
 
   createBusLine() {
-    this.busLine.regularPriceFactor = this.priceFormGroup.get('regularPriceFactor')!.value;
-    this.busLine.returnPriceFactor = this.priceFormGroup.get('returnPriceFactor')!.value;
-    this.busLine.studentDiscount = this.priceFormGroup.get('studentDiscount')!.value;
-    this.busLine.seniorDiscount = this.priceFormGroup.get('seniorDiscount')!.value;
-    this.busLine.groupDiscount = this.priceFormGroup.get('groupDiscount')!.value;
     this.busLine.companyId = this.user!.id;
     this.busLine.companyName = this.user!.name;
   }

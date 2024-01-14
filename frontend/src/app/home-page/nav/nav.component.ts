@@ -22,10 +22,6 @@ export class NavComponent {
     this.router.navigate(['/signUpUser']);
   }
 
-  continueAsGuest() {
-    this.router.navigate(['/mainPage', 'listCompanies']);
-  }
-
   openSnackBar(message: string) {
     this.snackBar.open(message, 'Okay', {
       duration: 5000,

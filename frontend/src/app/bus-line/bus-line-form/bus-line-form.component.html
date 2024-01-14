@@ -34,7 +34,7 @@
                         </div>
                     </div>
                     <div class="button-container">
-                        <button mat-button class="btn" type="button" matStepperPrevious>
+                        <button mat-button class="btn" type="button" (click)="back()">
                             Back
                         </button>
                         <button mat-button class="btn" type="button" matStepperNext>
@@ -43,46 +43,6 @@
                     </div>
                 </form>
             </mat-step>
-
-            <mat-step [stepControl]="priceFormGroup">
-                <ng-template matStepLabel> Price Calculation </ng-template>
-                <form [formGroup]="priceFormGroup">
-                    <mat-form-field appearance="fill" class="field">
-                        <mat-label>Regular Price Factor</mat-label>
-                        <input matInput formControlName="regularPriceFactor" />
-                    </mat-form-field>
-
-                    <mat-form-field appearance="fill" class="field">
-                        <mat-label>Return Price Factor</mat-label>
-                        <input matInput formControlName="returnPriceFactor" />
-                    </mat-form-field>
-
-                    <mat-form-field appearance="fill" class="field">
-                        <mat-label>Student Discount</mat-label>
-                        <input matInput formControlName="studentDiscount" />
-                    </mat-form-field>
-
-                    <mat-form-field appearance="fill" class="field">
-                        <mat-label>Senior Discount</mat-label>
-                        <input matInput formControlName="seniorDiscount" />
-                    </mat-form-field>
-
-                    <mat-form-field appearance="fill" class="field">
-                        <mat-label>Group Discount</mat-label>
-                        <input matInput formControlName="groupDiscount" />
-                    </mat-form-field>
-
-                    <div class="button-container">
-                        <button mat-button class="btn" type="button" matStepperPrevious>
-                            Back
-                        </button>
-                        <button mat-button class="btn" type="button" matStepperNext>
-                            Next
-                        </button>
-                    </div>
-                </form>
-            </mat-step>
-
             <mat-step>
                 <ng-template matStepLabel>Done</ng-template>
                 <div style="margin: 30px">

@@ -26,11 +26,24 @@
             <mat-label>Year established</mat-label>
             <input matInput [(ngModel)]="company.yearEstablished" required="true" #yearInput="ngModel" />
         </mat-form-field>
+        <mat-form-field appearance="fill" class="field">
+            <mat-label>Regular price factor</mat-label>
+            <input matInput [(ngModel)]="company.regularPriceFactor" required="true" #regularInput="ngModel" />
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="field">
+            <mat-label>Return price factor</mat-label>
+            <input matInput [(ngModel)]="company.returnPriceFactor" required="true" #returnInput="ngModel" />
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="field">
+            <mat-label>Discount</mat-label>
+            <input matInput [(ngModel)]="company.discount" required="true" #discountInput="ngModel" />
+        </mat-form-field>
 
         <div class="button-container">
             <button mat-raised-button class="btn" (click)="back()">Back</button>
             <button mat-raised-button class="btn" (click)="action()" [disabled]="
-          !nameInput.valid || !emailInput.valid || !phoneInput.valid || !passwordInput.valid || !yearInput.valid"> 
+          !nameInput.valid || !emailInput.valid || !phoneInput.valid || !passwordInput.valid 
+          || !yearInput.valid || !regularInput.valid || !returnInput.valid || !discountInput.valid"> 
           Create Company
             </button>
         </div>

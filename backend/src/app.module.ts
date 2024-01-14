@@ -11,7 +11,6 @@ import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './auth/guards/roles.guard';
 import { CompanyModule } from './company/company.module';
-import { UtilityModule } from './utility/utility.module';
 import { TownModule } from './town/town.module';
 import { BusLineModule } from './bus-line/bus-line.module';
 
@@ -23,7 +22,6 @@ import { BusLineModule } from './bus-line/bus-line.module';
     AuthModule,
     UserModule,
     CompanyModule,
-    UtilityModule,
     TownModule,
     BusLineModule
   ],

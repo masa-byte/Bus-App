@@ -19,6 +19,12 @@ export const loadCompaniesSuccess = createAction('[Company] Load Companies Succe
 
 export const loadCompaniesFailure = createAction('[Company] Load Companies Failure', props<{ error: string }>());
 
+export const createCompanyUser = createAction('[User] Create Company User', props<{ company: CompanyUser }>());
+
+export const createCompanyUserSuccess = createAction('[User] Create Company User Success', props<{ company: CompanyUser }>());
+
+export const createCompanyUserFailure = createAction('[User] Create Company User Failure', props<{ error: string }>());
+
 export const deleteCompany = createAction('[Company] Delete Company', props<{ id: string }>());
 
 export const deleteCompanySuccess = createAction('[Company] Delete Company Success', props<{ id: string }>());
