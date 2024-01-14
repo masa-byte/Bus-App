@@ -5,12 +5,12 @@ import { Neo4jService } from './my-neo4j/neo4j.service';
 @Injectable()
 export class AppService {
   constructor(
-    private readonly redisService: RedisService,
+    //private readonly redisService: RedisService,
     private readonly neo4jService: Neo4jService,
   ) { }
 
   redisPing() {
-    return this.redisService.ping();
+    //return this.redisService.ping();
   }
 
   async neo4jPing() {

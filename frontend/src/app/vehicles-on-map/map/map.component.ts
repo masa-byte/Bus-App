@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { LatLng, MapOptions, Marker, MarkerOptions, TileLayer } from 'leaflet';
+import { LatLng, Map, MapOptions, Marker, MarkerOptions, TileLayer } from 'leaflet';
 import { VehiclesOnMapService } from '../vehicles-on-map.service';
 
 @Component({
@@ -11,9 +11,9 @@ export class MapComponent {
 
   public options: MapOptions = {
     layers: [
-      new TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { minZoom: 7, attribution: '...', })
+      new TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { minZoom: 0, attribution: '...', })
     ],
-    zoom: 10,
+    zoom: 0,
     center: new LatLng(43.75, 20.1)
   };
 
@@ -23,9 +23,9 @@ export class MapComponent {
 
   constructor() {
 
-    this.redis.createEventSource().subscribe((messageData: any) => {
-      console.log(messageData);
-    });
+    // this.redis.createEventSource().subscribe((messageData: any) => {
+    //   console.log(messageData);
+    // });
 
     const newMarker = new Marker([43.75, 20.1]);
     newMarker.bindPopup(`Random marker ${Math.random() * 10}`);
@@ -45,4 +45,17 @@ export class MapComponent {
     }, 1000);
   }
 
+  public onMapReady(map: Map) {
+    console.log(map);
+  }
+
+  public onMapMoveEnd(event: any) {
+    // console.log(event);
+    // console.log(event.target.getCenter());
+    const zoom = event.target.getZoom();
+    const initialSquareSize = 40075016.685578488 / Math.pow(2, 1);
+    const squareSize = initialSquareSize / Math.pow(2, zoom - 1) / 1000;
+    const divWidthInMeters = squareSize * (Math.max(event.target._size.x, event.target._size.y) / 256);
+    console.log(divWidthInMeters);
+  }
 }

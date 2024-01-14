@@ -3,6 +3,8 @@
         leaflet 
         [leafletOptions]="options"
         [leafletLayers]="layers"
+        (leafletMapReady)="onMapReady($event)"
+        (leafletMapMoveEnd)="onMapMoveEnd($event)"
         >
     </div>
 </div>
