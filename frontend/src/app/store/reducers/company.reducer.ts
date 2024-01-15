@@ -18,12 +18,6 @@ export const initialState: CompanyState = companyAdapter.getInitialState({
 
 export const companyReducer = createReducer(
     initialState,
-    on(CompanyActions.loadCompaniesByPageIndexPageSize, (state) => {
-        return {
-            ...state,
-            loading: true
-        };
-    }),
     on(CompanyActions.loadTotalNumberOfCompaniesSuccess, (state, { totalNumberOfCompanies }) => {
         return {
             ...state,

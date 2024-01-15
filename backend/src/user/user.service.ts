@@ -42,7 +42,7 @@ export class UserService {
             ...user,
             dateCreated: new Date().toISOString(),
         };
-        const res = await this.neo4jService.write(`CREATE (n:User ${userToCreate}) RETURN n`)
+        const res = await this.neo4jService.write(`CREATE (n:User $userToCreate) RETURN n`, { userToCreate })
         return mapNeo4jNodeToRegularUser(res.records[0].get('n'))
     }
 
@@ -53,7 +53,7 @@ export class UserService {
 
     async updateUser(user: any): Promise<RegularUser | CompanyUser> {
         const { id, ...rest } = user
-        const res = await this.neo4jService.write(`MATCH (n) WHERE id(n) = ${id} SET n += ${rest} RETURN n`)
+        const res = await this.neo4jService.write(`MATCH (n) WHERE id(n) = ${id} SET n += $rest RETURN n`, { rest })
         return mapNeo4jNodeToUser(res.records[0].get('n'))
     }
 

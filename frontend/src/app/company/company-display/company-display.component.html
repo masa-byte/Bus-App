@@ -50,10 +50,5 @@
                 <mat-icon>delete</mat-icon>
             </button>
         </section>
-        <section class="section2" *ngIf="(user$ | async)!.type == 'user'">
-            <button mat-icon-button color="basic" (click)="checkAvailableTrips()">
-                <mat-icon>event_available</mat-icon>
-            </button>
-        </section>
     </mat-card-actions>
 </mat-card>

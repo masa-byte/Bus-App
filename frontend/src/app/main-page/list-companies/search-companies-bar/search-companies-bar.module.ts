@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SearchBarComponent } from './search-bar/search-bar.component';
+import { SearchCompaniesBarComponent } from './search-companies-bar.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
@@ -13,7 +13,7 @@ import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
   declarations: [
-    SearchBarComponent
+    SearchCompaniesBarComponent
   ],
   imports: [
     CommonModule,
@@ -29,7 +29,7 @@ import { MatRadioModule } from '@angular/material/radio';
     MatRadioModule,
   ],
   exports: [
-    SearchBarComponent
+    SearchCompaniesBarComponent
   ]
 })
-export class SearchBarModule { }
+export class SearchCompaniesBarModule { }

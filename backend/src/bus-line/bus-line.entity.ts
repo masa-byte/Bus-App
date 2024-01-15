@@ -7,10 +7,22 @@ export class BusLine {
     id: string;
 
     @Field()
+    busLineId: string;
+
+    @Field()
     companyId: string;
     
     @Field()
     companyName: string;
+
+    @Field()
+    price: number;
+
+    @Field()
+    distance: number;
+
+    @Field()
+    durationMinutes: number;
     
     @Field(() => [Town])
     stops: Town[];

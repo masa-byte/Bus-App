@@ -2,14 +2,14 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { FormControl } from '@angular/forms';
-import * as CompanyActions from '../../store/actions/company.actions';
+import * as CompanyActions from '../../../store/actions/company.actions';
 
 @Component({
-  selector: 'app-search-bar',
-  templateUrl: './search-bar.component.html',
-  styleUrls: ['./search-bar.component.scss']
+  selector: 'app-search-companies-bar',
+  templateUrl: './search-companies-bar.component.html',
+  styleUrls: ['./search-companies-bar.component.scss']
 })
-export class SearchBarComponent {
+export class SearchCompaniesBarComponent {
 
   searchText: string = '';
   searchControl = new FormControl();

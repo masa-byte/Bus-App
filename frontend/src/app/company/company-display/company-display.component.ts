@@ -29,8 +29,4 @@ export class CompanyDisplayComponent implements OnInit {
   deleteCompany() {
     this.companyDeleteRequest.emit(this.company!.id);
   }
-
-  checkAvailableTrips() {
-    // TO DO
-  }
 }

@@ -24,7 +24,7 @@ import { DeleteDialogModule } from '../delete-dialog/delete-profile.module';
 import { EditProfileModule } from '../user/edit-profile/edit-profile.module';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { CompanyModule } from '../company/company.module';
-import { SearchBarModule } from '../search-bar/search-bar.module';
+import { SearchCompaniesBarModule } from './list-companies/search-companies-bar/search-companies-bar.module';
 import { ListCompaniesComponent } from './list-companies/list-companies.component';
 
 @NgModule({
@@ -57,7 +57,7 @@ import { ListCompaniesComponent } from './list-companies/list-companies.componen
     DeleteDialogModule,
     MatPaginatorModule,
     CompanyModule,
-    SearchBarModule
+    SearchCompaniesBarModule
   ],
   exports: [NavMainPageComponent]
 })

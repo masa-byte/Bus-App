@@ -15,6 +15,11 @@ export const selectSelectedBusLineId = createSelector(
     (state) => state.selectedBusLineId
 );
 
+export const selectTotalNumberOfBusLines = createSelector(
+    selectBusLineState,
+    (state) => state.totalNumberOfBusLinesStartDestEndDest
+);
+
 export const selectBusLineLoading = createSelector(
     selectBusLineState,
     (state) => state.loading

@@ -13,6 +13,25 @@ export class BusLineEffects {
         private busLineService: BusLineService
     ) { }
 
+    loadTotalNumberOfBusLines$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(BusLineActions.loadTotalNumberOfBusLinesByStartDestEndDest),
+            switchMap(({ startDest, endDest }) =>
+                this.busLineService.getTotalNumberOfBusLinesByStartDestEndDest(startDest, endDest).pipe(
+                    map((response) => {
+                        let body = response.body;
+                        let totalNumberOfBusLines: number = body;
+
+                        return BusLineActions.loadTotalNumberOfBusLinesSuccess({ totalNumberOfBusLinesStartDestEndDest: totalNumberOfBusLines });
+                    }),
+                    catchError((error) => {
+                        return of(BusLineActions.loadTotalNumberOfBusLinesFailure({ error: 'Failed to load total number of busLines' }));
+                    })
+                )
+            )
+        )
+    );
+
     addBusLine$ = createEffect(() =>
         this.actions$.pipe(
             ofType(BusLineActions.addBusLine),
@@ -32,14 +51,18 @@ export class BusLineEffects {
         )
     );
 
-    loadBusLinesByStartDestEndDest$ = createEffect(() =>
+    loadBusLinesByStartDestEndDestPageIndexPageSize$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(BusLineActions.loadBusLinesByStartDestEndDest),
-            switchMap(({ startDest, endDest }) =>
-                this.busLineService.getBusLinesByStartDestEndDest(startDest, endDest).pipe(
+            ofType(BusLineActions.loadBusLinesByStartDestEndDestPageIndexPageSize),
+            switchMap(({ startDest, endDest, pageIndex, pageSize }) =>
+                this.busLineService.getBusLinesByStartDestEndDestPageIndexPageSize(startDest, endDest, pageIndex, pageSize).pipe(
                     map((response) => {
                         let body = response.body;
+                        console.log(body);
+                        let id: string = '0';
                         let allBusLines: BusLine[] = body.map((busLine: BusLine) => {
+                            busLine.id = id;
+                            id = +id + 1 + '';
                             return mapToBusLine(busLine)
                         });
 

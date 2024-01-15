@@ -21,6 +21,7 @@ import * as BusLineActions from '../../store/actions/bus-line.actions';
 export class BusLineFormComponent {
   busLine: BusLine = {
     id: '',
+    busLineId: '',
     companyId: '',
     companyName: '',
     stops: []

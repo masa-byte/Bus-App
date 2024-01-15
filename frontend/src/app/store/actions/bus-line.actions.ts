@@ -1,6 +1,5 @@
 import { createAction, props } from "@ngrx/store";
 import { BusLine } from "../../bus-line/bus-line.model";
-import { Town } from "../../town/town.model";
 
 export const getBusLine = createAction('[BusLine] Get BusLine', props<{ id: string }>());
 
@@ -16,7 +15,22 @@ export const deleteBusLineSuccess = createAction('[BusLine] Delete BusLine Succe
 
 export const deleteBusLineFailure = createAction('[BusLine] Delete BusLine Failure', props<{ error: string }>());
 
-export const loadBusLinesByStartDestEndDest = createAction('[BusLine] Load BusLines', props<{ startDest: Town, endDest: Town }>());
+export const loadBusLinesByStartDestEndDestPageIndexPageSize = createAction(
+    '[BusLine] Load BusLines',
+    props<{ startDest: number, endDest: number, pageIndex: number, pageSize: number }>()
+);
+
+export const loadTotalNumberOfBusLinesByStartDestEndDest = createAction(
+    '[BusLine] Load Total Number Of BusLines',
+    props<{ startDest: number, endDest: number }>()
+);
+
+export const loadTotalNumberOfBusLinesSuccess = createAction(
+    '[BusLine] Load Total Number Of BusLines Success',
+    props<{ totalNumberOfBusLinesStartDestEndDest: number }>()
+);
+
+export const loadTotalNumberOfBusLinesFailure = createAction('[BusLine] Load Total Number Of BusLines Failure', props<{ error: string }>());
 
 export const loadBusLinesSuccess = createAction('[BusLine] Load BusLines Success', props<{ busLine: BusLine[] }>());
 

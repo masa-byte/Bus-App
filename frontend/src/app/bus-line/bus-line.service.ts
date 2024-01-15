@@ -20,10 +20,22 @@ export class BusLineService {
     );
   }
 
-  getBusLinesByStartDestEndDest(startDest: Town, endDest: Town): Observable<HttpResponse<any>> {
+  getTotalNumberOfBusLinesByStartDestEndDest(startDestId: number, endDestId: number): Observable<HttpResponse<any>> {
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem('token'));
-    return this.http.get(url + '/bus-line' + '?startDest=' + startDest.id + '&endDest=' + endDest.id, 
-    { headers: headers, observe: 'response' });
+    return this.http.get(url + '/bus-line/total?startDestId=' + startDestId + '&endDestId=' + endDestId,
+      { headers: headers, observe: 'response' }
+    );
+  }
+
+  getBusLinesByStartDestEndDestPageIndexPageSize
+    (startDestId: number, endDestId: number, pageIndex: number, pageSize: number): Observable<HttpResponse<any>> {
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem('token'));
+    return this.http.get(url + '/bus-line' +
+      '?startDestId=' + startDestId +
+      '&endDestId=' + endDestId +
+      '&pageIndex=' + pageIndex +
+      '&pageSize=' + pageSize,
+      { headers: headers, observe: 'response' });
   }
 
   getBusLine(id: number): Observable<HttpResponse<any>> {

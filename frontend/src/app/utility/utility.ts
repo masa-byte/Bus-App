@@ -64,6 +64,7 @@ export function mapToTown(town: any): Town {
 export function mapToBusLine(busLine: any): BusLine {
     let newBusLine: BusLine = {
         id: busLine.id,
+        busLineId: busLine.busLineId,
         companyId: busLine.companyId,
         companyName: busLine.companyName,
         stops: busLine.stops,

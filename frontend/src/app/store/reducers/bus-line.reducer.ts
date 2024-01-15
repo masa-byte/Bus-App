@@ -8,6 +8,7 @@ export const busLineAdapter: EntityAdapter<BusLine> = createEntityAdapter<BusLin
 
 export const initialState: BusLineState = busLineAdapter.getInitialState({
     selectedBusLineId: null,
+    totalNumberOfBusLinesStartDestEndDest: 0,
     loading: false,
     error: '',
     sortAscending: true,
@@ -36,10 +37,16 @@ export const busLineReducer = createReducer(
             error: error
         };
     }),
-    on(BusLineActions.loadBusLinesByStartDestEndDest, (state) => {
+    on(BusLineActions.loadTotalNumberOfBusLinesSuccess, (state, { totalNumberOfBusLinesStartDestEndDest }) => {
         return {
             ...state,
-            loading: true
+            totalNumberOfBusLinesStartDestEndDest: totalNumberOfBusLinesStartDestEndDest
+        };
+    }),
+    on(BusLineActions.loadTotalNumberOfBusLinesFailure, (state, { error }) => {
+        return {
+            ...state,
+            error: error
         };
     }),
     on(BusLineActions.loadBusLinesSuccess, (state, { busLine }) => {

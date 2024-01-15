@@ -41,7 +41,7 @@ export class CompanyService {
             nextBusLineId: '0'
         };
 
-        const res = await this.neo4jService.write(`CREATE (n:Company ${companyToCreate}) RETURN n`)
+        const res = await this.neo4jService.write(`CREATE (n:Company $companyToCreate) RETURN n`, { companyToCreate })
         return mapNeo4jNodeToCompanyUser(res.records[0].get('n'))
     }
 

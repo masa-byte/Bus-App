@@ -88,7 +88,7 @@ export class Neo4jService implements OnModuleDestroy, OnModuleInit {
                     parseFloat(city2.lat),
                     parseFloat(city2.lng)
                 );
-                const price = Math.round(parseFloat(distance) * 3);
+                const price = Math.round(parseFloat(distance) * 5);
                 console.log(`${city1.city} - ${city2.city} = ${distance} km = ${price} RSD`)
                 const session = this.getWriteSession();
                 await session.run(`

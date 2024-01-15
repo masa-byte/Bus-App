@@ -8,6 +8,7 @@ import * as CompanyActions from '../../store/actions/company.actions';
 import { selectFilteredCompanies, selectTotalNumberOfCompanies } from '../../store/selectors/company.selector';
 import { CompanyUser } from '../../user/company-user.model';
 import { DeleteDialogComponent } from '../../delete-dialog/delete-dialog.component';
+import * as BusLineActions from '../../store/actions/bus-line.actions';
 
 @Component({
   selector: 'app-list-companies',
@@ -46,6 +47,16 @@ export class ListCompaniesComponent implements OnInit, OnDestroy {
     );
     this.store.dispatch(CompanyActions.loadTotalNumberOfCompanies());
     this.store.dispatch(CompanyActions.loadCompaniesByPageIndexPageSize({ pageIndex: this.pageIndex, pageSize: this.pageSize }));
+
+    this.store.dispatch(BusLineActions.loadTotalNumberOfBusLinesByStartDestEndDest({ startDest: 0, endDest: 3 }));
+    this.store.dispatch(BusLineActions.loadBusLinesByStartDestEndDestPageIndexPageSize(
+      {
+        startDest: 0,
+        endDest: 3,
+        pageIndex: 0,
+        pageSize: 10
+      }
+    ));
   }
 
   ngOnDestroy(): void {
