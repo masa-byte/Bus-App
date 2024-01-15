@@ -1,0 +1,102 @@
+.dialog-header {
+    font-size: 28px;
+    font-weight: bolder;
+    font-style: italic;
+    color: white;
+    text-shadow: 0 0 15px rgba(216, 220, 224, 0.97);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+
+p {
+    font-size: 15px;
+    color: white;
+    text-shadow: 0 0 15px rgba(216, 220, 224, 0.97);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+
+h4 {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+
+mat-dialog-content {
+    overflow: initial;
+    display: flex;
+    flex-direction: column;
+    max-height: 95vh;
+}
+
+.passengerDetails {
+    display: flex;
+    justify-content: space-between;
+}
+
+table {
+    width: 100%;
+    overflow: auto;
+}
+
+tr.detail-row {
+    height: 0;
+}
+
+tr.element-row:not(.expanded-row):hover {
+    background: rgb(193, 194, 221);
+}
+
+tr.element-row:not(.expanded-row):active {
+    background: whitesmoke;
+}
+
+.element-row td {
+    border-bottom-width: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+
+.mat-mdc-header-row {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+
+.element-detail {
+    overflow: hidden;
+    display: flex;
+}
+
+.element-description {
+    padding: 8px;
+    font-weight: lighter;
+    margin: 8px 0;
+}
+
+.element-description-attribution {
+    opacity: 0.5;
+}
+
+.customBtn {
+    width: 35%;
+    background-color: #323875 !important;
+    color: white !important;
+    font-weight: bolder;
+    font-size: large;
+    font-style: italic;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+
+.mdc-dialog__actions {
+    justify-content: space-between !important;
+}
+
+::ng-deep {
+    .mat-mdc-dialog-container {
+        --mdc-dialog-container-color: transparent;
+        background-image: linear-gradient(to bottom, #323875, #6A90D1) !important;
+        border-radius: 7px;
+    }
+
+    .mat-mdc-table {
+        background-color: transparent !important;
+    }
+
+    .mat-mdc-checkbox label {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    }
+}

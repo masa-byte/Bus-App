@@ -27,7 +27,7 @@ export class AppComponent {
         if (rememberMe) {
           const id = parseInt(savedUserId as string);
           this.store.dispatch(UserActions.setUserId({ userId: id }));
-          this.router.navigate(['mainPage', 'listCompanies']);
+          this.router.navigate(['mainPage', 'listBusLines']);
         }
         else {
           localStorage.removeItem('userId');

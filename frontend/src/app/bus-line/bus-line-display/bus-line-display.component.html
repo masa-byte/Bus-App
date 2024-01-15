@@ -1,0 +1,55 @@
+<mat-card class="card">
+    <mat-card-header>
+        <div mat-card-avatar class="icon"></div>
+        <mat-card-title class="cursor-pointer">
+            Bus Line {{ busLine!.busLineId }}
+        </mat-card-title>
+        <mat-card-subtitle>
+            Company {{ busLine!.companyName }}
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-divider></mat-divider>
+        <div class="row">
+            <span class="label">Start town:</span>
+            <span class="text">{{ busLine!.stops[0].name }}</span>
+        </div>
+        <div class="row">
+            <span class="label">End town:</span>
+            <span class="text">{{ busLine!.stops.at(-1)!.name }}</span>
+        </div>
+        <div class="row">
+            <span class="label">Distance:</span>
+            <span class="text">{{ busLine!.distance }} km</span>
+        </div>
+        <div class="row">
+            <span class="label">Duration:</span>
+            <span class="text">{{ formatDuration(busLine!.durationMinutes) }}</span>
+        </div>
+        <div class="row">
+            <span class="label">One way price:</span>
+            <span class="text">{{ busLine!.oneWayPrice }} RSD</span>
+        </div>
+        <div class="row">
+            <span class="label">Return price:</span>
+            <span class="text">{{ busLine!.returnPrice }} RSD</span>
+        </div>
+        <div class="row">
+            <span class="label">Discount:</span>
+            <span class="text">{{ busLine!.discount }}%</span>
+        </div>
+        <mat-divider></mat-divider>
+    </mat-card-content>
+    <mat-card-actions>
+        <section class="section2" *ngIf="(user$ | async)!.type != 'company'">
+            <button mat-icon-button color="basic" (click)="buyTicket()">
+                <mat-icon>event_available</mat-icon>
+            </button>
+        </section>
+        <section class="section2" *ngIf="(user$ | async)!.type == 'company'">
+            <button mat-icon-button color="basic" (click)="deleteCompany()">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </section>
+    </mat-card-actions>
+</mat-card>

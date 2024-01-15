@@ -26,13 +26,16 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { CompanyModule } from '../company/company.module';
 import { SearchCompaniesBarModule } from './list-companies/search-companies-bar/search-companies-bar.module';
 import { ListCompaniesComponent } from './list-companies/list-companies.component';
-
+import { ListBusLinesComponent } from './list-bus-lines/list-bus-lines.component';
+import { SearchBusLinesBarModule } from './list-bus-lines/search-bus-lines-bar/search-bus-lines-bar.module';
+import { BusLineModule } from '../bus-line/bus-line.module';
 @NgModule({
   declarations: [
     MainPageComponent,
     NavMainPageComponent,
     ListCompaniesComponent,
     ProfileComponent,
+    ListBusLinesComponent,
   ],
   imports: [
     CommonModule,
@@ -57,7 +60,9 @@ import { ListCompaniesComponent } from './list-companies/list-companies.componen
     DeleteDialogModule,
     MatPaginatorModule,
     CompanyModule,
-    SearchCompaniesBarModule
+    BusLineModule,
+    SearchCompaniesBarModule,
+    SearchBusLinesBarModule
   ],
   exports: [NavMainPageComponent]
 })

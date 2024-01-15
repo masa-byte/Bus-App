@@ -67,6 +67,11 @@ export function mapToBusLine(busLine: any): BusLine {
         busLineId: busLine.busLineId,
         companyId: busLine.companyId,
         companyName: busLine.companyName,
+        distance: busLine.distance,
+        durationMinutes: busLine.durationMinutes,
+        oneWayPrice: busLine.oneWayPrice,
+        returnPrice: busLine.returnPrice,
+        discount: busLine.discount,
         stops: busLine.stops,
     };
     return newBusLine;

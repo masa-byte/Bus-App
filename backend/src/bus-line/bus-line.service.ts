@@ -12,13 +12,17 @@ export class BusLineService {
 
   async getTotalBusLinesByStartDestEndDest(startDestId: number, endDestId: number): Promise<number> {
     const query = `
-    MATCH (start:Town)-[rel:BUS_LINE*]-(end:Town)
+    MATCH p = (start:Town)-[rel:BUS_LINE*]->(end:Town)
     WHERE id(start) = ${startDestId} AND id(end) = ${endDestId}
+    WITH relationships(p) as relationships, nodes(p) as towns, start, end
+    UNWIND relationships as rel
+    WITH rel, start, end, towns
+    WHERE ALL(r IN relationships WHERE r.busLineId = rel.busLineId AND r.companyName = rel.companyName AND r.companyId = rel.companyId)
     with DISTINCT {
-    busLineId: rel[0].busLineId,
-    companyName: rel[0].companyName,
-    companyId: rel[0].companyId
-    } AS line
+        busLineId: rel.busLineId,
+        companyName: rel.companyName,
+        companyId: rel.companyId
+        } AS line
     return COUNT(line) AS totalBusLines
   `;
     const res = await this.neo4jService.read(query)
@@ -35,10 +39,18 @@ export class BusLineService {
   async getBusLinesByStartDestEndDestPageIndexPageSize
     (startDestId: number, endDestId: number, pageIndex: number, pageSize: number): Promise<BusLine[]> {
     const query = `
-    MATCH (start:Town)-[rel:BUS_LINE*]-(end:Town)
+    MATCH p = (start:Town)-[rel:BUS_LINE*]->(end:Town)
     WHERE id(start) = ${startDestId} AND id(end) = ${endDestId}
-    UNWIND rel as busLine
-    RETURN DISTINCT busLine.busLineId as busLineId, busLine.companyName as companyName, busLine.companyId as companyId
+    WITH relationships(p) as relationships, nodes(p) as towns, start, end
+    UNWIND relationships as rel
+    WITH rel, start, end, towns
+    WHERE ALL(r IN relationships WHERE r.busLineId = rel.busLineId AND r.companyName = rel.companyName AND r.companyId = rel.companyId)
+    with DISTINCT {
+        busLineId: rel.busLineId,
+        companyName: rel.companyName,
+        companyId: rel.companyId
+        } AS line
+    return line.busLineId as busLineId, line.companyId as companyId, line.companyName as companyName
     SKIP ${pageIndex * pageSize} LIMIT ${pageSize}
   `;
     const res = await this.neo4jService.read(query)
@@ -52,27 +64,28 @@ export class BusLineService {
       busLine.busLineId = record.get('busLineId');
       busLine.companyName = record.get('companyName');
       busLine.companyId = record.get('companyId');
+      busLine.distance = 0;
+      busLine.oneWayPrice = 0;
+      busLine.returnPrice = 0;
+      busLine.discount = 0;
+      busLine.durationMinutes = 0;
       return busLine;
     })
 
     for (let busLine of busLines) {
       let query = `
-      MATCH p = (start:Town)-[r:BUS_LINE*]-(end:Town)
+      MATCH p = (start:Town)-[r:BUS_LINE* {busLineId:'${busLine.busLineId}', companyId: '${busLine.companyId}'}]->(end:Town)
       WHERE id(start) = ${startDestId} AND id(end) = ${endDestId}
       WITH relationships(p) as relationships, nodes(p) as towns, start, end
       UNWIND relationships as rel
       WITH rel, towns
-      WHERE rel.companyId = '${busLine.companyId}' and rel.busLineId = '${busLine.busLineId}'
       UNWIND towns AS town
       RETURN DISTINCT town
     `;
       const res = await this.neo4jService.read(query)
 
       busLine.stops = res.records.map(record => mapNeo4jNodeToTown(record.get('town')))
-      busLine.distance = 0;
-      busLine.price = 0;
-      busLine.durationMinutes = 0;
-
+      
       for (let i = 0; i < busLine.stops.length - 1; i++) {
         query = `
         MATCH p = (t1:Town)-[r:CONNECTS]-(t2:Town) 
@@ -82,12 +95,25 @@ export class BusLineService {
         const res = await this.neo4jService.read(query)
         res.records.map(record => {
           busLine.distance += +record.get('km');
-          busLine.price += record.get('price');
+          busLine.oneWayPrice += record.get('price');
         })
       }
-
+      busLine.distance = Math.round(busLine.distance);
+      
       const kmPerMinute = 1.33; // equals to 80 km/h
       busLine.durationMinutes = Math.round(busLine.distance / kmPerMinute);
+
+      query = `
+      MATCH (n:Company) WHERE id(n) = ${busLine.companyId}
+      RETURN n.discount AS discount, n.regularPriceFactor AS regularPriceFactor, n.returnPriceFactor AS returnPriceFactor
+      `;
+
+      const res2 = await this.neo4jService.read(query)
+      res2.records.map(record => {
+        busLine.discount += +record.get('discount');
+        busLine.returnPrice = Math.round(busLine.oneWayPrice * record.get('returnPriceFactor'));
+        busLine.oneWayPrice *= Math.round(record.get('regularPriceFactor'));
+      })
     }
     return busLines;
   }

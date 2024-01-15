@@ -1,0 +1,73 @@
+<div class="search-filter-container">
+    <mat-form-field appearance="fill">
+        <mat-label>Search</mat-label>
+        <input matInput [(ngModel)]="searchText" [formControl]="searchControl" placeholder="Search" />
+        <button mat-button matPrefix [matMenuTriggerFor]="filterMenu">
+            <mat-icon>filter_list</mat-icon>
+            Filters
+        </button>
+    </mat-form-field>
+
+    <div class="destination-container">
+        <mat-form-field appearance="fill" class="field">
+            <mat-label>Start</mat-label>
+            <mat-select [(ngModel)]="startDestId" required="true" #startInput="ngModel">
+                <mat-option *ngFor="let town of towns" [value]="town.id">
+                    {{town.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="field">
+            <mat-label>End</mat-label>
+            <mat-select [(ngModel)]="endDestId" required="true" #endInput="ngModel">
+                <mat-option *ngFor="let town of towns" [value]="town.id">
+                    {{town.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <button class="search-button" matSuffix (click)="searchByDestinations()" [disabled]="!startInput.valid || !endInput.valid">
+            <mat-icon>search</mat-icon>
+        </button>
+    </div>
+
+    <mat-menu #filterMenu="matMenu">
+        <div class="menu-group">
+            <h3>Sort by</h3>
+            <mat-radio-group [(ngModel)]="selectedParameter" aria-label="Select an option">
+                <mat-radio-button (click)="$event.stopPropagation()" value="distance">
+                    Distance
+                </mat-radio-button>
+                <mat-radio-button (click)="$event.stopPropagation()" value="durationMinutes">
+                    Duration in minutes
+                </mat-radio-button>
+                <mat-radio-button (click)="$event.stopPropagation()" value="oneWayPrice">
+                    One way price
+                </mat-radio-button>
+                <mat-radio-button (click)="$event.stopPropagation()" value="returnPrice">
+                    Return price
+                </mat-radio-button>
+                <mat-radio-button (click)="$event.stopPropagation()" value="discount">
+                    Discount
+                </mat-radio-button>
+            </mat-radio-group>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="menu-group">
+            <h3>Order</h3>
+            <mat-radio-group [(ngModel)]="selectedOrder" aria-label="Select an option">
+                <mat-radio-button (click)="$event.stopPropagation()" value="asc">
+                    Ascending
+                </mat-radio-button>
+                <mat-radio-button (click)="$event.stopPropagation()" value="desc">
+                    Descending
+                </mat-radio-button>
+            </mat-radio-group>
+        </div>
+        <mat-divider></mat-divider>
+        <button class="applyFilters" mat-button (click)="searchByText()">
+            Apply Filters
+        </button>
+    </mat-menu>
+</div>

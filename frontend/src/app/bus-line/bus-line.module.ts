@@ -7,8 +7,6 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatStepperModule } from '@angular/material/stepper';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -20,10 +18,13 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { BackgroundPictureModule } from '../background-picture/background-picture.module';
+import { BusLineDisplayComponent } from './bus-line-display/bus-line-display.component';
+import { TicketModule } from '../ticket/ticket.module';
 
 @NgModule({
   declarations: [
-    BusLineFormComponent
+    BusLineFormComponent,
+    BusLineDisplayComponent
   ],
   imports: [
     CommonModule,
@@ -40,14 +41,16 @@ import { BackgroundPictureModule } from '../background-picture/background-pictur
     MatSlideToggleModule,
     MatStepperModule,
     ReactiveFormsModule,
-    MatNativeDateModule,
-    MatDatepickerModule,
     MatRadioModule,
     MatMenuModule, 
     MatGridListModule,
     MatListModule,
     MatCheckboxModule,
-    BackgroundPictureModule
+    BackgroundPictureModule,
+    TicketModule
+  ],
+  exports: [
+    BusLineDisplayComponent
   ]
 })
 export class BusLineModule { }

@@ -24,7 +24,12 @@ export class BusLineFormComponent {
     busLineId: '',
     companyId: '',
     companyName: '',
-    stops: []
+    stops: [],
+    distance: 0,
+    durationMinutes: 0,
+    oneWayPrice: 0,
+    returnPrice: 0,
+    discount: 0
   };
 
   townsArr: Town[] = [];
@@ -100,14 +105,12 @@ export class BusLineFormComponent {
     this.store.dispatch(BusLineActions.clearBusLineError());
     this.store.dispatch(BusLineActions.addBusLine({ busLine: this.busLine }));
 
-    console.log(this.busLine);
-
     this.errorSubscription = this.error$.subscribe((error) => {
       if (error)
         this.openSnackBar(error);
       else {
         this.openSnackBar("Bus Line successfully added!");
-        this.router.navigate(['mainPage', 'listItems']);
+        this.router.navigate(['mainPage', 'listBusLines']);
       }
     });
   }

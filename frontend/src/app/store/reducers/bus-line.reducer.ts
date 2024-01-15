@@ -20,7 +20,11 @@ export const initialState: BusLineState = busLineAdapter.getInitialState({
 export const busLineReducer = createReducer(
     initialState,
     on(BusLineActions.addBusLineSuccess, (state, { busLine }) => {
-        return busLineAdapter.addOne(busLine, state);
+        return {
+            ...state,
+            loading: false,
+            error: ''
+        };
     }),
     on(BusLineActions.addBusLineFailure, (state, { error }) => {
         return {

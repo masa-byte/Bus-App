@@ -16,8 +16,8 @@ export class BusLineEffects {
     loadTotalNumberOfBusLines$ = createEffect(() =>
         this.actions$.pipe(
             ofType(BusLineActions.loadTotalNumberOfBusLinesByStartDestEndDest),
-            switchMap(({ startDest, endDest }) =>
-                this.busLineService.getTotalNumberOfBusLinesByStartDestEndDest(startDest, endDest).pipe(
+            switchMap(({ startDestId, endDestId }) =>
+                this.busLineService.getTotalNumberOfBusLinesByStartDestEndDest(startDestId, endDestId).pipe(
                     map((response) => {
                         let body = response.body;
                         let totalNumberOfBusLines: number = body;
@@ -54,11 +54,10 @@ export class BusLineEffects {
     loadBusLinesByStartDestEndDestPageIndexPageSize$ = createEffect(() =>
         this.actions$.pipe(
             ofType(BusLineActions.loadBusLinesByStartDestEndDestPageIndexPageSize),
-            switchMap(({ startDest, endDest, pageIndex, pageSize }) =>
-                this.busLineService.getBusLinesByStartDestEndDestPageIndexPageSize(startDest, endDest, pageIndex, pageSize).pipe(
+            switchMap(({ startDestId, endDestId, pageIndex, pageSize }) =>
+                this.busLineService.getBusLinesByStartDestEndDestPageIndexPageSize(startDestId, endDestId, pageIndex, pageSize).pipe(
                     map((response) => {
                         let body = response.body;
-                        console.log(body);
                         let id: string = '0';
                         let allBusLines: BusLine[] = body.map((busLine: BusLine) => {
                             busLine.id = id;

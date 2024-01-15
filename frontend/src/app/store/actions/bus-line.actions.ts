@@ -17,12 +17,12 @@ export const deleteBusLineFailure = createAction('[BusLine] Delete BusLine Failu
 
 export const loadBusLinesByStartDestEndDestPageIndexPageSize = createAction(
     '[BusLine] Load BusLines',
-    props<{ startDest: number, endDest: number, pageIndex: number, pageSize: number }>()
+    props<{ startDestId: number, endDestId: number, pageIndex: number, pageSize: number }>()
 );
 
 export const loadTotalNumberOfBusLinesByStartDestEndDest = createAction(
     '[BusLine] Load Total Number Of BusLines',
-    props<{ startDest: number, endDest: number }>()
+    props<{ startDestId: number, endDestId: number }>()
 );
 
 export const loadTotalNumberOfBusLinesSuccess = createAction(
@@ -36,7 +36,7 @@ export const loadBusLinesSuccess = createAction('[BusLine] Load BusLines Success
 
 export const loadBusLinesFailure = createAction('[BusLine] Load BusLines Failure', props<{ error: string }>());
 
-export const selectBusLine = createAction('[BusLine] Select BusLine', props<{ id: number }>());
+export const selectBusLine = createAction('[BusLine] Select BusLine', props<{ id: string }>());
 
 export const clearBusLineError = createAction('[BusLine] Clear Error');
 

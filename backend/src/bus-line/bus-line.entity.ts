@@ -16,7 +16,13 @@ export class BusLine {
     companyName: string;
 
     @Field()
-    price: number;
+    oneWayPrice: number;
+
+    @Field()
+    returnPrice: number;
+
+    @Field()
+    discount: number;
 
     @Field()
     distance: number;

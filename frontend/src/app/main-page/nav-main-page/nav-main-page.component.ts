@@ -39,7 +39,7 @@ export class NavMainPageComponent implements OnInit, OnDestroy {
   }
 
   openMainPage() {
-    this.router.navigate(['mainPage', 'listCompanies']);
+    this.router.navigate(['mainPage', 'listBusLines']);
   }
 
   openProfile() {
