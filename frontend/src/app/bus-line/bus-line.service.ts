@@ -4,6 +4,7 @@ import { BusLine } from './bus-line.model';
 import { Observable } from 'rxjs';
 import { url } from '../../environment/environment';
 import { Town } from '../town/town.model';
+import { BusLineDepartureTimes } from './bus-line-departure-times.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,14 @@ export class BusLineService {
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem('token'));
     return this.http.post(url + '/bus-line',
       { busLine },
+      { headers: headers, observe: 'response' }
+    );
+  }
+
+  createBusLineDepartureTimes(busLineDepartureTimes: BusLineDepartureTimes): Observable<HttpResponse<any>> {
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem('token'));
+    return this.http.post(url + '/bus-line/departure-times',
+      { busLineDepartureTimes },
       { headers: headers, observe: 'response' }
     );
   }

@@ -1,3 +1,4 @@
+import { BusLineDepartureTimes } from "src/bus-line/bus-line-departure-times.entity";
 import { Town } from "src/town/town.entity";
 import { CompanyUser } from "src/user/company-user.entity";
 import { RegularUser } from "src/user/regular-user.entity";
@@ -51,4 +52,12 @@ export function mapNeo4jNodeToTown(node: any): Town {
     town.latitude = node.properties.latitude;
     town.longitude = node.properties.longitude;
     return town;
+}
+
+export function mapNeo4jNodeToBusLineDepartureTime(node: any): BusLineDepartureTimes {
+    const busLineDepartureTime = new BusLineDepartureTimes();
+    busLineDepartureTime.id = node.identity.toString();
+    busLineDepartureTime.departureTimes = node.properties.departureTimes;
+    busLineDepartureTime.capacities = node.properties.capacities;
+    return busLineDepartureTime;
 }

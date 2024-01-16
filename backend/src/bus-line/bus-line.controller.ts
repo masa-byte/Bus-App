@@ -52,6 +52,16 @@ export class BusLineController {
         }
     }
 
+    @Post('departure-times')
+    async createBusLineDepartureTimes(@Body('busLineDepartureTimes') busLineDepartureTimes: any) {
+        try {
+            const res = await this.busLineService.createBusLineDepartureTimes(busLineDepartureTimes);
+            return res
+        } catch (error) {
+            return HttpStatus.INTERNAL_SERVER_ERROR
+        }
+    }
+
     @Delete(':busLineId/:companyId')
     async deleteBusLine(@Param('busLineId') busLineId: string, @Param('companyId') companyId: string) {
         try {

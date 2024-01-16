@@ -1,3 +1,4 @@
+import { BusLineDepartureTimes } from "../bus-line/bus-line-departure-times.model";
 import { BusLine } from "../bus-line/bus-line.model";
 import { Town } from "../town/town.model";
 import { CompanyUser } from "../user/company-user.model";
@@ -75,4 +76,16 @@ export function mapToBusLine(busLine: any): BusLine {
         stops: busLine.stops,
     };
     return newBusLine;
+}
+
+export function mapToBusLineDepartureTimes(busLineDepartureTimes: any): BusLineDepartureTimes {
+    let newBusLineDepartureTimes: BusLineDepartureTimes = {
+        id: busLineDepartureTimes.id,
+        busLineId: busLineDepartureTimes.busLineId,
+        companyId: busLineDepartureTimes.companyId,
+        companyName: busLineDepartureTimes.companyName,
+        departureTimes: busLineDepartureTimes.departureTimes,
+        capacities: busLineDepartureTimes.capacities,
+    };
+    return newBusLineDepartureTimes;
 }

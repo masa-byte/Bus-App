@@ -38,6 +38,10 @@ export class NavMainPageComponent implements OnInit, OnDestroy {
     this.router.navigate(['busLineForm']);
   }
 
+  addNewBusLineTime() {
+    this.router.navigate(['busLineTimeForm']);
+  }
+
   openMainPage() {
     this.router.navigate(['mainPage', 'listBusLines']);
   }

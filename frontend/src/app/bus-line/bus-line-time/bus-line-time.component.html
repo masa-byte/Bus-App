@@ -1,0 +1,80 @@
+<div class="container">
+    <div class="main-div">
+        <mat-stepper orientation="vertical" [linear]="true" #stepper>
+            <mat-step [stepControl]="busLineTimeFormGroup">
+                <form [formGroup]="busLineTimeFormGroup">
+                    <ng-template matStepLabel> Departure Time For Bus Line </ng-template>
+
+                    <mat-form-field appearance="fill" class="field">
+                        <mat-label>Bus Line</mat-label>
+                        <mat-select formControlName="busLineId">
+                            <mat-option *ngFor="let bl of busLineIds" [value]="bl">
+                                {{ bl }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill" class="field">
+                        <input matInput placeholder="Bus capacity" type="number" min=1 value="10" formControlName="capacity" />        
+                    </mat-form-field>
+
+                    <div formArrayName="departureTimes">
+                        <div *ngFor="let departureTime of departureTimes.controls; let i=index">
+                            <div [formGroupName]="i">
+                                <h3 style="margin-top: 10px">Departure Time {{ i + 1 }}</h3>
+
+                                <mat-form-field appearance="fill" class="field">
+                                    <div class="24hr-example">
+                                        <input matInput placeholder="24hr format" aria-label="24hr format"
+                                            [ngxTimepicker]="fullTime" [format]="24" readonly formControlName="dt">
+                                        <ngx-material-timepicker #fullTime
+                                            [enableKeyboardInput]="true"></ngx-material-timepicker>
+                                    </div>
+                                </mat-form-field>
+
+                                <div>
+                                    <button mat-button class="btn" (click)="removeDepartureTime(i)">
+                                        Remove
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="add-button">
+                            <div class="center-container">
+                                <button mat-icon-button type="button" color="basic"
+                                    (click)="addDepartureTime()">
+                                    <mat-icon>add</mat-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="button-container">
+                        <button mat-button class="btn" type="button" (click)="back()">
+                            Back
+                        </button>
+                        <button mat-button class="btn" type="button" matStepperNext>
+                            Next
+                        </button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step>
+                <ng-template matStepLabel>Done</ng-template>
+                <div style="margin: 30px">
+                    <h2>This bus line departure times are ready!</h2>
+                    <div class="button-container">
+                        <button mat-button class="btn" type="button" matStepperPrevious>
+                            Back
+                        </button>
+                        <button mat-raised-button class="btn" type="submit" (click)="action()">
+                            Save
+                        </button>
+                    </div>
+                </div>
+            </mat-step>
+        </mat-stepper>
+    </div>
+</div>
+<app-background-picture [src]="'assets/map.jpg'"></app-background-picture>

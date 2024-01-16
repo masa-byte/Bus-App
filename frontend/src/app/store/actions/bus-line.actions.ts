@@ -1,5 +1,6 @@
 import { createAction, props } from "@ngrx/store";
 import { BusLine } from "../../bus-line/bus-line.model";
+import { BusLineDepartureTimes } from "../../bus-line/bus-line-departure-times.model";
 
 export const getBusLine = createAction('[BusLine] Get BusLine', props<{ id: string }>());
 
@@ -8,6 +9,21 @@ export const addBusLine = createAction('[BusLine] Add BusLine', props<{ busLine:
 export const addBusLineSuccess = createAction('[BusLine] Add BusLine Success', props<{ busLine: BusLine }>());
 
 export const addBusLineFailure = createAction('[BusLine] Add BusLine Failure', props<{ error: string }>());
+
+export const addBusLineDepartureTimes = createAction(
+    '[BusLine] Add BusLine Departure Times',
+    props<{ busLineDepartureTimes: BusLineDepartureTimes }>()
+);
+
+export const addBusLineDepartureTimesSuccess = createAction(
+    '[BusLine] Add BusLine Departure Times Success',
+    props<{ busLineDepartureTimes: BusLineDepartureTimes }>()
+);
+
+export const addBusLineDepartureTimesFailure = createAction(
+    '[BusLine] Add BusLine Departure Times Failure',
+    props<{ error: string }>()
+);
 
 export const deleteBusLine = createAction(
     '[BusLine] Delete BusLine',

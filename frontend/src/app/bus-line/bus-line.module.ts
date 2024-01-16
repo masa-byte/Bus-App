@@ -20,11 +20,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { BackgroundPictureModule } from '../background-picture/background-picture.module';
 import { BusLineDisplayComponent } from './bus-line-display/bus-line-display.component';
 import { TicketModule } from '../ticket/ticket.module';
+import { BusLineTimeComponent } from './bus-line-time/bus-line-time.component';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 @NgModule({
   declarations: [
     BusLineFormComponent,
     BusLineDisplayComponent,
+    BusLineTimeComponent,
   ],
   imports: [
     CommonModule,
@@ -42,12 +45,13 @@ import { TicketModule } from '../ticket/ticket.module';
     MatStepperModule,
     ReactiveFormsModule,
     MatRadioModule,
-    MatMenuModule, 
+    MatMenuModule,
     MatGridListModule,
     MatListModule,
     MatCheckboxModule,
     BackgroundPictureModule,
-    TicketModule
+    TicketModule,
+    NgxMaterialTimepickerModule
   ],
   exports: [
     BusLineDisplayComponent

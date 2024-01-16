@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { Neo4jService } from 'src/my-neo4j/neo4j.service';
 import { BusLine } from './bus-line.entity';
-import { mapNeo4jNodeToTown } from 'src/utility/utility';
+import { mapNeo4jNodeToBusLineDepartureTime, mapNeo4jNodeToTown } from 'src/utility/utility';
+import { BusLineDepartureTimes } from './bus-line-departure-times.entity';
 
 @Injectable()
 export class BusLineService {
@@ -144,10 +145,44 @@ export class BusLineService {
     return res.records[0].get('nextBusLineId');
   }
 
+  async createBusLineDepartureTimes(busLineDepartureTimes: any): Promise<BusLineDepartureTimes> {
+
+    await this.deleteBusLineDepartureTimes(busLineDepartureTimes.busLineId, busLineDepartureTimes.companyId);
+
+    let departureTimesToCreate = {
+      departureTimes: busLineDepartureTimes.departureTimes,
+      capacities: busLineDepartureTimes.capacities,
+      dateCreated: new Date().toISOString(),
+    };
+
+    const res = await this.neo4jService.write(`CREATE (n:DepartureTimes $departureTimesToCreate) RETURN n`, { departureTimesToCreate })
+    const depTimeId = res.records[0].get('n').identity.toString();
+
+    const query = `
+    MATCH (c:Company), (dt:DepartureTimes) WHERE id(c) = ${busLineDepartureTimes.companyId} AND id(dt) = ${depTimeId} 
+      CREATE (c)-[r:TIMETABLE {busLineId: '${busLineDepartureTimes.busLineId}'}]->(dt)`;
+
+    const res2 = await this.neo4jService.write(query);
+    const toReturn = mapNeo4jNodeToBusLineDepartureTime(res2.records[0].get('n'));
+    toReturn.busLineId = busLineDepartureTimes.busLineId;
+    toReturn.companyId = busLineDepartureTimes.companyId;
+    toReturn.companyName = busLineDepartureTimes.companyName;
+    return toReturn;
+  }
+
   async deleteBusLine(busLineId: string, companyId: string): Promise<void> {
     const query = `
     MATCH (t1:Town)-[r:BUS_LINE {busLineId: '${busLineId}', companyId: '${companyId}'}]->(t2:Town) 
     DELETE r
+    `;
+    await this.neo4jService.write(query);
+  }
+
+  async deleteBusLineDepartureTimes(busLineId: string, companyId: string): Promise<void> {
+    const query = `
+    MATCH (c:Company)-[r:TIMETABLE {busLineId: '${busLineId}'}]->(dt:DepartureTimes) 
+    WHERE id(c) = ${companyId}
+    DELETE r, dt
     `;
     await this.neo4jService.write(query);
   }

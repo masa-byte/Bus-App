@@ -33,6 +33,19 @@ export const busLineReducer = createReducer(
             error: error
         };
     }),
+    on(BusLineActions.addBusLineDepartureTimesSuccess, (state, { busLineDepartureTimes }) => {
+        return {
+            ...state,
+            loading: false,
+            error: ''
+        };
+    }),
+    on(BusLineActions.addBusLineDepartureTimesFailure, (state, { error }) => {
+        return {
+            ...state,
+            error: error
+        };
+    }),
     on(BusLineActions.deleteBusLineSuccess, (state, { id }) => {
         return busLineAdapter.removeOne(id, state);
     }),

@@ -5,6 +5,7 @@ import { SignInComponent } from './home-page/sign-in/sign-in.component';
 import { SignUpComponent } from './home-page/sign-up/sign-up.component';
 import { CompanyFormComponent } from './company/company-form/company-form.component';
 import { BusLineFormComponent } from './bus-line/bus-line-form/bus-line-form.component';
+import { BusLineTimeComponent } from './bus-line/bus-line-time/bus-line-time.component';
 
 const routes: Routes = [
   {
@@ -37,11 +38,11 @@ const routes: Routes = [
     component: BusLineFormComponent,
     pathMatch: 'full',
   },
-  // {
-  //   path: 'busLineTime',
-  //   component: BusLineTimeComponent,
-  //   pathMatch: 'full',
-  // },
+  {
+    path: 'busLineTimeForm',
+    component: BusLineTimeComponent,
+    pathMatch: 'full',
+  },
   {
     path: 'mainPage',
     loadChildren: () =>

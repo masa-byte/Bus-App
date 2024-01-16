@@ -4,7 +4,8 @@ import { switchMap, map, catchError, of } from 'rxjs';
 import * as BusLineActions from '../actions/bus-line.actions';
 import { BusLine } from '../../bus-line/bus-line.model';
 import { BusLineService } from '../../bus-line/bus-line.service';
-import { mapToBusLine } from '../../utility/utility';
+import { mapToBusLine, mapToBusLineDepartureTimes } from '../../utility/utility';
+import { BusLineDepartureTimes } from '../../bus-line/bus-line-departure-times.model';
 
 @Injectable()
 export class BusLineEffects {
@@ -89,6 +90,25 @@ export class BusLineEffects {
                     }),
                     catchError((error) => {
                         return of(BusLineActions.addBusLineFailure({ error: 'Failed to add busLine' }));
+                    })
+                )
+            )
+        )
+    );
+
+    addBusLineDepartureTimes$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(BusLineActions.addBusLineDepartureTimes),
+            switchMap(({ busLineDepartureTimes }) =>
+                this.busLineService.createBusLineDepartureTimes(busLineDepartureTimes).pipe(
+                    map((response) => {
+                        let body = response.body;
+                        let busLineDepartureTimes: BusLineDepartureTimes = mapToBusLineDepartureTimes(body);
+
+                        return BusLineActions.addBusLineDepartureTimesSuccess({ busLineDepartureTimes: busLineDepartureTimes });
+                    }),
+                    catchError((error) => {
+                        return of(BusLineActions.addBusLineDepartureTimesFailure({ error: 'Failed to add busLine departure times' }));
                     })
                 )
             )

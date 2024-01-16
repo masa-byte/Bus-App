@@ -30,6 +30,9 @@
                 <button mat-raised-button class="customButton" *ngIf="userType == 'admin'" (click)="addNewCompany()">
                     + Add new company
                 </button>
+                <button mat-raised-button class="customButton" *ngIf="userType == 'company'" (click)="addNewBusLineTime()">
+                    + Add new bus line time
+                </button>
                 <button mat-raised-button class="customButton" *ngIf="userType == 'company'" (click)="addNewBusLine()">
                     + Add new bus line
                 </button>
