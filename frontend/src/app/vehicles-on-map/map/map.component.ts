@@ -19,7 +19,7 @@ export class MapComponent {
 
   public layers: Marker[] = [];
 
-  private redis = inject(VehiclesOnMapService);
+  private vehiclesOnMapService = inject(VehiclesOnMapService);
 
   constructor() {
 
@@ -47,15 +47,28 @@ export class MapComponent {
 
   public onMapReady(map: Map) {
     console.log(map);
+    this.vehiclesOnMapService.lat = map.getCenter().lat;
+    this.vehiclesOnMapService.lon = map.getCenter().lng;
+    this.vehiclesOnMapService.w = map.getSize().x;
+    this.vehiclesOnMapService.h = map.getSize().y;
+
+    this.vehiclesOnMapService.vehiclesCoordinates.subscribe((data: any) => {
+      console.log(data);
+    });
   }
 
   public onMapMoveEnd(event: any) {
+    const map = event.target;
+    this.vehiclesOnMapService.lat = map.getCenter().lat;
+    this.vehiclesOnMapService.lon = map.getCenter().lng;
+    this.vehiclesOnMapService.w = map.getSize().x;
+    this.vehiclesOnMapService.h = map.getSize().y;
     // console.log(event);
     // console.log(event.target.getCenter());
-    const zoom = event.target.getZoom();
-    const initialSquareSize = 40075016.685578488 / Math.pow(2, 1);
-    const squareSize = initialSquareSize / Math.pow(2, zoom - 1) / 1000;
-    const divWidthInMeters = squareSize * (Math.max(event.target._size.x, event.target._size.y) / 256);
-    console.log(divWidthInMeters);
+    // const zoom = event.target.getZoom();
+    // const initialSquareSize = 40075016.685578488 / Math.pow(2, 1);
+    // const squareSize = initialSquareSize / Math.pow(2, zoom - 1) / 1000;
+    // const divWidthInMeters = squareSize * (Math.max(event.target._size.x, event.target._size.y) / 256);
+    // console.log(divWidthInMeters);
   }
 }

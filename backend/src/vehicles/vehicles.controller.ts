@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, Sse } from '@nestjs/common';
 import { VehiclesService } from './vehicles.service';
 import { CreateVehicleDto } from './dto/create-vehicle.dto';
 import { UpdateVehicleDto } from './dto/update-vehicle.dto';
+import { Observable } from 'rxjs';
 
 @Controller('vehicles')
 export class VehiclesController {
@@ -22,9 +23,14 @@ export class VehiclesController {
   //   return this.vehiclesService.findOne(+id);
   // }
 
-  @Get('/findByBoundigBox')
+  @Get('findByBoundigBox')
   async findByBoundigBox(@Query('lon') lon: number, @Query('lat') lat: number, @Query('w') w: number, @Query('h') h: number) {
     return await this.vehiclesService.findByBoundigBox(lon, lat, w, h);
+  }
+
+  @Sse('locationUpdates')
+  locationUpdates(): Observable<any> {
+    return this.vehiclesService.locationUpdates();
   }
 
   @Patch(':id')

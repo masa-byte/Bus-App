@@ -9,7 +9,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { userReducer } from './store/reducers/user.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { UserEffects } from './store/effects/user.effects';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
 import { MainPageModule } from './main-page/main-page.module';
 import { EditProfileModule } from './user/edit-profile/edit-profile.module';
 import { CompanyModule } from './company/company.module';
@@ -39,6 +39,7 @@ import { VehiclesOnMapModule } from './vehicles-on-map/vehicles-on-map.module';
     }),
     LeafletModule,
     VehiclesOnMapModule,
+    HttpClientModule,
   ],
   providers: [
     provideClientHydration(),
