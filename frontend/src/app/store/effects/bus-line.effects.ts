@@ -32,25 +32,6 @@ export class BusLineEffects {
         )
     );
 
-    addBusLine$ = createEffect(() =>
-        this.actions$.pipe(
-            ofType(BusLineActions.addBusLine),
-            switchMap(({ busLine }) =>
-                this.busLineService.createBusLine(busLine).pipe(
-                    map((response) => {
-                        let body = response.body;
-                        let busLine: BusLine = mapToBusLine(body);
-
-                        return BusLineActions.addBusLineSuccess({ busLine: busLine });
-                    }),
-                    catchError((error) => {
-                        return of(BusLineActions.addBusLineFailure({ error: 'Failed to add busLine' }));
-                    })
-                )
-            )
-        )
-    );
-
     loadBusLinesByStartDestEndDestPageIndexPageSize$ = createEffect(() =>
         this.actions$.pipe(
             ofType(BusLineActions.loadBusLinesByStartDestEndDestPageIndexPageSize),
@@ -75,11 +56,50 @@ export class BusLineEffects {
         )
     );
 
+    loadBusLineIdsForCompany$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(BusLineActions.loadBusLineIdsForCompany),
+            switchMap(({ companyId }) =>
+                this.busLineService.getBusLineIdsForCompany(companyId).pipe(
+                    map((response) => {
+                        let body = response.body;
+                        let companyBusLineIds: string[] = body;
+
+                        return BusLineActions.loadBusLineIdsForCompanySuccess({ companyBusLineIds: companyBusLineIds });
+                    }),
+                    catchError((error) => {
+                        return of(BusLineActions.loadBusLineIdsForCompanyFailure({ error: 'Failed to load busLineIds for company' }));
+                    })
+                )
+            )
+        )
+    );
+
+
+    addBusLine$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(BusLineActions.addBusLine),
+            switchMap(({ busLine }) =>
+                this.busLineService.createBusLine(busLine).pipe(
+                    map((response) => {
+                        let body = response.body;
+                        let busLine: BusLine = mapToBusLine(body);
+
+                        return BusLineActions.addBusLineSuccess({ busLine: busLine });
+                    }),
+                    catchError((error) => {
+                        return of(BusLineActions.addBusLineFailure({ error: 'Failed to add busLine' }));
+                    })
+                )
+            )
+        )
+    );
+
     deleteBusLine$ = createEffect(() =>
         this.actions$.pipe(
             ofType(BusLineActions.deleteBusLine),
-            switchMap(({ id }) =>
-                this.busLineService.deleteBusLine(id).pipe(
+            switchMap(({ id, busLineId, companyId }) =>
+                this.busLineService.deleteBusLine(busLineId, companyId).pipe(
                     map((response) => {
                         return BusLineActions.deleteBusLineSuccess({ id: id });
                     }),

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpStatus, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Query } from '@nestjs/common';
 import { BusLineService } from './bus-line.service';
 import { Public } from 'src/auth/decorators/metadata';
 
@@ -7,7 +7,6 @@ export class BusLineController {
 
     constructor(private readonly busLineService: BusLineService) { }
 
-    @Public()
     @Get('total')
     async totalNumberOfBusLines(@Query('startDestId') startDestId: number, @Query('endDestId') endDestId: number) {
         try {
@@ -18,7 +17,6 @@ export class BusLineController {
         }
     }
 
-    @Public()
     @Get()
     async getBusLinesByStartDestEndDest(
         @Query('startDestId') startDestId: number,
@@ -33,11 +31,32 @@ export class BusLineController {
             return HttpStatus.INTERNAL_SERVER_ERROR
         }
     }
+
+    @Get('all/:companyId')
+    async getAllBusLineIdsForCompany(@Param('companyId') companyId: string) {
+        try {
+            const res = await this.busLineService.getAllBusLineIdsForCompany(companyId);
+            return res
+        } catch (error) {
+            return HttpStatus.INTERNAL_SERVER_ERROR
+        }
+    }
+
     @Post()
     async createBusLine(@Body('busLine') busLine: any) {
         try {
             const res = await this.busLineService.createBusLine(busLine);
             return res
+        } catch (error) {
+            return HttpStatus.INTERNAL_SERVER_ERROR
+        }
+    }
+
+    @Delete(':busLineId/:companyId')
+    async deleteBusLine(@Param('busLineId') busLineId: string, @Param('companyId') companyId: string) {
+        try {
+            await this.busLineService.deleteBusLine(busLineId, companyId);
+            return HttpStatus.OK
         } catch (error) {
             return HttpStatus.INTERNAL_SERVER_ERROR
         }

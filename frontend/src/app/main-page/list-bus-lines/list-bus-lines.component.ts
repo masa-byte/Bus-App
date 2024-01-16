@@ -86,12 +86,12 @@ export class ListBusLinesComponent {
     ));
   }
 
-  deleteBusLine(event: string) {
+  deleteBusLine(event: string[]) {
     const dialogRef = this.dialog.open(DeleteDialogComponent);
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.store.dispatch(BusLineActions.deleteBusLine({ id: event }));
+        this.store.dispatch(BusLineActions.deleteBusLine({ id: event[0], busLineId: event[1], companyId: event[2] }));
       }
     });
   }

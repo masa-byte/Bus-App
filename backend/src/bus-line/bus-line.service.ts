@@ -85,7 +85,7 @@ export class BusLineService {
       const res = await this.neo4jService.read(query)
 
       busLine.stops = res.records.map(record => mapNeo4jNodeToTown(record.get('town')))
-      
+
       for (let i = 0; i < busLine.stops.length - 1; i++) {
         query = `
         MATCH p = (t1:Town)-[r:CONNECTS]-(t2:Town) 
@@ -99,7 +99,7 @@ export class BusLineService {
         })
       }
       busLine.distance = Math.round(busLine.distance);
-      
+
       const kmPerMinute = 1.33; // equals to 80 km/h
       busLine.durationMinutes = Math.round(busLine.distance / kmPerMinute);
 
@@ -118,6 +118,15 @@ export class BusLineService {
     return busLines;
   }
 
+  async getAllBusLineIdsForCompany(companyId: string): Promise<string[]> {
+    const query = `
+    MATCH (t1:Town)-[r:BUS_LINE {companyId: '${companyId}'}]->(t2:Town) 
+    RETURN DISTINCT r.busLineId AS busLineId
+    `;
+    const res = await this.neo4jService.read(query)
+    return res.records.map(record => record.get('busLineId'));
+  }
+
   async createBusLine(busLine: any): Promise<string> {
     const res = await this.neo4jService.read(`MATCH (n:Company) WHERE id(n) = ${busLine.companyId} RETURN n.nextBusLineId AS nextBusLineId`)
     const busLineId = res.records[0].get('nextBusLineId')
@@ -133,5 +142,13 @@ export class BusLineService {
     }
     await this.neo4jService.write(`MATCH (n:Company) WHERE id(n) = ${busLine.companyId} SET n.nextBusLineId = '${+busLineId + 1}'`)
     return res.records[0].get('nextBusLineId');
+  }
+
+  async deleteBusLine(busLineId: string, companyId: string): Promise<void> {
+    const query = `
+    MATCH (t1:Town)-[r:BUS_LINE {busLineId: '${busLineId}', companyId: '${companyId}'}]->(t2:Town) 
+    DELETE r
+    `;
+    await this.neo4jService.write(query);
   }
 }

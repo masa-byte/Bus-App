@@ -24,7 +24,7 @@ import { TicketModule } from '../ticket/ticket.module';
 @NgModule({
   declarations: [
     BusLineFormComponent,
-    BusLineDisplayComponent
+    BusLineDisplayComponent,
   ],
   imports: [
     CommonModule,

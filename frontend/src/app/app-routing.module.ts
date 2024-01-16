@@ -37,6 +37,11 @@ const routes: Routes = [
     component: BusLineFormComponent,
     pathMatch: 'full',
   },
+  // {
+  //   path: 'busLineTime',
+  //   component: BusLineTimeComponent,
+  //   pathMatch: 'full',
+  // },
   {
     path: 'mainPage',
     loadChildren: () =>

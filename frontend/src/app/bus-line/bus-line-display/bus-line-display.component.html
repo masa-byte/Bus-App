@@ -47,7 +47,7 @@
             </button>
         </section>
         <section class="section2" *ngIf="(user$ | async)!.type == 'company'">
-            <button mat-icon-button color="basic" (click)="deleteCompany()">
+            <button mat-icon-button color="basic" (click)="deleteBusLine()">
                 <mat-icon>delete</mat-icon>
             </button>
         </section>

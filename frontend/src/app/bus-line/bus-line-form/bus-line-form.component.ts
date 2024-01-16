@@ -38,6 +38,7 @@ export class BusLineFormComponent {
 
   user: User | undefined = undefined;
   error$: Observable<string | null> = of();
+  
   errorSubscription: Subscription = new Subscription();
   userSubscription: Subscription = new Subscription();
   townsSubscription: Subscription = new Subscription();
@@ -56,8 +57,6 @@ export class BusLineFormComponent {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(TownActions.loadTowns());
-
     this.error$ = this.store.select(selectBusLineError);
 
     this.userSubscription = this.store.select(selectUser).subscribe((user) => {

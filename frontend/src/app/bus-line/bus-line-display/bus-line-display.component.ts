@@ -18,7 +18,7 @@ export class BusLineDisplayComponent {
 
   user$: Observable<User | null> = of();
   @Input() busLine!: BusLine | undefined;
-  @Output() busLineDeleteRequest = new EventEmitter<string>();
+  @Output() busLineDeleteRequest = new EventEmitter<string[]>();
 
   constructor(
     private router: Router,
@@ -45,8 +45,8 @@ export class BusLineDisplayComponent {
     // });
   }
 
-  deleteCompany() {
-    this.busLineDeleteRequest.emit(this.busLine!.id);
+  deleteBusLine() {
+    this.busLineDeleteRequest.emit([this.busLine!.id, this.busLine!.busLineId, this.busLine!.companyId]);
   }
 
   formatDuration(durationInMinutes: number): string {

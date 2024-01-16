@@ -9,7 +9,10 @@ export const addBusLineSuccess = createAction('[BusLine] Add BusLine Success', p
 
 export const addBusLineFailure = createAction('[BusLine] Add BusLine Failure', props<{ error: string }>());
 
-export const deleteBusLine = createAction('[BusLine] Delete BusLine', props<{ id: string }>());
+export const deleteBusLine = createAction(
+    '[BusLine] Delete BusLine',
+    props<{ id: string, busLineId: string, companyId: string }>()
+);
 
 export const deleteBusLineSuccess = createAction('[BusLine] Delete BusLine Success', props<{ id: string }>());
 
@@ -25,6 +28,10 @@ export const loadTotalNumberOfBusLinesByStartDestEndDest = createAction(
     props<{ startDestId: number, endDestId: number }>()
 );
 
+export const loadBusLinesSuccess = createAction('[BusLine] Load BusLines Success', props<{ busLine: BusLine[] }>());
+
+export const loadBusLinesFailure = createAction('[BusLine] Load BusLines Failure', props<{ error: string }>());
+
 export const loadTotalNumberOfBusLinesSuccess = createAction(
     '[BusLine] Load Total Number Of BusLines Success',
     props<{ totalNumberOfBusLinesStartDestEndDest: number }>()
@@ -32,9 +39,14 @@ export const loadTotalNumberOfBusLinesSuccess = createAction(
 
 export const loadTotalNumberOfBusLinesFailure = createAction('[BusLine] Load Total Number Of BusLines Failure', props<{ error: string }>());
 
-export const loadBusLinesSuccess = createAction('[BusLine] Load BusLines Success', props<{ busLine: BusLine[] }>());
+export const loadBusLineIdsForCompany = createAction('[BusLine] Load BusLine Ids For Company', props<{ companyId: string }>());
 
-export const loadBusLinesFailure = createAction('[BusLine] Load BusLines Failure', props<{ error: string }>());
+export const loadBusLineIdsForCompanySuccess = createAction(
+    '[BusLine] Load BusLine Ids For Company Success',
+    props<{ companyBusLineIds: string[] }>()
+);
+
+export const loadBusLineIdsForCompanyFailure = createAction('[BusLine] Load BusLine Ids For Company Failure', props<{ error: string }>());
 
 export const selectBusLine = createAction('[BusLine] Select BusLine', props<{ id: string }>());
 

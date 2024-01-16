@@ -20,6 +20,13 @@ export class BusLineService {
     );
   }
 
+  getBusLineIdsForCompany(companyId: string): Observable<HttpResponse<any>> {
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem('token'));
+    return this.http.get(url + '/bus-line/all/' + companyId,
+      { headers: headers, observe: 'response' }
+    );
+  }
+
   getTotalNumberOfBusLinesByStartDestEndDest(startDestId: number, endDestId: number): Observable<HttpResponse<any>> {
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem('token'));
     return this.http.get(url + '/bus-line/total?startDestId=' + startDestId + '&endDestId=' + endDestId,
@@ -43,9 +50,9 @@ export class BusLineService {
     return this.http.get(url + '/bus-line/' + id, { headers: headers, observe: 'response' });
   }
 
-  deleteBusLine(id: string): Observable<HttpResponse<any>> {
+  deleteBusLine(busLineId: string, companyId: string): Observable<HttpResponse<any>> {
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem('token'));
-    return this.http.delete(url + '/bus-line/' + id,
+    return this.http.delete(url + '/bus-line/' + busLineId + '/' + companyId,
       { headers: headers, observe: 'response' }
     );
   }
