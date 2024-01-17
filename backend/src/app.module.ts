@@ -14,6 +14,7 @@ import { CompanyModule } from './company/company.module';
 import { TownModule } from './town/town.module';
 import { BusLineModule } from './bus-line/bus-line.module';
 import { CacheInterceptor, CacheModule, CacheStore } from '@nestjs/cache-manager';
+import { TicketModule } from './ticket/ticket.module';
 import * as redisStore from 'cache-manager-redis-store';
 
 @Module({
@@ -34,7 +35,8 @@ import * as redisStore from 'cache-manager-redis-store';
     UserModule,
     CompanyModule,
     TownModule,
-    BusLineModule
+    BusLineModule,
+    TicketModule
   ],
   controllers: [AppController],
   providers: [AppService,
