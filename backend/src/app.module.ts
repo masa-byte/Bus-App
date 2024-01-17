@@ -16,6 +16,7 @@ import { BusLineModule } from './bus-line/bus-line.module';
 import { CacheInterceptor, CacheModule, CacheStore } from '@nestjs/cache-manager';
 import { TicketModule } from './ticket/ticket.module';
 import * as redisStore from 'cache-manager-redis-store';
+import { CustomHttpCacheInterceptor } from './custom-cache-interceptor';
 
 @Module({
   imports: [
@@ -50,7 +51,7 @@ import * as redisStore from 'cache-manager-redis-store';
     },
     {
       provide: APP_INTERCEPTOR,
-      useClass: CacheInterceptor,
+      useClass: CustomHttpCacheInterceptor,
     },
   ],
 })
