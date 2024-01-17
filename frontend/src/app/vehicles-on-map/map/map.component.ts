@@ -1,6 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, inject } from '@angular/core';
 import { LatLng, Map, MapOptions, Marker, MarkerOptions, TileLayer } from 'leaflet';
 import { VehiclesOnMapService } from '../vehicles-on-map.service';
+import { Observable, map, tap } from 'rxjs';
 
 @Component({
   selector: 'app-map',
@@ -13,48 +14,35 @@ export class MapComponent {
     layers: [
       new TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { minZoom: 0, attribution: '...', })
     ],
-    zoom: 0,
+    zoom: 7,
     center: new LatLng(43.75, 20.1)
   };
 
-  public layers: Marker[] = [];
+  public layer$: Observable<Marker[]> = new Observable<Marker[]>();
 
   private vehiclesOnMapService = inject(VehiclesOnMapService);
 
-  constructor() {
+  public onMapReady(mapa: Map) {
+    this.vehiclesOnMapService.lat = mapa.getCenter().lat;
+    this.vehiclesOnMapService.lon = mapa.getCenter().lng;
+    this.vehiclesOnMapService.w = mapa.getSize().x;
+    this.vehiclesOnMapService.h = mapa.getSize().y;
 
-    // this.redis.createEventSource().subscribe((messageData: any) => {
-    //   console.log(messageData);
-    // });
-
-    const newMarker = new Marker([43.75, 20.1]);
-    newMarker.bindPopup(`Random marker ${Math.random() * 10}`);
-    newMarker.bindTooltip(`Random markeree ${Math.random() * 10}`);
-    newMarker.setPopupContent(`Random marker ${Math.random() * 10}`);
-    this.layers = [...this.layers, newMarker];
-    setInterval(() => {
-      // const x: MarkerOptions = {};
-      // x.title = `Random marker ${Math.random() * 10}`;
-      // const newMarker = new Marker([44.0 + Math.random() * 10 - 5, 20.0 + Math.random() * 10 - 5], x);
-      // this.layers = [...this.layers, newMarker];
-      this.layers = this.layers.map((marker) => {
-        
-        //marker.setLatLng([marker.getLatLng().lat + 0.5, marker.getLatLng().lng + 0.2]);
+    this.layer$ = this.vehiclesOnMapService.vehiclesCoordinates.pipe(
+      tap((data) => mapa.eachLayer((layer) => {
+        if (layer instanceof Marker) {
+          mapa.removeLayer(layer);
+        } 
+      })),
+      map((data: any[]) => data.map((p) => {
+        console.log(p);
+        const x: MarkerOptions = {};
+        x.title = p[0];
+        const newMarker = new Marker([+p[1][0], +p[1][1]], x);
+        newMarker.addTo(mapa);
         return newMarker;
-      });
-    }, 1000);
-  }
-
-  public onMapReady(map: Map) {
-    console.log(map);
-    this.vehiclesOnMapService.lat = map.getCenter().lat;
-    this.vehiclesOnMapService.lon = map.getCenter().lng;
-    this.vehiclesOnMapService.w = map.getSize().x;
-    this.vehiclesOnMapService.h = map.getSize().y;
-
-    this.vehiclesOnMapService.vehiclesCoordinates.subscribe((data: any) => {
-      console.log(data);
-    });
+      })),
+    );
   }
 
   public onMapMoveEnd(event: any) {
@@ -63,12 +51,5 @@ export class MapComponent {
     this.vehiclesOnMapService.lon = map.getCenter().lng;
     this.vehiclesOnMapService.w = map.getSize().x;
     this.vehiclesOnMapService.h = map.getSize().y;
-    // console.log(event);
-    // console.log(event.target.getCenter());
-    // const zoom = event.target.getZoom();
-    // const initialSquareSize = 40075016.685578488 / Math.pow(2, 1);
-    // const squareSize = initialSquareSize / Math.pow(2, zoom - 1) / 1000;
-    // const divWidthInMeters = squareSize * (Math.max(event.target._size.x, event.target._size.y) / 256);
-    // console.log(divWidthInMeters);
   }
 }
