@@ -112,4 +112,7 @@ export const busLineReducer = createReducer(
             searchText: searchText
         };
     }),
+    on(BusLineActions.clearBusLines, (state) => {
+        return busLineAdapter.removeAll(state);
+    })
 );

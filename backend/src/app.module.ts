@@ -21,14 +21,14 @@ import { CustomHttpCacheInterceptor } from './custom-cache-interceptor';
 @Module({
   imports: [
     //CacheModule.register(),
-    CacheModule.registerAsync({
-      isGlobal: true,
-      useFactory: async () => ({
-        store: (await redisStore.redisStore({
-          url: 'redis://localhost:6379',
-        })) as unknown as CacheStore,
-      }),
-    }),
+    // CacheModule.registerAsync({
+    //   isGlobal: true,
+    //   useFactory: async () => ({
+    //     store: (await redisStore.redisStore({
+    //       url: 'redis://localhost:6379',
+    //     })) as unknown as CacheStore,
+    //   }),
+    // }),
     Neo4jModule.forRoot(neo4jConfig),
     RedisModule,
     MyNeo4jModule,
@@ -49,10 +49,10 @@ import { CustomHttpCacheInterceptor } from './custom-cache-interceptor';
       provide: APP_GUARD,
       useClass: RolesGuard,
     },
-    {
-      provide: APP_INTERCEPTOR,
-      useClass: CustomHttpCacheInterceptor,
-    },
+    // {
+    //   provide: APP_INTERCEPTOR,
+    //   useClass: CustomHttpCacheInterceptor,
+    // },
   ],
 })
 export class AppModule { }

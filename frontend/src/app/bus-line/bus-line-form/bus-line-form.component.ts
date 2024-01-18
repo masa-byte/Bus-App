@@ -6,12 +6,12 @@ import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { Observable, of, Subscription, map } from 'rxjs';
 import { selectUser } from '../../store/selectors/user.selectors';
-import * as TownActions from '../../store/actions/town.actions';
-import { selectTownEntities } from '../../store/selectors/town.selector';
 import { Town } from '../../town/town.model';
 import { User } from '../../user/user.model';
 import { selectBusLineError } from '../../store/selectors/bus-line.selector';
 import * as BusLineActions from '../../store/actions/bus-line.actions';
+import { TownService } from '../../town/town.service';
+import { mapToTown } from '../../utility/utility';
 
 @Component({
   selector: 'app-bus-line-form',
@@ -47,7 +47,8 @@ export class BusLineFormComponent {
     private snackBar: MatSnackBar,
     private store: Store,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private townService: TownService
   ) {
     this.townFormGroup = this.fb.group({
       towns: this.fb.array([])
@@ -64,15 +65,13 @@ export class BusLineFormComponent {
         this.user = user;
     });
 
-    this.townsSubscription = this.store.select(selectTownEntities)
-      .pipe(
-        map((townEntities) => Object.entries(townEntities))
-      )
-      .subscribe((towns) => {
-        for (let town of towns) {
-          this.townsArr.push(town[1]!);
-        }
+    this.townService.getAllTowns().subscribe(response => {
+      let body = response.body;
+      body.map((town: Town) => {
+        const t = mapToTown(town)
+        this.townsArr.push(t);
       });
+    });
   }
 
   ngOnDestroy(): void {

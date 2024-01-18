@@ -1,4 +1,5 @@
 import { BusLineDepartureTimes } from "src/bus-line/bus-line-departure-times.entity";
+import { Ticket } from "src/ticket/ticket.entity";
 import { Town } from "src/town/town.entity";
 import { CompanyUser } from "src/user/company-user.entity";
 import { RegularUser } from "src/user/regular-user.entity";
@@ -60,4 +61,19 @@ export function mapNeo4jNodeToBusLineDepartureTime(node: any): BusLineDepartureT
     busLineDepartureTime.departureTimes = node.properties.departureTimes;
     busLineDepartureTime.capacities = node.properties.capacities;
     return busLineDepartureTime;
+}
+
+export function mapNeo4jNodeToTicket(node: any): Ticket {
+    const ticket = new Ticket();
+    ticket.id = node.identity.toString();
+    ticket.busLineId = node.properties.busLineId;
+    ticket.price = node.properties.price;
+    ticket.departureTime = node.properties.departureTime;
+    ticket.companyId = node.properties.companyId;
+    ticket.distance = node.properties.distance;
+    ticket.durationMinutes = node.properties.durationMinutes;
+    ticket.endTownName = node.properties.endTownName;
+    ticket.startTownName = node.properties.startTownName;
+    ticket.departureDate = node.properties.departureDate;
+    return ticket;
 }

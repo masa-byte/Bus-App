@@ -7,13 +7,19 @@ export class Ticket {
     id: string;
 
     @Field()
+    companyId: string;
+
+    @Field()
     userId: string;
 
     @Field()
     busLineId: string;
 
     @Field()
-    departureDate: Date;
+    departureDate: string;
+
+    @Field()
+    departureTime: string;
 
     @Field()
     price: number;
@@ -31,5 +37,5 @@ export class Ticket {
     endTownName: string;
 
     @Field()
-    companyName: string;
+    ratedCompany: boolean;
 }

@@ -128,6 +128,22 @@ export class BusLineService {
     return res.records.map(record => record.get('busLineId'));
   }
 
+  async getBusLineDepartureTimes(busLineId: string, companyId: string): Promise<any> {
+    const query = `
+    MATCH (c:Company)-[r:TIMETABLE {busLineId: '${busLineId}'}]->(dt:DepartureTimes)-[r2:HAS_SPECIFIC_DEPARTURE]->()
+    WHERE id(c) = ${companyId}
+    RETURN DISTINCT dt.departureTimes as departureTime, r2.date as date
+    `;
+    const res = await this.neo4jService.read(query)
+    const departureTimes = res.records.map(record => record.get('departureTime'));
+    const dates = res.records.map(record => record.get('date'));
+    const departureDatesWithTime = {};
+    for (let i = 0; i < departureTimes.length; i++) {
+      departureDatesWithTime[dates[i]] = departureTimes[i];
+    }
+    return departureDatesWithTime;
+  }
+
   async createBusLine(busLine: any): Promise<string> {
     const res = await this.neo4jService.read(`MATCH (n:Company) WHERE id(n) = ${busLine.companyId} RETURN n.nextBusLineId AS nextBusLineId`)
     const busLineId = res.records[0].get('nextBusLineId')
@@ -146,7 +162,6 @@ export class BusLineService {
   }
 
   async createBusLineDepartureTimes(busLineDepartureTimes: any): Promise<BusLineDepartureTimes> {
-
     await this.deleteBusLineDepartureTimes(busLineDepartureTimes.busLineId, busLineDepartureTimes.companyId);
 
     let departureTimesToCreate = {
@@ -163,10 +178,13 @@ export class BusLineService {
       CREATE (c)-[r:TIMETABLE {busLineId: '${busLineDepartureTimes.busLineId}'}]->(dt)`;
 
     const res2 = await this.neo4jService.write(query);
-    const toReturn = mapNeo4jNodeToBusLineDepartureTime(res2.records[0].get('n'));
+    const toReturn = mapNeo4jNodeToBusLineDepartureTime(res.records[0].get('n'));
     toReturn.busLineId = busLineDepartureTimes.busLineId;
     toReturn.companyId = busLineDepartureTimes.companyId;
     toReturn.companyName = busLineDepartureTimes.companyName;
+
+    await this.neo4jService.makeSpecificDatesForTimeTables(depTimeId);
+
     return toReturn;
   }
 
@@ -176,10 +194,17 @@ export class BusLineService {
     DELETE r
     `;
     await this.neo4jService.write(query);
+    await this.deleteBusLineDepartureTimes(busLineId, companyId);
   }
 
   async deleteBusLineDepartureTimes(busLineId: string, companyId: string): Promise<void> {
-    const query = `
+    let query = `
+    MATCH (c:Company)-[r:TIMETABLE {busLineId: '${busLineId}'}]->(dt:DepartureTimes)-[r2:HAS_SPECIFIC_DEPARTURE]->(sd:SpecificDepTime) 
+    WHERE id(c) = ${companyId}
+    DELETE r, dt, r2, sd
+    `;
+    await this.neo4jService.write(query);
+    query = `
     MATCH (c:Company)-[r:TIMETABLE {busLineId: '${busLineId}'}]->(dt:DepartureTimes) 
     WHERE id(c) = ${companyId}
     DELETE r, dt

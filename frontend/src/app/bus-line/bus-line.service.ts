@@ -59,6 +59,12 @@ export class BusLineService {
     return this.http.get(url + '/bus-line/' + id, { headers: headers, observe: 'response' });
   }
 
+  getBusLineDepartureTimes(busLineId: string, companyId: string): Observable<HttpResponse<any>> {
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem('token'));
+    return this.http.get(url + '/bus-line/departure-times/' + busLineId + '/' + companyId,
+      { headers: headers, observe: 'response' });
+  }
+
   deleteBusLine(busLineId: string, companyId: string): Observable<HttpResponse<any>> {
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem('token'));
     return this.http.delete(url + '/bus-line/' + busLineId + '/' + companyId,

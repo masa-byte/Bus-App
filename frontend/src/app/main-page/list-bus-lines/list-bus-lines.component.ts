@@ -8,6 +8,8 @@ import { BusLine } from '../../bus-line/bus-line.model';
 import { DeleteDialogComponent } from '../../delete-dialog/delete-dialog.component';
 import { selectFilteredBusLines, selectTotalNumberOfBusLines } from '../../store/selectors/bus-line.selector';
 import * as BusLineActions from '../../store/actions/bus-line.actions';
+import { Ticket } from '../../ticket/ticket.model';
+import { TicketService } from '../../ticket/ticket.service';
 
 @Component({
   selector: 'app-list-bus-lines',
@@ -36,7 +38,8 @@ export class ListBusLinesComponent {
   constructor(
     private store: Store,
     private snackBar: MatSnackBar,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private ticketService: TicketService
   ) { }
 
   ngOnInit(): void {
@@ -84,6 +87,22 @@ export class ListBusLinesComponent {
         pageSize: this.pageSize
       }
     ));
+  }
+
+  reserveTicket(event: Ticket) {
+    this.ticketService.createTicket(event).subscribe(response => {
+      if (response.body) {
+        if (response.body.error) {
+          this.openSnackBar(response.body.error);
+        }
+        else if (response.body == true) {
+          this.openSnackBar('Ticket successfully reserved!');
+        }
+        else {
+          this.openSnackBar('Selected time has no more seats available!');
+        }
+      }
+    });
   }
 
   deleteBusLine(event: string[]) {

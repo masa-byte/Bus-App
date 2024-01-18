@@ -42,6 +42,16 @@ export class BusLineController {
         }
     }
 
+    @Get('departure-times/:busLineId/:companyId')
+    async getBusLineDepartureTimes(@Param('busLineId') busLineId: string, @Param('companyId') companyId: string) {
+        try {
+            const res = await this.busLineService.getBusLineDepartureTimes(busLineId, companyId);
+            return res
+        } catch (error) {
+            return HttpStatus.INTERNAL_SERVER_ERROR
+        }
+    }
+
     @Post()
     async createBusLine(@Body('busLine') busLine: any) {
         try {

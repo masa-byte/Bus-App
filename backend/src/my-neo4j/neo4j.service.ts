@@ -2,6 +2,7 @@ import { Injectable, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
 import { Result, Session, session } from 'neo4j-driver';
 import neo4j from 'neo4j-driver';
 import { neo4jUrl, neo4jConfig } from 'config';
+import { SpecificDepartureTime } from 'src/bus-line/specific-departure-time.entity';
 
 @Injectable()
 export class Neo4jService implements OnModuleDestroy, OnModuleInit {
@@ -16,6 +17,7 @@ export class Neo4jService implements OnModuleDestroy, OnModuleInit {
 
     onModuleInit() {
         this.getTownsInSerbia();
+        //this.makeSpecificDatesForTimeTables();
     }
 
     onModuleDestroy() {
@@ -113,5 +115,73 @@ export class Neo4jService implements OnModuleDestroy, OnModuleInit {
         const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         const distance = R * c; // in km
         return distance.toPrecision(4);
+    }
+
+    async makeSpecificDatesForTimeTables(departureTimesid: string = null) {
+        await this.deleteSpecificDatesForTimeTablesWhichAreOld(departureTimesid);
+        const session = this.getWriteSession();
+        let res;
+        if (departureTimesid) {
+            res = await session.run(`MATCH (n:DepartureTimes) WHERE ID(n) = ${departureTimesid} RETURN n`, {});
+        }
+        else {
+            res = await session.run(`MATCH (n:DepartureTimes) RETURN n`, {});
+        }
+        session.close();
+        for (const record of res.records) {
+            const departureTimes = record.get('n').properties.departureTimes;
+            const capacities = record.get('n').properties.capacities;
+            const today = new Date();
+            const specificDates = [];
+            // in specific dates we will save 3 days ahead of today
+            for (let i = 0; i < 3; i++) {
+                let date = new Date();
+                date.setDate(today.getDate() + i + 1);
+                const formDate = date.toISOString().split('T')[0];
+                specificDates.push(formDate);
+            }
+            for (const specificDate of specificDates) {
+                for (let i = 0; i < departureTimes.length; i++) {
+                    const departureTime = new SpecificDepartureTime();
+                    departureTime.departureTime = departureTimes[i];
+                    departureTime.capacity = capacities[i];
+
+                    const session = this.getWriteSession();
+                    const res = await session.run(`CREATE (n:SpecificDepTime $departureTime) RETURN n`, { departureTime });
+                    session.close();
+                    const depTimeId = res.records[0].get('n').identity.toString();
+
+                    const session2 = this.getWriteSession();
+                    await session2.run(`
+                    MATCH (n:DepartureTimes) WHERE id(n) = ${record.get('n').identity}
+                    MATCH (s:SpecificDepTime) WHERE id(s) = ${depTimeId}
+                    CREATE (n)-[:HAS_SPECIFIC_DEPARTURE {date: '${specificDate}'}]->(s)
+                    `);
+                    session2.close();
+                }
+            }
+        }
+    }
+
+    async deleteSpecificDatesForTimeTablesWhichAreOld(departureTimesid: string = null) {
+        const session = this.getWriteSession();
+        let res
+        if (departureTimesid) {
+            return;
+        }
+        else {
+            res = await session.run(`MATCH (n:SpecificDepTime)-[r:HAS_SPECIFIC_DEPARTURE]-() RETURN r`, {});
+        }
+        session.close();
+        for (const record of res.records) {
+            const date = record.get('r').properties.date;
+            const today = new Date();
+            const specificDate = new Date(date);
+            if (specificDate < today) {
+                const session = this.getWriteSession();
+                await session.run(`MATCH (n:SpecificDepTime)-[r:HAS_SPECIFIC_DEPARTURE {date: ${date}}]-() delete n, r`, {});
+                session.close();
+            }
+        }
     }
 }

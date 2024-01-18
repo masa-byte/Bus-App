@@ -3,11 +3,13 @@ export interface Ticket {
     id: string;
     userId: string;
     busLineId: string;
-    departureDate: Date;
+    companyId: string;
+    departureDate: string;
+    departureTime: string;
     price: number;
     durationMinutes: number;
     distance: number;
     startTownName: string;
     endTownName: string;
-    companyName: string;
+    ratedCompany: boolean;
 }

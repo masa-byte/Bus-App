@@ -4,6 +4,16 @@ import { Town } from "../town/town.model";
 import { CompanyUser } from "../user/company-user.model";
 import { RegularUser } from "../user/regular-user.model";
 
+export function formatDuration(durationInMinutes: number): string {
+    const hours = Math.floor(durationInMinutes / 60);
+    const minutes = durationInMinutes % 60;
+
+    const hoursText = hours > 0 ? `${hours}h` : '';
+    const minutesText = minutes > 0 ? `${minutes}min` : '';
+
+    return `${hoursText}${minutesText}`;
+}
+
 export function mapToUser(user: any) {
     if (user.type === 'user' || user.type === 'admin') {
         return mapToRegularUser(user);

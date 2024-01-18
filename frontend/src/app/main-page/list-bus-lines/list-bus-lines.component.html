@@ -1,19 +1,14 @@
 <app-search-bus-lines-bar (busLineFetchRequest)="fetchBusLines($event)"></app-search-bus-lines-bar>
 
-<mat-paginator #paginator
-               class="paginator"
-               (page)="handlePageEvent($event)"
-               [length]="length"
-               [pageSize]="pageSize"
-               [showFirstLastButtons]="showFirstLastButtons"
-               [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []"
-               [pageIndex]="pageIndex"
-               aria-label="Select page">
+<mat-paginator #paginator class="paginator" (page)="handlePageEvent($event)" [length]="length" [pageSize]="pageSize"
+    [showFirstLastButtons]="showFirstLastButtons" [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []"
+    [pageIndex]="pageIndex" aria-label="Select page">
 </mat-paginator>
 
 <div *ngIf="(busLines$ | async)" class="mainDiv">
     <div *ngFor="let busLine of busLines$ | async" class="card">
-        <app-bus-line-display [busLine]="busLine[1]" (busLineDeleteRequest)="deleteBusLine($event)"></app-bus-line-display>
+        <app-bus-line-display [busLine]="busLine[1]" (ticketReservationRequest)="reserveTicket($event)"
+            (busLineDeleteRequest)="deleteBusLine($event)"></app-bus-line-display>
     </div>
 </div>
 

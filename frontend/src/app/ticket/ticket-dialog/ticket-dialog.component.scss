@@ -90,6 +90,7 @@ tr.element-row:not(.expanded-row):active {
         --mdc-dialog-container-color: transparent;
         background-image: linear-gradient(to bottom, #323875, #6A90D1) !important;
         border-radius: 7px;
+        width: 100vh;
     }
 
     .mat-mdc-table {

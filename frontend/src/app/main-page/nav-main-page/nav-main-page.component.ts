@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { selectUserType } from '../../store/selectors/user.selectors';
 import * as UserAction from '../../store/actions/user.actions';
+import { clearBusLines } from '../../store/actions/bus-line.actions';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -58,6 +59,7 @@ export class NavMainPageComponent implements OnInit, OnDestroy {
   signOut() {
     localStorage.removeItem('userId');
     localStorage.removeItem('rememberMe');
+    this.store.dispatch(clearBusLines());
     this.store.dispatch(UserAction.signOut());
     this.router.navigate(['']);
   }

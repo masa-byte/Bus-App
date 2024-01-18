@@ -72,3 +72,5 @@ export const sortBusLines = createAction(
     '[BusLine] Sort BusLines',
     props<{ sortingCriteria: string; sortAscending: boolean, searchText: string }>()
 );
+
+export const clearBusLines = createAction('[BusLine] Clear BusLines');

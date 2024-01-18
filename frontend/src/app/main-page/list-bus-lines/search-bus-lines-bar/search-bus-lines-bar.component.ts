@@ -3,9 +3,9 @@ import { FormControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Subscription, debounceTime, distinctUntilChanged, map } from 'rxjs';
 import * as BusLineActions from '../../../store/actions/bus-line.actions';
-import * as TownActions from '../../../store/actions/town.actions';
 import { Town } from '../../../town/town.model';
-import { selectTownEntities } from '../../../store/selectors/town.selector';
+import { mapToTown } from '../../../utility/utility';
+import { TownService } from '../../../town/town.service';
 
 @Component({
   selector: 'app-search-bus-lines-bar',
@@ -27,7 +27,8 @@ export class SearchBusLinesBarComponent implements OnInit, OnDestroy {
   townsSubscription: Subscription = new Subscription();
 
   constructor(
-    private store: Store
+    private store: Store,
+    private townService: TownService
   ) { }
 
   ngOnInit(): void {
@@ -40,16 +41,13 @@ export class SearchBusLinesBarComponent implements OnInit, OnDestroy {
         this.searchByText();
       });
 
-    this.store.dispatch(TownActions.loadTowns());
-    this.townsSubscription = this.store.select(selectTownEntities)
-      .pipe(
-        map((townEntities) => Object.entries(townEntities))
-      )
-      .subscribe((towns) => {
-        for (let town of towns) {
-          this.towns.push(town[1]!);
-        }
+    this.townService.getAllTowns().subscribe(response => {
+      let body = response.body;
+      body.map((town: Town) => {
+        const t = mapToTown(town)
+        this.towns.push(t);
       });
+    });
   }
 
   ngOnDestroy(): void {

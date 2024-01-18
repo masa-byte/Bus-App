@@ -16,8 +16,6 @@ import { CompanyModule } from './company/company.module';
 import { companyReducer } from './store/reducers/company.reducer';
 import { CompanyEffects } from './store/effects/company.effects';
 import { BusLineModule } from './bus-line/bus-line.module';
-import { townReducer } from './store/reducers/town.reducer';
-import { TownEffects } from './store/effects/town.effects';
 import { busLineReducer } from './store/reducers/bus-line.reducer';
 import { BusLineEffects } from './store/effects/bus-line.effects';
 
@@ -37,13 +35,11 @@ import { BusLineEffects } from './store/effects/bus-line.effects';
     StoreModule.forRoot({
       user: userReducer,
       companies: companyReducer,
-      towns: townReducer,
       busLines: busLineReducer
     }, {}),
     EffectsModule.forRoot([
       UserEffects,
       CompanyEffects,
-      TownEffects,
       BusLineEffects
     ]),
     StoreDevtoolsModule.instrument({
