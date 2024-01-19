@@ -14,6 +14,10 @@ export class NavComponent {
     private snackBar: MatSnackBar,
   ) { }
 
+  vehiclesOnMap() {
+    this.router.navigate(['/vehicles-on-map']);
+  }
+
   signIn() {
     this.router.navigate(['/signInUser']);
   }

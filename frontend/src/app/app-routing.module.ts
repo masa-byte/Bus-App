@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { BusLineFormComponent } from './bus-line/bus-line-form/bus-line-form.component';
+import { BusLineTimeComponent } from './bus-line/bus-line-time/bus-line-time.component';
+import { CompanyFormComponent } from './company/company-form/company-form.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { SignInComponent } from './home-page/sign-in/sign-in.component';
 import { SignUpComponent } from './home-page/sign-up/sign-up.component';
-import { CompanyFormComponent } from './company/company-form/company-form.component';
-import { BusLineFormComponent } from './bus-line/bus-line-form/bus-line-form.component';
-import { BusLineTimeComponent } from './bus-line/bus-line-time/bus-line-time.component';
+import { VehiclesOnMapComponent } from './vehicles-on-map/vehicles-on-map.component';
 
 const routes: Routes = [
   {
@@ -41,6 +42,11 @@ const routes: Routes = [
   {
     path: 'busLineTimeForm',
     component: BusLineTimeComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'vehicles-on-map',
+    component: VehiclesOnMapComponent,
     pathMatch: 'full',
   },
   {
