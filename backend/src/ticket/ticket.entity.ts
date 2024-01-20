@@ -37,5 +37,11 @@ export class Ticket {
     endTownName: string;
 
     @Field()
+    returnTicket: boolean;
+
+    @Field()
+    numberOfSeats: number;
+
+    @Field()
     ratedCompany: boolean;
 }

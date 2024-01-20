@@ -91,16 +91,14 @@ export class ListBusLinesComponent {
 
   reserveTicket(event: Ticket) {
     this.ticketService.createTicket(event).subscribe(response => {
-      if (response.body) {
-        if (response.body.error) {
-          this.openSnackBar(response.body.error);
-        }
-        else if (response.body == true) {
-          this.openSnackBar('Ticket successfully reserved!');
-        }
-        else {
-          this.openSnackBar('Selected time has no more seats available!');
-        }
+      if (response.body.error) {
+        this.openSnackBar(response.body.error);
+      }
+      else if (response.body == true) {
+        this.openSnackBar('Ticket successfully reserved!');
+      }
+      else {
+        this.openSnackBar('Selected time does not have enough seats available!');
       }
     });
   }

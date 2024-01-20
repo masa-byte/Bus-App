@@ -11,9 +11,15 @@ export class TicketService {
 
   constructor(private http: HttpClient) { }
 
-  getTickerByUserId(userId: string): Observable<HttpResponse<any>> {
+  getTotalNumberOfTicketsForUser(userId: string): Observable<HttpResponse<any>> {
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem('token'));
-    return this.http.get(url + '/ticket/user/' + userId,
+    return this.http.get(url + '/ticket/user/total/' + userId,
+      { headers: headers, observe: 'response' });
+  }
+
+  getTickerByUserIdPageIndexPageSize(userId: string, pageIndex: number, pageSize: number): Observable<HttpResponse<any>> {
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem('token'));
+    return this.http.get(url + '/ticket/user/' + userId + '/' + pageIndex + '/' + pageSize,
       { headers: headers, observe: 'response' });
   }
 
@@ -22,6 +28,15 @@ export class TicketService {
     return this.http.post(url + '/ticket',
       {
         ticket
+      },
+      { headers: headers, observe: 'response' });
+  }
+
+  rateCompany(ticketId: string, rating: number): Observable<HttpResponse<any>> {
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem('token'));
+    return this.http.put(url + '/ticket/rate/' + ticketId,
+      {
+        rating
       },
       { headers: headers, observe: 'response' });
   }

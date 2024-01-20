@@ -1,5 +1,6 @@
 import { BusLineDepartureTimes } from "../bus-line/bus-line-departure-times.model";
 import { BusLine } from "../bus-line/bus-line.model";
+import { Ticket } from "../ticket/ticket.model";
 import { Town } from "../town/town.model";
 import { CompanyUser } from "../user/company-user.model";
 import { RegularUser } from "../user/regular-user.model";
@@ -98,4 +99,24 @@ export function mapToBusLineDepartureTimes(busLineDepartureTimes: any): BusLineD
         capacities: busLineDepartureTimes.capacities,
     };
     return newBusLineDepartureTimes;
+}
+
+export function mapToTicket(ticket: any): Ticket {
+    let newTicket: Ticket = {
+        id: ticket.id,
+        userId: ticket.userId,
+        busLineId: ticket.busLineId,
+        companyId: ticket.companyId,
+        departureDate: ticket.departureDate,
+        departureTime: ticket.departureTime,
+        price: ticket.price,
+        durationMinutes: ticket.durationMinutes,
+        distance: ticket.distance,
+        startTownName: ticket.startTownName,
+        endTownName: ticket.endTownName,
+        returnTicket: ticket.returnTicket,
+        numberOfSeats: ticket.numberOfSeats,
+        ratedCompany: ticket.ratedCompany,
+    };
+    return newTicket;
 }

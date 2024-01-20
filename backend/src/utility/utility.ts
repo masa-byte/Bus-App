@@ -75,5 +75,7 @@ export function mapNeo4jNodeToTicket(node: any): Ticket {
     ticket.endTownName = node.properties.endTownName;
     ticket.startTownName = node.properties.startTownName;
     ticket.departureDate = node.properties.departureDate;
+    ticket.numberOfSeats = node.properties.numberOfSeats;
+    ticket.returnTicket = node.properties.returnTicket;
     return ticket;
 }

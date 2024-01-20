@@ -11,10 +11,12 @@ import { MatTableModule } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatCardModule} from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
+import { TicketDisplayComponent } from './ticket-display/ticket-display.component';
 
 @NgModule({
   declarations: [
-    TicketDialogComponent
+    TicketDialogComponent,
+    TicketDisplayComponent
   ],
   imports: [
     CommonModule,
@@ -31,7 +33,8 @@ import { MatDividerModule } from '@angular/material/divider';
     MatDividerModule
   ],
   exports: [
-    TicketDialogComponent
+    TicketDialogComponent,
+    TicketDisplayComponent
   ]
 })
 export class TicketModule { }

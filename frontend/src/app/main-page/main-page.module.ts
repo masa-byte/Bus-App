@@ -29,6 +29,9 @@ import { ListCompaniesComponent } from './list-companies/list-companies.componen
 import { ListBusLinesComponent } from './list-bus-lines/list-bus-lines.component';
 import { SearchBusLinesBarModule } from './list-bus-lines/search-bus-lines-bar/search-bus-lines-bar.module';
 import { BusLineModule } from '../bus-line/bus-line.module';
+import { ListTicketsComponent } from './list-tickets/list-tickets.component';
+import { TicketModule } from '../ticket/ticket.module';
+import { RatingDialogModule } from '../rating-dialog/rating-dialog.module';
 @NgModule({
   declarations: [
     MainPageComponent,
@@ -36,6 +39,7 @@ import { BusLineModule } from '../bus-line/bus-line.module';
     ListCompaniesComponent,
     ProfileComponent,
     ListBusLinesComponent,
+    ListTicketsComponent,
   ],
   imports: [
     CommonModule,
@@ -62,7 +66,9 @@ import { BusLineModule } from '../bus-line/bus-line.module';
     CompanyModule,
     BusLineModule,
     SearchCompaniesBarModule,
-    SearchBusLinesBarModule
+    SearchBusLinesBarModule,
+    TicketModule,
+    RatingDialogModule
   ],
   exports: [NavMainPageComponent]
 })

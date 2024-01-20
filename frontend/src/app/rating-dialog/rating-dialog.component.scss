@@ -1,0 +1,50 @@
+.rating-stars {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+}
+
+.star-icon {
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.star-filled,
+.star-icon:hover,
+.star-icon.active {
+    color: #F89B92;
+}
+
+.mat-icon {
+    overflow: unset !important;
+}
+
+.customBtn {
+    width: 35%;
+    background-color: #323875 !important;
+    color: white !important;
+    font-weight: bolder;
+    font-size: large;
+    font-style: italic;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+
+h2 {
+    font-size: x-large;
+    letter-spacing: 2px;
+    font-weight: bolder;
+    font-style: italic;
+    text-shadow: 0 0 10px rgba(216, 220, 224, 0.97);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+
+.mdc-dialog__actions {
+    justify-content: space-between !important;
+}
+
+::ng-deep {
+    .mat-mdc-dialog-container {
+        --mdc-dialog-container-color: transparent;
+        background-image: linear-gradient(to bottom, #323875, transparent) !important;
+    }
+}

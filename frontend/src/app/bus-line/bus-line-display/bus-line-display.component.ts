@@ -9,6 +9,7 @@ import * as BusLineActions from '../../store/actions/bus-line.actions';
 import { MatDialog } from '@angular/material/dialog';
 import { TicketDialogComponent } from '../../ticket/ticket-dialog/ticket-dialog.component';
 import { Ticket } from '../../ticket/ticket.model';
+import { formatDuration } from '../../utility/utility';
 
 @Component({
   selector: 'app-bus-line-display',
@@ -54,13 +55,7 @@ export class BusLineDisplayComponent {
     this.busLineDeleteRequest.emit([this.busLine!.id, this.busLine!.busLineId, this.busLine!.companyId]);
   }
 
-  formatDuration(durationInMinutes: number): string {
-    const hours = Math.floor(durationInMinutes / 60);
-    const minutes = durationInMinutes % 60;
-
-    const hoursText = hours > 0 ? `${hours}h` : '';
-    const minutesText = minutes > 0 ? `${minutes}min` : '';
-
-    return `${hoursText}${minutesText}`;
+  _formatDuration(durationInMinutes: number): string {
+    return formatDuration(durationInMinutes);
   }
 }

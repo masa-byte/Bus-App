@@ -18,6 +18,8 @@ import { CompanyEffects } from './store/effects/company.effects';
 import { BusLineModule } from './bus-line/bus-line.module';
 import { busLineReducer } from './store/reducers/bus-line.reducer';
 import { BusLineEffects } from './store/effects/bus-line.effects';
+import { ticketReducer } from './store/reducers/ticket.reducer';
+import { TicketEffects } from './store/effects/ticket.effects';
 
 @NgModule({
   declarations: [
@@ -35,12 +37,14 @@ import { BusLineEffects } from './store/effects/bus-line.effects';
     StoreModule.forRoot({
       user: userReducer,
       companies: companyReducer,
-      busLines: busLineReducer
+      busLines: busLineReducer,
+      tickets: ticketReducer
     }, {}),
     EffectsModule.forRoot([
       UserEffects,
       CompanyEffects,
-      BusLineEffects
+      BusLineEffects,
+      TicketEffects
     ]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,

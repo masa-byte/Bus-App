@@ -179,7 +179,7 @@ export class Neo4jService implements OnModuleDestroy, OnModuleInit {
             const specificDate = new Date(date);
             if (specificDate < today) {
                 const session = this.getWriteSession();
-                await session.run(`MATCH (n:SpecificDepTime)-[r:HAS_SPECIFIC_DEPARTURE {date: ${date}}]-() delete n, r`, {});
+                await session.run(`MATCH (n:SpecificDepTime)-[r:HAS_SPECIFIC_DEPARTURE {date: '${date}'}]-() delete n, r`, {});
                 session.close();
             }
         }

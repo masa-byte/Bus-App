@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { BusLine } from '../../bus-line/bus-line.model';
-import { Observable, of } from 'rxjs';
+import { Observable, filter, of, switchMap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { MatDialogRef } from '@angular/material/dialog';
 import { selectSelectedBusLine } from '../../store/selectors/bus-line.selector';
 import { Town } from '../../town/town.model';
 import { BusLineService } from '../../bus-line/bus-line.service';
 import { Ticket } from '../ticket.model';
+import { formatDuration } from '../../utility/utility';
 
 interface TownIndexed extends Town {
   number: number;
@@ -31,12 +32,12 @@ export class TicketDialogComponent {
   stops: TownIndexed[] = [];
   departureDatesTimes: SpecificDateTimeIndexed[] = [];
 
-  calculatedPrice = 0;
   index = 1;
 
   userDetails = {
     discount: false,
-    // TO DO friendDiscount: false,
+    returnTicket: false,
+    numberOfSeats: 1
   }
 
   stopColumnsToDisplay = ['number', 'name', 'population'];
@@ -51,26 +52,22 @@ export class TicketDialogComponent {
 
   ngOnInit(): void {
     this.busLine$ = this.store.select(selectSelectedBusLine);
-    this.busLine$.subscribe(busLine => {
-      if (busLine) {
+    this.busLine$.pipe(
+      filter(Boolean),
+      switchMap((busLine) => {
         this.busLine = busLine;
-        this.calculatedPrice = busLine.oneWayPrice;
-
-        this.stops = busLine.stops.map((stop, index) => {
-          return { ...stop, number: index + 1 };
-        });
-
-        this.busLineService.getBusLineDepartureTimes(busLine.busLineId, busLine.companyId).subscribe(response => {
-          if (response.body) {
-            Object.keys(response.body).map((date, index) => {
-              for (let i = 0; i < response.body[date].length; i++) {
-                this.departureDatesTimes.push({
-                  date: date,
-                  departureTime: response.body[date][i],
-                  number: this.index++,
-                  selected: false
-                });
-              }
+        this.stops = busLine.stops.map((stop, index) => ({ ...stop, number: index + 1 }));
+        return this.busLineService.getBusLineDepartureTimes(busLine.busLineId, busLine.companyId);
+      })
+    ).subscribe((response) => {
+      if (response.body) {
+        Object.keys(response.body).forEach((date, index) => {
+          for (let i = 0; i < response.body[date].length; i++) {
+            this.departureDatesTimes.push({
+              date: date,
+              departureTime: response.body[date][i],
+              number: this.index++,
+              selected: false
             });
           }
         });
@@ -86,11 +83,15 @@ export class TicketDialogComponent {
   }
 
   calculatePrice() {
+    let price = this.busLine!.oneWayPrice * this.userDetails.numberOfSeats;
+    if (this.userDetails.returnTicket) {
+      price = this.busLine!.returnPrice * this.userDetails.numberOfSeats;
+    }
     if (this.userDetails.discount) {
-      return Math.round(this.calculatedPrice * (1 - this.busLine!.discount / 100));
+      return Math.round(price * (1 - this.busLine!.discount / 100));
     }
     else {
-      return this.calculatedPrice;
+      return price;
     }
   }
 
@@ -103,6 +104,9 @@ export class TicketDialogComponent {
   }
 
   book(): void {
+    if (this.userDetails.numberOfSeats <= 0) {
+      this.userDetails.numberOfSeats = 1;
+    }
     const ticket: Ticket = {
       id: '',
       userId: '',
@@ -115,18 +119,14 @@ export class TicketDialogComponent {
       distance: this.busLine!.distance,
       startTownName: this.busLine!.stops[0].name,
       endTownName: this.busLine!.stops.at(-1)!.name,
+      returnTicket: this.userDetails.returnTicket,
+      numberOfSeats: this.userDetails.numberOfSeats,
       ratedCompany: false
     };
     this.dialogRef.close(ticket);
   }
 
-  formatDuration(durationInMinutes: number): string {
-    const hours = Math.floor(durationInMinutes / 60);
-    const minutes = durationInMinutes % 60;
-
-    const hoursText = hours > 0 ? `${hours}h` : '';
-    const minutesText = minutes > 0 ? `${minutes}min` : '';
-
-    return `${hoursText}${minutesText}`;
+  _formatDuration(durationInMinutes: number): string {
+    return formatDuration(durationInMinutes);
   }
 }

@@ -8,6 +8,7 @@ import { MyNeo4jModule } from 'src/my-neo4j/my-neo4j.module';
     MyNeo4jModule,
   ],
   providers: [BusLineService],
-  controllers: [BusLineController]
+  controllers: [BusLineController],
+  exports: [BusLineService]
 })
 export class BusLineModule {}

@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Role } from 'src/auth/enums/role.enum';
+import { BusLineService } from 'src/bus-line/bus-line.service';
 import { Neo4jService } from 'src/my-neo4j/neo4j.service';
 import { CompanyUser } from 'src/user/company-user.entity';
 import { mapNeo4jNodeToCompanyUser } from 'src/utility/utility';
@@ -9,6 +10,7 @@ export class CompanyService {
 
     constructor(
         private readonly neo4jService: Neo4jService,
+        private readonly busLineService: BusLineService,
     ) { }
 
     async getTotalNumberOfCompanies(): Promise<number> {
@@ -46,12 +48,23 @@ export class CompanyService {
     }
 
     async deleteCompany(id: string) {
-        const res = await this.neo4jService.write(`MATCH (n:Company) WHERE id(n) = ${id} DELETE n`)
+        // deleting bus lines first
+        const query = `
+        MATCH (t1:Town)-[r:BUS_LINE { companyId: '${id}'}]->(t2:Town) 
+        return distinct r.busLineId as busLineId
+        `;
+        const res = await this.neo4jService.read(query)
+        const busLineIds = res.records.map(record => record.get('busLineId'))
+        for (let i = 0; i < busLineIds.length; i++) {
+            await this.busLineService.deleteBusLine(busLineIds[i], id)
+        }
+        // deleting company
+        const res2 = await this.neo4jService.write(`MATCH (n:Company) WHERE id(n) = ${id} DELETE n`)
         return
     }
 
     async rateCompany(id: string, rating: number): Promise<any> {
-        const res = await this.neo4jService.write(`MATCH (n:Company) WHERE id(n) = ${id} SET n.gradeNumber = n.gradeNumber + 1, n.gradeSum = n.gradeSum + ${rating} RETURN n`)
+        const res = await this.neo4jService.write(`MATCH (n:Company) WHERE id(n) = ${id} SET n.gradeNumber = n.gradeNumber + 1, n.gradeSum = n.gradeSum + ${rating}`)
         if (res.records.length === 0) {
             return null
         }

@@ -11,5 +11,7 @@ export interface Ticket {
     distance: number;
     startTownName: string;
     endTownName: string;
+    returnTicket: boolean;
+    numberOfSeats: number;
     ratedCompany: boolean;
 }

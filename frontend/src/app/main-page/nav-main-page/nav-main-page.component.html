@@ -6,6 +6,7 @@
                 <mat-nav-list>
                     <a mat-list-item routerLink="/mainPage/listBusLines">Main Page</a>
                     <a mat-list-item routerLink="/mainPage/listCompanies">Companies</a>
+                    <a mat-list-item *ngIf="userType != 'company'" routerLink="/mainPage/listTickets">My Tickets</a>
                 </mat-nav-list>
             </div>
             <div class="profile-actions">

@@ -47,7 +47,8 @@ export class UserService {
     }
 
     async deleteUser(id: string) {
-        const res = await this.neo4jService.write(`MATCH (n) WHERE id(n) = ${id} DELETE n`)
+        // soft delete
+        const res = await this.neo4jService.write(`MATCH (n:User) WHERE id(n) = ${id} SET n.deleted = true RETURN n`)
         return
     }
 

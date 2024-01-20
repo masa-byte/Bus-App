@@ -6,7 +6,7 @@
         <p>Start Destination: {{ busLine.stops[0].name }}</p>
         <p>End Destination: {{ busLine.stops.at(-1)!.name }}</p>
         <p>Distance: {{ busLine.distance }} km</p>
-        <p>Duration: {{ formatDuration(busLine.durationMinutes) }}</p>
+        <p>Duration: {{ _formatDuration(busLine.durationMinutes) }}</p>
 
 
         <!-- Stops Table -->
@@ -29,6 +29,13 @@
         <div class="passengerDetails">
             <mat-checkbox [(ngModel)]="userDetails.discount" (ngModelChange)="calculatePrice()"> Discount
             </mat-checkbox>
+            <mat-checkbox [(ngModel)]="userDetails.returnTicket" (ngModelChange)="calculatePrice()"> 
+                Return Ticket
+            </mat-checkbox>
+            <mat-form-field>
+                <mat-label>Number of tickets</mat-label>
+                <input matInput type="number" [(ngModel)]="userDetails.numberOfSeats" (ngModelChange)="calculatePrice()">
+            </mat-form-field>
         </div>
 
         <!-- Departure Times Table -->

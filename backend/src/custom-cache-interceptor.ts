@@ -4,7 +4,11 @@ import { Injectable, ExecutionContext } from "@nestjs/common";
 @Injectable()
 export class CustomHttpCacheInterceptor extends CacheInterceptor {
 
-    excludePaths = ["/auth/profile"];
+    excludePaths = [
+        "/auth/profile",
+        "/ticket/total/:id", "ticket/:id/:pageIndex/:pageSize",
+        "user/:id", "/user/email/:email"
+    ];
 
     isRequestCacheable(context: ExecutionContext): boolean {
         const req = context.switchToHttp().getRequest();

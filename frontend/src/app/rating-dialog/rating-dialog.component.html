@@ -1,0 +1,13 @@
+<h2 mat-dialog-title>Rate this item</h2>
+<mat-dialog-content>
+    <div class="rating-stars">
+        <mat-icon class="star-icon" *ngFor="let star of stars; let i = index" (click)="rate(i + 1)" (mouseenter)="highlightStars(i)"
+            [ngClass]="{ 'star-filled': i < selectedRating }">
+            star
+        </mat-icon>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button (click)="onCancelClick()" class="customBtn">Cancel</button>
+    <button mat-button [mat-dialog-close]="selectedRating" class="customBtn">Rate</button>
+</mat-dialog-actions>

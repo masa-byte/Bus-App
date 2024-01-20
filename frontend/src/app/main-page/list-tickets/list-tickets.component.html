@@ -1,0 +1,11 @@
+<mat-paginator #paginator class="paginator" (page)="handlePageEvent($event)" [length]="length" [pageSize]="pageSize"
+    [showFirstLastButtons]="showFirstLastButtons" [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []"
+    [pageIndex]="pageIndex" aria-label="Select page">
+</mat-paginator>
+
+<div *ngIf="(tickets$ | async)" class=" mainDiv">
+    <div *ngFor="let t of tickets$ | async" class="card">
+        <app-ticket-display [ticket]="t[1]" (ticketRateRequest)="rateTicket($event)"></app-ticket-display>
+    </div>
+</div>
+<app-background-picture [src]="'assets/seats.jpg'"></app-background-picture>
