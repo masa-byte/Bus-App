@@ -34,10 +34,10 @@ export class CompanyUser {
     discount: number;
 
     @Field()
-    gradeNumber: number;
+    gradeNumber: string;
 
     @Field()
-    gradeSum: number;
+    gradeSum: string;
 
     async setPassword(password: string): Promise<void> {
         const saltRounds = 10;

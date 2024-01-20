@@ -21,7 +21,6 @@ import * as redisStore from 'cache-manager-redis-store';
 
 @Module({
   imports: [
-    //CacheModule.register(),
     CacheModule.registerAsync({
       isGlobal: true,
       useFactory: async () => ({

@@ -16,7 +16,6 @@ import { BusLineEffects } from './store/effects/bus-line.effects';
 import { CompanyEffects } from './store/effects/company.effects';
 import { UserEffects } from './store/effects/user.effects';
 import { busLineReducer } from './store/reducers/bus-line.reducer';
-import { BusLineEffects } from './store/effects/bus-line.effects';
 import { companyReducer } from './store/reducers/company.reducer';
 import { userReducer } from './store/reducers/user.reducer';
 import { EditProfileModule } from './user/edit-profile/edit-profile.module';
