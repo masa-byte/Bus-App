@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { APP_GUARD } from '@nestjs/core';
+import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { Neo4jModule } from 'nest-neo4j';
 import { neo4jConfig } from '../config';
 import { AppController } from './app.controller';
@@ -15,18 +15,21 @@ import { TicketModule } from './ticket/ticket.module';
 import { TownModule } from './town/town.module';
 import { UserModule } from './user/user.module';
 import { VehiclesModule } from './vehicles/vehicles.module';
+import { CustomHttpCacheInterceptor } from './custom-cache-interceptor';
+import { CacheModule, CacheStore } from '@nestjs/cache-manager';
+import * as redisStore from 'cache-manager-redis-store';
 
 @Module({
   imports: [
     //CacheModule.register(),
-    // CacheModule.registerAsync({
-    //   isGlobal: true,
-    //   useFactory: async () => ({
-    //     store: (await redisStore.redisStore({
-    //       url: 'redis://localhost:6379',
-    //     })) as unknown as CacheStore,
-    //   }),
-    // }),
+    CacheModule.registerAsync({
+      isGlobal: true,
+      useFactory: async () => ({
+        store: (await redisStore.redisStore({
+          url: 'redis://localhost:6379',
+        })) as unknown as CacheStore,
+      }),
+    }),
     Neo4jModule.forRoot(neo4jConfig),
     RedisModule,
     MyNeo4jModule,
@@ -48,10 +51,10 @@ import { VehiclesModule } from './vehicles/vehicles.module';
       provide: APP_GUARD,
       useClass: RolesGuard,
     },
-    // {
-    //   provide: APP_INTERCEPTOR,
-    //   useClass: CustomHttpCacheInterceptor,
-    // },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: CustomHttpCacheInterceptor,
+    },
   ],
 })
 export class AppModule { }
