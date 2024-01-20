@@ -41,4 +41,17 @@ export class RedisService implements OnModuleDestroy {
             lng: item[1][1]
         }));
     }
+
+    async lock(): Promise<void> {
+        let x = await this.redis.set('lock', 'lock', { NX: true }) === 'OK';
+        while(x === false) {
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+            console.log("Lockovan sam");
+            x = await this.redis.set('lock', 'lock', { NX: true }) === 'OK'
+        }
+    }
+
+    async unlock(): Promise<boolean> {
+        return await this.redis.del('lock') === 1;
+    }
 }
