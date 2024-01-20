@@ -1,0 +1,10 @@
+<div>
+    <div style="width: 100vw; height: 100vh;"
+        leaflet 
+        [leafletOptions]="options"
+        [leafletLayers]="(layer$ | async)!"
+        (leafletMapReady)="onMapReady($event)"
+        (leafletMapMoveEnd)="onMapMoveEnd($event)"
+        >
+    </div>
+</div>
