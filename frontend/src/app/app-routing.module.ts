@@ -45,7 +45,7 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'vehicles-on-map',
+    path: 'vehiclesOnMap',
     component: VehiclesOnMapComponent,
     pathMatch: 'full',
   },

@@ -37,6 +37,12 @@
                 <button mat-raised-button class="customButton" *ngIf="userType == 'company'" (click)="addNewBusLine()">
                     + Add new bus line
                 </button>
+                <button mat-raised-button class="customButton" *ngIf="userType != 'company'" (click)="openMyTickets()">
+                    My Tickets
+                </button>
+                <button mat-raised-button class="customButton" (click)="openVehiclesOnMap()">
+                    Vehicles on map
+                </button>
                 <button type="button" aria-label="Navigate to profile" mat-icon-button [matMenuTriggerFor]="profile">
                     <mat-icon aria-label="Profile icon">account_circle</mat-icon>
                 </button>

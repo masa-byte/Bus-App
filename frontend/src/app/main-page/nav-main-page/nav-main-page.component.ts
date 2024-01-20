@@ -5,6 +5,7 @@ import { selectUserType } from '../../store/selectors/user.selectors';
 import * as UserAction from '../../store/actions/user.actions';
 import { clearBusLines } from '../../store/actions/bus-line.actions';
 import { Subscription } from 'rxjs';
+import { clearTickets } from '../../store/actions/ticket.actions';
 
 @Component({
   selector: 'app-nav-main-page',
@@ -43,6 +44,14 @@ export class NavMainPageComponent implements OnInit, OnDestroy {
     this.router.navigate(['busLineTimeForm']);
   }
 
+  openVehiclesOnMap() {
+    this.router.navigate(['vehiclesOnMap']);
+  }
+
+  openMyTickets() {
+    this.router.navigate(['mainPage', 'listTickets']);
+  }
+
   openMainPage() {
     this.router.navigate(['mainPage', 'listBusLines']);
   }
@@ -60,6 +69,7 @@ export class NavMainPageComponent implements OnInit, OnDestroy {
     localStorage.removeItem('userId');
     localStorage.removeItem('rememberMe');
     this.store.dispatch(clearBusLines());
+    this.store.dispatch(clearTickets());
     this.store.dispatch(UserAction.signOut());
     this.router.navigate(['']);
   }
