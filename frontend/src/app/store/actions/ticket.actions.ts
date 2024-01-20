@@ -44,3 +44,7 @@ export const rateCompanyFailure = createAction(
     '[Ticket] Rate Company Failure',
     props<{ error: string }>()
 );
+
+export const clearTickets = createAction(
+    '[Ticket] Clear Tickets'
+);

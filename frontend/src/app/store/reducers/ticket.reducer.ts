@@ -46,5 +46,8 @@ export const ticketReducer = createReducer(
             ...state,
             error: error
         };
-    })
+    }),
+    on(TicketActions.clearTickets, (state) => {
+        return ticketAdapter.removeAll(state);
+    }),
 );
